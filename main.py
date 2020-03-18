@@ -1,10 +1,8 @@
 import csv
-# from collections import defaultdict
 import os
 import pandas as pd
 import tempfile
 import urllib.request as request
-from selenium import webdriver
 
 from generator import DataGenerator
 from visualizer import visualize
