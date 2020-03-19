@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
+import os
 
 from helper import _convert_to_dates
 
@@ -24,7 +25,10 @@ def visualize(X, y, region, case):
   plot(X, y, ax3, axhline=True)
 
   # save the figure
-  plt.savefig(f"data/{region}-{case}-timeseries.png")
+  dir_str = f"{os.getcwd()}/data/{region}"
+  if not os.path.exists(dir_str):
+    os.mkdir(dir_str)
+  plt.savefig(f"data/{region}/{region}-{case}-timeseries.png")
 
   # show the figure
   plt.show()
