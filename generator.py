@@ -1,9 +1,9 @@
-from helper import valid_countries
+import numpy as np
 
 class DataGenerator:
-  def __init__(self, reports, country):
+  def __init__(self, reports):
     self.reports = reports
-    self.country = country
+    self.country = None
 
     self._clean_dfs()
 
@@ -12,21 +12,25 @@ class DataGenerator:
       df = raw_df.drop(['Lat', 'Long'], axis=1).set_index(["Country/Region", "Province/State"])
       self.reports[report_type] = df
 
-  def set_country(self, country):
-    countries = valid_countries(self.reports)
-    if country not in countries:
-      print("Country selected is not valid!")
-      print(f"Choose from the following: {str(countries)}")
-      return
+  def set_country(self, country, valid_countries):
+    if country not in valid_countries:
+      return False
 
     self.country = country
+    return True
+
+  def get_country(self):
+    if not self.country:
+      print("No country has been set, run 'generator.set_country(<your country>)' to do so!")
+      return
+    return self.country
 
   def X(self, report_type: str) -> list:
     if report_type not in self.reports:
       raise ValueError("Invalid report type given!")
 
     df = self.reports[report_type]
-    return df.columns.values.tolist()
+    return df.columns.values
 
   def y(self, report_type: str) -> list:
     if report_type not in self.reports:
@@ -36,7 +40,7 @@ class DataGenerator:
 
     # get only the country values and sum up all provinces
     np_arr = df.xs((self.country)).values
-    return np_arr.sum(axis=0).tolist()
+    return np.nan_to_num(np_arr.sum(axis=0))
 
   def generate(self, report_type):
     return self.X(report_type), self.y(report_type)

@@ -18,6 +18,7 @@ class CoronaScraper():
     self.time_git_url = f"https://raw.githubusercontent.com/{self.user}/{self.repo}/master/{self.time_path}"
 
     self.reports = {}
+    self.valid_countries = []
 
   def download_reports(self):
     """
@@ -45,6 +46,8 @@ class CoronaScraper():
           tmp.write(req_str)
           df = pd.read_csv(path, sep=",")
           reports[report_type] = df
+          self.valid_countries += df["Country/Region"].tolist()
+          self.valid_countries = list(set(self.valid_countries))
       finally:
         os.remove(path)
 
@@ -61,15 +64,33 @@ class CoronaScraper():
 def main():
   # scrape the timeseries report for COVID-19
   scraper = CoronaScraper()
-  reports = CoronaScraper.download_reports().get_reports()
+  reports = scraper.download_reports().get_reports()
 
-  # init generator for a country
-  gen = DataGenerator(reports, "Canada")
+  # initialize a data generator
+  generator = DataGenerator(reports)
+
+  # get all the valid countries to choose from
+  countries = scraper.valid_countries
+
+  while True:
+    country = input("Enter a country to track (type quit to exit): \n")
+
+    if country == "quit":
+      break
+
+    if country == "":
+      continue
+
+    if not generator.set_country(country, valid_countries=countries):
+      print("Invalid country selected")
+      print(f"Choose from the following: {str(countries)}\n")
+      continue
+
+    for case in ["Confirmed", "Deaths", "Recovered"]:
+      X, y = generator.generate(case)
+      visualize(X, y, country, case)
+
+  print("Shutting down...")
 
 if __name__ == "__main__":
-  reports = CoronaScraper().download_reports().get_reports()
-  can_gen = DataGenerator(reports, "Canada")
-
-  for case in ["Confirmed", "Deaths", "Recovered"]:
-    X, y = can_gen.generate(case)
-    visualize(X, y, can_gen.country, case)
+  main()
