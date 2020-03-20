@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, abort
 from backend.scraper import CoronaScraper
 from backend.generator import DataGenerator
-from backend.helper import CONFIRMED, DEATHS, RECOVERED, ndarray_to_list
+from backend.helper import CONFIRMED, DEATHS, RECOVERED, to_data
 
 app = Flask(__name__)
 
@@ -20,25 +20,17 @@ def index():
 @app.route('/covid19/<string:country>', methods=['GET'])
 def get_data(country):
   try:
-    data = {
+    X, confirmed = generator.generate(CONFIRMED, country)
+    deaths = generator.y(DEATHS, country)
+    recovered = generator.y(RECOVERED, country)
+
+    data = to_data(X, confirmed, deaths, recovered)
+
+    res = {
       "country": country,
-      CONFIRMED: {
-        "x": ndarray_to_list(generator.X(CONFIRMED)),
-        "y": ndarray_to_list(generator.y(CONFIRMED, country)),
-        "unit": "cases"
-      },
-      DEATHS: {
-        "x": ndarray_to_list(generator.X(DEATHS)),
-        "y": ndarray_to_list(generator.y(DEATHS, country)),
-        "unit": "cases per day"
-      },
-      RECOVERED: {
-        "x": ndarray_to_list(generator.X(RECOVERED)),
-        "y": ndarray_to_list(generator.y(RECOVERED, country)),
-        "unit": "change in cases per day"
-      }
+      "data": data
     }
-    return jsonify(data)
+    return jsonify(res)
   except Exception:
     abort(404)
 
