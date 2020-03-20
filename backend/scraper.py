@@ -61,6 +61,9 @@ class CoronaScraper():
   def get_report(self, report_type: str):
     return self.reports.get(report_type, d=None)
 
+  def get_valid_countries(self):
+    return self.valid_countries
+
 def main():
   # scrape the timeseries report for COVID-19
   scraper = CoronaScraper()
