@@ -40,7 +40,6 @@ def get_data(country):
     }
     return jsonify(data)
   except Exception:
-    print("HERE")
     abort(404)
 
 if __name__ == "__main__":
