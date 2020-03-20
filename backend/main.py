@@ -73,7 +73,7 @@ def main():
   countries = scraper.valid_countries
 
   while True:
-    country = input("Enter a country to track (type quit to exit): \n")
+    country = input("Enter a country to track (type quit to exit): ")
 
     if country == "quit":
       break
@@ -82,8 +82,7 @@ def main():
       continue
 
     if not generator.set_country(country, valid_countries=countries):
-      print("Invalid country selected")
-      print(f"Choose from the following: {str(countries)}\n")
+      print(f"Invalid country selected! Choose from the following: {str(countries)}\n")
       continue
 
     for case in ["Confirmed", "Deaths", "Recovered"]:
