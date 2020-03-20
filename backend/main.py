@@ -4,8 +4,8 @@ import pandas as pd
 import tempfile
 import urllib.request as request
 
-from generator import DataGenerator
-from visualizer import visualize
+from backend.generator import DataGenerator
+from backend.visualizer import visualize
 
 class CoronaScraper():
   def __init__(self):

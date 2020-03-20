@@ -3,7 +3,7 @@ import matplotlib.dates as mdates
 import numpy as np
 import os
 
-from helper import _convert_to_dates
+from backend.helper import _convert_to_dates
 
 def visualize(X, y, region, case):
   # convert date strings to datetime
