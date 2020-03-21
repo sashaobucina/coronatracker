@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, abort
-from backend.scraper import CoronaScraper
-from backend.generator import DataGenerator
-from backend.helper import CONFIRMED, DEATHS, RECOVERED, to_data
+from flask_cors import CORS
+from scraper import CoronaScraper
+from generator import DataGenerator
+from helper import CONFIRMED, DEATHS, RECOVERED, to_data
 
 app = Flask(__name__)
+CORS(app)
 
 def initialize():
   scraper = CoronaScraper()
@@ -13,7 +15,7 @@ def initialize():
 
 scraper, generator = initialize()
 
-@app.route('/')
+@app.route('/valid-countries')
 def index():
   return jsonify(scraper.valid_countries)
 
