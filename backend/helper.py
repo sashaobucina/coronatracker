@@ -10,12 +10,16 @@ def _convert_to_dates(dates: str):
 
 def to_data(X, confirmed, deaths, recovered):
   data = []
+  confirmed_drv1 = np.gradient(confirmed)
+  confirmed_drv2 = np.gradient(confirmed_drv1)
 
-  for x, cy, dy, ry in zip(X, confirmed, deaths, recovered):
+  for x, cy, cd1y, cd2y, dy, ry in zip(X, confirmed, confirmed_drv1, confirmed_drv2, deaths, recovered):
     data.append(
       {
         "name": ndarray_to_list(x),
         CONFIRMED: ndarray_to_list(cy),
+        f"{CONFIRMED}-drv1": ndarray_to_list(cd1y),
+        f"{CONFIRMED}-drv2": ndarray_to_list(cd2y),
         DEATHS: ndarray_to_list(dy),
         RECOVERED: ndarray_to_list(ry)
       }
