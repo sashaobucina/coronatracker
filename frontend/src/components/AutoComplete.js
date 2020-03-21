@@ -123,7 +123,7 @@ class AutoComplete extends Component {
         );
       } else {
         suggestionsListComponent = (
-          <div class="no-suggestions">
+          <div className="no-suggestions">
             <em>No suggestions available.</em>
           </div>
         );
@@ -133,9 +133,10 @@ class AutoComplete extends Component {
     return (
       <Fragment>
         <input
-          type="text"
+          type="search"
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
+          placeholder={"Search for a country..."}
           value={userInput}
         />
         {suggestionsListComponent}
