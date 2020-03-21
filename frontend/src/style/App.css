@@ -1,4 +1,15 @@
-.App {
+html, body {
+  display: flexbox;
+  height: 100%;
+}
+
+#root-app {
+  background: #2E3047;
+  color: #3BBA9C;
+  min-height: 100vh;
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +46,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
