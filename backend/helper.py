@@ -12,7 +12,6 @@ def to_data(X, confirmed, deaths, recovered):
   data = []
 
   for x, cy, dy, ry in zip(X, confirmed, deaths, recovered):
-    dy, ry = fill_with_zeros(cy, dy), fill_with_zeros(cy, ry)
     data.append(
       {
         "name": ndarray_to_list(x),

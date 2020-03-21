@@ -26,13 +26,10 @@ def get_data(country):
     deaths = generator.y(DEATHS, country)
     recovered = generator.y(RECOVERED, country)
 
-    data = to_data(X, confirmed, deaths, recovered)
+    print("HERE")
 
-    res = {
-      "country": country,
-      "data": data
-    }
-    return jsonify(res)
+    data = to_data(X, confirmed, deaths, recovered)
+    return jsonify(data)
   except Exception:
     abort(404)
 
