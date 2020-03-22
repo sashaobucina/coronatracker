@@ -34,25 +34,11 @@ const styles = {
 }
 
 class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  handleKeyPress = (e) => {
-    const { fetchData } = this.props;
-    if (e.keyCode === 13) {
-      fetchData()
-    }
-  }
-
   render() {
     const { suggestions, classes, updateState, value } = this.props;
     return (
       <div style={{ textAlign: "center" }}>
         <AutoComplete
-          autoSelect={true}
           id="autocomplete-main"
           classes={{
             input: classes.color,
@@ -73,7 +59,6 @@ class SearchBar extends Component {
               margin="normal"
               variant="outlined"
               value={value}
-              onKeyDown={this.handleKeyPress}
               InputProps={{ ...params.InputProps, type: 'search' }}
             />
           )}
