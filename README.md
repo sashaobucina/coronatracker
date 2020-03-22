@@ -4,7 +4,7 @@ Tracking the movement and trends of the COVID-19 virus.
 
 ## Demo
 
-TODO
+![demo](demo.gif)
 
 ## Installation
 
