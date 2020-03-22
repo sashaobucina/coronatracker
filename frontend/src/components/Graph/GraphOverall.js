@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Legend, AreaChart, XAxis, YAxis, Area, Tooltip, ResponsiveContainer } from "recharts";
-import "../../style/GraphComponent.css";
+import { Brush, Legend, AreaChart, XAxis, YAxis, Area, Tooltip, ResponsiveContainer } from "recharts";
 
-class GraphComponent extends Component {
+class GraphOverall extends Component {
   render() {
     const { data } = this.props;
-    console.log(data)
     return (
       <ResponsiveContainer height={500} style={{ minWidth: "100%" }}>
         <AreaChart data={data} title="Cases of COVID-19">
@@ -23,12 +21,13 @@ class GraphComponent extends Component {
               <stop offset="95%" stopColor="#447a28" stopOpacity={0}/>
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" stroke={'#3BBA9C'} />
+          <Brush stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
+          <XAxis dataKey="date" stroke={'#3BBA9C'} />
           <YAxis stroke={'#3BBA9C'} />
           <Area type="monotone" dataKey="Confirmed" stroke="#a15c03" fillOpacity={1} fill="url(#colorConfirmed)"/>
           <Area type="monotone" dataKey="Deaths" stroke="red" fillOpacity={1} fill="url(#colorDeaths)"/>
           <Area type="monotone" dataKey="Recovered" stroke="green" fillOpacity={1} fill="url(#colorRecovered)" />
-          <Tooltip className="my-tooltip" cursor={false} />
+          <Tooltip />
           <Legend />
         </AreaChart>
       </ResponsiveContainer>
@@ -36,4 +35,4 @@ class GraphComponent extends Component {
   }
 }
 
-export default GraphComponent;
+export default GraphOverall;

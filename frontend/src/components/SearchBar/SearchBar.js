@@ -12,7 +12,6 @@ const styles = {
     color: '#3BBA9C'
   },
   textfield: {
-    width: 400,
     background: '#3C3F58',
     '& label': {
       color: '#3BBA9C'
@@ -41,19 +40,18 @@ class SearchBar extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleKeyPress(e) {
+  handleKeyPress = (e) => {
     const { fetchData } = this.props;
     if (e.keyCode === 13) {
-      fetchData(e.target.value)
+      fetchData()
     }
   }
 
   render() {
-    const { suggestions, classes, updateState } = this.props;
+    const { suggestions, classes, updateState, value } = this.props;
     return (
       <div style={{ textAlign: "center" }}>
         <AutoComplete
-          autoComplete={true}
           id="autocomplete-main"
           classes={{
             input: classes.color,
@@ -64,7 +62,7 @@ class SearchBar extends Component {
             noOptions: classes.color
           }}
           options={suggestions}
-          onInputChange={(_, value) => updateState(value)}
+          onSelect={(e) => updateState(e.target.value)}
           noOptionsText={"No countries match your search..."}
           renderInput={params => (
             <TextField
@@ -73,8 +71,8 @@ class SearchBar extends Component {
               label="Search for a country"
               margin="normal"
               variant="outlined"
+              value={value}
               onKeyDown={this.handleKeyPress}
-              onChange={(e) => updateState(e.target.value)}
               InputProps={{ ...params.InputProps, type: 'search' }}
             />
           )}
