@@ -16,17 +16,15 @@ def initialize():
 scraper, generator = initialize()
 
 @app.route('/valid-countries')
-def index():
+def get_countries():
   return jsonify(scraper.valid_countries)
 
 @app.route('/covid19/<string:country>', methods=['GET'])
 def get_data(country):
   try:
     X, confirmed = generator.generate(CONFIRMED, country)
-    deaths = generator.y(DEATHS, country)
-    recovered = generator.y(RECOVERED, country)
-
-    print("HERE")
+    _, deaths = generator.generate(DEATHS, country)
+    _, recovered = generator.generate(RECOVERED, country)
 
     data = to_data(X, confirmed, deaths, recovered)
     return jsonify(data)

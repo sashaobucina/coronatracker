@@ -51,6 +51,9 @@ class CoronaScraper():
       finally:
         os.remove(path)
 
+    self.valid_countries.append("Global")
+    self.valid_countries.sort()
+
     if len(reports) > 0:
       self.reports = reports
     return self

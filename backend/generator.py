@@ -1,7 +1,7 @@
 import numpy as np
 
 class DataGenerator:
-  def __init__(self, reports, valid_countries):
+  def __init__(self, reports: dict, valid_countries: list):
     self.reports = reports
     self.valid_countries = valid_countries
     self._clean_dfs()
@@ -19,18 +19,30 @@ class DataGenerator:
     return df.columns.values
 
 
-  def y(self, report_type: str, country: str) -> list:
+  def y(self, report_type: str, country="all") -> list:
     if report_type not in self.reports:
       raise ValueError(f"Invalid report type given - {report_type}")
 
     df = self.reports[report_type]
 
-    # get only the country values and sum up all provinces
-    np_arr = df.xs((country)).values
-    return np.nan_to_num(np_arr.sum(axis=0))
+    if country != "all":
+      # get only the country values and sum up all provinces
+      arr = df.xs((country)).values
+      return np.nan_to_num(arr.sum(axis=0))
+    else:
+      # get all the country values and summing them together
+      total = np.zeros(df.shape[1])
+      for country in filter(lambda x: x != "Global", self.valid_countries):
+        arr = df.xs((country)).values
+        summed = np.nan_to_num(arr.sum(axis=0))
+        total += summed
+      return total
 
 
   def generate(self, report_type, country):
+    if country == "Global":
+      return self.X(report_type), self.y(report_type)
+
     if country not in self.valid_countries:
       raise ValueError("Invalid country set!")
     return self.X(report_type), self.y(report_type, country)
