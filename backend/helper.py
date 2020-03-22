@@ -9,19 +9,36 @@ def _convert_to_dates(dates: str):
   return [datetime.datetime.strptime(d, "%m/%d/%y").date() for d in dates]
 
 def to_data(X, confirmed, deaths, recovered):
-  data = []
-  confirmed_drv1 = np.gradient(confirmed)
-  confirmed_drv2 = np.gradient(confirmed_drv1)
+  data = {
+    "overall" : [],
+    "first_derivative_data": [],
+    "second_derivative_data": []
+  }
+  drv1 = np.gradient(confirmed)
+  drv2 = np.gradient(drv1)
 
-  for x, cy, cd1y, cd2y, dy, ry in zip(X, confirmed, confirmed_drv1, confirmed_drv2, deaths, recovered):
-    data.append(
+  for x, c, d, r, dydx1, dydx2 in zip(X, confirmed, deaths, recovered, drv1, drv2):
+    x = ndarray_to_list(x)
+    data["overall"].append(
       {
-        "name": ndarray_to_list(x),
-        CONFIRMED: ndarray_to_list(cy),
-        f"{CONFIRMED}-drv1": ndarray_to_list(cd1y),
-        f"{CONFIRMED}-drv2": ndarray_to_list(cd2y),
-        DEATHS: ndarray_to_list(dy),
-        RECOVERED: ndarray_to_list(ry)
+        "date": x,
+        CONFIRMED: ndarray_to_list(c),
+        DEATHS: ndarray_to_list(d),
+        RECOVERED: ndarray_to_list(r)
+      }
+    )
+
+    data["first_derivative_data"].append(
+      {
+        "date": x,
+        "First Derivative": ndarray_to_list(dydx1),
+      }
+    )
+
+    data["second_derivative_data"].append(
+      {
+        "date": x,
+        "Second Derivative": ndarray_to_list(dydx2)
       }
     )
 
@@ -31,10 +48,3 @@ def ndarray_to_list(arr):
   if type(arr).__module__ == np.__name__:
     return arr.tolist()
   return arr
-
-def fill_with_zeros(y, y_orig):
-  diff = len(y) - len(y_orig)
-
-  if diff <= 0:
-    return y_orig
-  return np.pad(y_orig, (diff, 0), mode='constant')
