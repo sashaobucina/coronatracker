@@ -103,20 +103,24 @@ class App extends Component{
     if (!validated) {
       return (
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p style={{ color: "red", textAlign: "center", fontSize: 12 }}>Invalid country entered!</p>
+          <p style={{ color: "red", textAlign: "center", fontSize: 13 }}>Invalid country entered!</p>
         </Grid>
       )
     } else {
-      return (<></>)
+      return (
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <p style={{ color: "#3BBA9C", textAlign: "center", fontSize: 13 }}>Search "Global" to get world view</p>
+        </Grid>
+      )
     }
   }
 
   render() {
-    const { graphData, validCountries, country, validated, userInput } = this.state
+    const { graphData, validCountries, country, userInput } = this.state
     return (
       <div id="root-app">
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
-          { !validated ? this.invalidText() : <></> }
+          { this.invalidText() }
           <Grid item sm xs />
           <Grid item xs={5} sm={5} md={4} lg={4}>
             <SearchBar

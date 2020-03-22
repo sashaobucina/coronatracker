@@ -52,6 +52,7 @@ class SearchBar extends Component {
     return (
       <div style={{ textAlign: "center" }}>
         <AutoComplete
+          autoSelect={true}
           id="autocomplete-main"
           classes={{
             input: classes.color,
