@@ -35,6 +35,7 @@ In another shell, run the following to start a local instance of the website on 
 
 ```bash
 cd frontend
+npm install
 npm start
 ```
 
