@@ -2,7 +2,7 @@ from flask import Flask, jsonify, abort
 from flask_cors import CORS
 from scraper import CoronaScraper
 from generator import DataGenerator
-from helper import CONFIRMED, DEATHS, to_data
+from helper import CONFIRMED, DEATHS, RECOVERED, to_data
 
 app = Flask(__name__)
 CORS(app)
@@ -24,8 +24,9 @@ def get_data(country):
   try:
     X, confirmed = generator.generate(CONFIRMED, country)
     _, deaths = generator.generate(DEATHS, country)
+    _, recovered = generator.generate(RECOVERED, country)
 
-    data = to_data(X, confirmed, deaths)
+    data = to_data(X, confirmed, deaths, recovered)
     return jsonify(data)
   except Exception:
     abort(404)
