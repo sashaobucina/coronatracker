@@ -8,7 +8,8 @@ RECOVERED = "recovered"
 def _convert_to_dates(dates: str):
   return [datetime.datetime.strptime(d, "%m/%d/%y").date() for d in dates]
 
-def to_data(X, confirmed, deaths, recovered):
+def to_data(X, confirmed, deaths):
+  print(X.shape, deaths.shape)
   data = {
     "overall" : [],
     "first_derivative_data": [],
@@ -17,14 +18,13 @@ def to_data(X, confirmed, deaths, recovered):
   drv1 = np.gradient(confirmed)
   drv2 = np.gradient(drv1)
 
-  for x, c, d, r, dydx1, dydx2 in zip(X, confirmed, deaths, recovered, drv1, drv2):
+  for x, c, d, dydx1, dydx2 in zip(X, confirmed, deaths, drv1, drv2):
     x = ndarray_to_list(x)
     data["overall"].append(
       {
         "date": x,
         CONFIRMED: ndarray_to_list(c),
         DEATHS: ndarray_to_list(d),
-        RECOVERED: ndarray_to_list(r)
       }
     )
 

@@ -25,7 +25,7 @@ class CoronaScraper():
     """
     reports = {}
 
-    for report_type in ["confirmed", "deaths", "recovered"]:
+    for report_type in ["confirmed", "deaths"]:
       url = f"{self.time_git_url}/time_series_covid19_{report_type}_global.csv"
       print(f"Requesting GitHub raw file from {url}...\n")
       req = request.urlopen(url)
@@ -90,7 +90,7 @@ def main():
       print(f"Invalid country selected! Choose from the following: {str(countries)}\n")
       continue
 
-    for case in ["confirmed", "deaths", "recovered"]:
+    for case in ["confirmed", "deaths"]:
       X, y = generator.generate(case)
       visualize(X, y, country, case)
 
