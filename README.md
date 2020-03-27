@@ -4,6 +4,8 @@ Tracking the movement and trends of the COVID-19 virus.
 
 ## Demo
 
+*Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
+
 ![demo](demo.gif)
 
 ## Installation
