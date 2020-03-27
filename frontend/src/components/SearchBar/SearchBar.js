@@ -35,7 +35,7 @@ const styles = {
 
 class SearchBar extends Component {
   render() {
-    const { suggestions, classes, updateState, value } = this.props;
+    const { suggestions, classes, updateState } = this.props;
     return (
       <div style={{ textAlign: "center" }}>
         <AutoComplete
@@ -58,7 +58,6 @@ class SearchBar extends Component {
               label="Search for a country"
               margin="normal"
               variant="outlined"
-              value={value}
               InputProps={{ ...params.InputProps, type: 'search' }}
             />
           )}

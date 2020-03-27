@@ -116,7 +116,7 @@ class App extends Component{
   }
 
   render() {
-    const { graphData, validCountries, country, userInput } = this.state
+    const { graphData, validCountries, country } = this.state
     return (
       <div id="root-app">
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
@@ -128,7 +128,6 @@ class App extends Component{
               fetchData={this.fetchData}
               updateState={this.updateInputState}
               validateData={this.validateData}
-              value={userInput}
             />
           </Grid>
           <Grid item sm={3} xs={3} md={2} lg={2}>
