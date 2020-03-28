@@ -103,13 +103,13 @@ class App extends Component{
     if (!validated) {
       return (
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p style={{ color: "red", textAlign: "center", fontSize: 13 }}>Invalid country entered!</p>
+          <p style={{ color: "red", textAlign: "center", fontSize: 14 }}>Invalid country entered! (Ensure correct capitalization)</p>
         </Grid>
       )
     } else {
       return (
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p style={{ color: "#3BBA9C", textAlign: "center", fontSize: 13 }}>Search "Global" to get world view</p>
+          <p style={{ color: "#3BBA9C", textAlign: "center", fontSize: 14 }}>Search "Global" to get world view</p>
         </Grid>
       )
     }
