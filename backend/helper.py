@@ -31,14 +31,14 @@ def to_data(X, confirmed, deaths):
     data["first_derivative_data"].append(
       {
         "date": x,
-        "First Derivative": ndarray_to_list(dydx1),
+        "first_derivative": ndarray_to_list(dydx1),
       }
     )
 
     data["second_derivative_data"].append(
       {
         "date": x,
-        "Second Derivative": ndarray_to_list(dydx2)
+        "second_derivative": ndarray_to_list(dydx2)
       }
     )
 

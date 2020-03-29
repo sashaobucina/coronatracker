@@ -4,16 +4,35 @@ import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
 import GraphOverall from "./Graph/GraphOverall";
-import { Grid } from "@material-ui/core"
+import { Grid, ButtonGroup, Button } from "@material-ui/core"
 import GraphDerivative from './Graph/GraphDerivative';
+import GraphRate from './Graph/GraphRate';
+import DateSlider from './Slider/DateSlider';
+
+function convertData(overall, idx) {
+  const filteredData = overall.filter((entry) => entry.confirmed !== 0);
+
+  let data = filteredData.map((entry, idx, arr) => {
+    const weeklyVal = idx < 7 ? 0 : arr[idx]["confirmed"] - arr[idx - 7]["confirmed"];
+    return {
+      cases: entry.confirmed,
+      weekly: Math.round(weeklyVal)
+    };
+  });
+
+  data = data.filter((entry) => entry.weekly >= 10);
+  return data.slice(0, idx)
+}
 
 class App extends Component{
   constructor(props) {
     super(props)
     this.state = {
       country: '',
+      idxValue: 0,
       userInput: '',
       graphData: undefined,
+      scale: "log",
       validCountries: [],
       validated: true
     };
@@ -22,6 +41,7 @@ class App extends Component{
     this.prefetchData = this.prefetchData.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
+    this.updateIdxState = this.updateIdxState.bind(this);
     this.generateGraphs = this.generateGraphs.bind(this);
     this.invalidText = this.invalidText.bind(this);
     this.validateData = this.validateData.bind(this);
@@ -35,6 +55,7 @@ class App extends Component{
         this.setState({
           country: userInput,
           graphData: res.data,
+          idxValue: 0,
           validated: true
         });
       }).catch(err => {
@@ -62,6 +83,12 @@ class App extends Component{
     })
   }
 
+  updateIdxState = (idx) => {
+    this.setState({
+      idxValue: idx
+    })
+  }
+
   validateData = (value) => {
     const { validCountries } = this.state;
     return validCountries.includes(value)
@@ -72,10 +99,14 @@ class App extends Component{
   };
 
   generateGraphs = (country) => {
-    const { graphData } = this.state
+    const { graphData, idxValue, scale } = this.state;
     const overallData = graphData.overall;
     const firstDerivData = graphData.first_derivative_data;
     const secondDerivData = graphData.second_derivative_data;
+
+    const rateData = convertData(overallData);
+    const n = overallData.length;
+    const dates = overallData.slice(n - rateData.length, n).map(entry => entry.date)
 
     const component = (
       <Grid container direction="row" justify="center" alignItems="center">
@@ -87,11 +118,21 @@ class App extends Component{
         </Grid>
         <Grid item xs={5} sm={5} md={5} lg={5} >
           <h3 style={{ textAlign: "center" }}>Rate of Change in Cases</h3>
-          <GraphDerivative data={firstDerivData} dataKey={"First Derivative"} />
+          <GraphDerivative data={firstDerivData} dataKey={"first_derivative"} />
         </Grid>
         <Grid item xs={5} sm={5} md={5} lg={5} >
           <h3 style={{ textAlign: "center" }}>Acceleration of Change</h3>
-          <GraphDerivative data={secondDerivData} dataKey={"Second Derivative"} />
+          <GraphDerivative data={secondDerivData} dataKey={"second_derivative"} />
+        </Grid>
+        <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginBottom: 20 }}>
+          <h3 style={{ textAlign: "center", textTransform: "capitalize" }}>COVID-19 Trajectory ({scale})</h3>
+          <GraphRate data={rateData.slice(0, idxValue)} scale={scale} />
+          <ButtonGroup color="primary">
+            <Button variant="contained" disabled={scale === "log"} onClick={() => this.setState({ scale: "log" })}>Log</Button>
+            <Button variant="contained" disabled={scale === "linear"} onClick={() => this.setState({ scale: "linear" })}>Linear</Button>
+          </ButtonGroup>
+          <p style={{ textAlign: "center", marginBottom: 40 }}><i>← Tune slider to view changes over time →</i></p>
+          <DateSlider dates={dates} updateState={this.updateIdxState} value={idxValue} />
         </Grid>
       </Grid>
     )
