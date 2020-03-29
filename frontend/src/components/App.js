@@ -5,6 +5,7 @@ import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
 import GraphOverall from "./Graph/GraphOverall";
 import { Grid, ButtonGroup, Button } from "@material-ui/core"
+import { Add, Remove } from "@material-ui/icons";
 import GraphDerivative from './Graph/GraphDerivative';
 import GraphRate from './Graph/GraphRate';
 import DateSlider from './Slider/DateSlider';
@@ -42,6 +43,7 @@ class App extends Component{
     this.fetchData = this.fetchData.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIdxState = this.updateIdxState.bind(this);
+    this.onPlayClick = this.onPlayClick.bind(this);
     this.generateGraphs = this.generateGraphs.bind(this);
     this.invalidText = this.invalidText.bind(this);
     this.validateData = this.validateData.bind(this);
@@ -98,6 +100,19 @@ class App extends Component{
     this.prefetchData();
   };
 
+  onPlayClick = (n, increment) => {
+    const { idxValue } = this.state;
+    if (increment) {
+      this.setState({
+        idxValue: idxValue < n ? idxValue + 1 : 0
+      })
+    } else {
+      this.setState({
+        idxValue: idxValue > 0 ? idxValue - 1 : n
+      })
+    }
+  }
+
   generateGraphs = (country) => {
     const { graphData, idxValue, scale } = this.state;
     const overallData = graphData.overall;
@@ -133,6 +148,16 @@ class App extends Component{
           </ButtonGroup>
           <p style={{ textAlign: "center", marginBottom: 40 }}><i>← Tune slider to view changes over time →</i></p>
           <DateSlider dates={dates} updateState={this.updateIdxState} value={idxValue} />
+          <ButtonGroup color="inherit" size="medium" variant="outlined">
+            <Button 
+              onClick={(_) => this.onPlayClick(dates.length - 1, true)}
+              startIcon={<Add />}
+            />
+            <Button 
+              onClick={(_) => this.onPlayClick(dates.length - 1, false)}
+              startIcon={<Remove />}
+            />
+          </ButtonGroup>
         </Grid>
       </Grid>
     )
