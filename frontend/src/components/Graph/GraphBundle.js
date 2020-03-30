@@ -27,7 +27,7 @@ function convertToDates(overall, offset) {
 
 class GraphBundle extends Component {
   render() {
-    const { country, data, indexValue, scale, onPlayClick, updateIndexState } = this.props;
+    const { country, data, indexValue, scale, onPlayClick, updateIndexState, updateScale } = this.props;
     const { overall, first_derivative_data, second_derivative_data } = data;
 
     const weeklyData = convertDataToWeekly(overall);
@@ -53,10 +53,10 @@ class GraphBundle extends Component {
           <GraphTrajectory data={weeklyData.slice(0, indexValue)} scale={scale} />
           <ButtonGroup color="primary">
             <Tooltip title="Convert to logarithmic scale" placement="top">
-              <Button variant="contained" disabled={scale === "log"} onClick={() => this.setState({ scale: "log" })}>Log</Button>
+              <Button variant="contained" disabled={scale === "log"} onClick={() => updateScale("log")}>Log</Button>
             </Tooltip>
             <Tooltip title="Convert to linear scale" placement="right">
-              <Button variant="contained" disabled={scale === "linear"} onClick={() => this.setState({ scale: "linear" })}>Linear</Button>
+              <Button variant="contained" disabled={scale === "linear"} onClick={() => updateScale("linear")}>Linear</Button>
             </Tooltip>
           </ButtonGroup>
           <Typography align="center" fontStyle="oblique" style={{ marginBottom: 40 }} variant="body2">← Tune slider to view changes over time →</Typography>

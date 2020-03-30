@@ -23,9 +23,10 @@ class App extends Component{
     /* Bindings */
     this.prefetchData = this.prefetchData.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.onPlayClick = this.onPlayClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
-    this.onPlayClick = this.onPlayClick.bind(this);
+    this.updateScale = this.updateScale.bind(this);
   };
 
   fetchData = () => {
@@ -75,6 +76,12 @@ class App extends Component{
     })
   }
 
+  updateScale = (scale) => {
+    this.setState({
+      scale: scale
+    })
+  }
+
   componentDidMount() {
     this.prefetchData();
   };
@@ -102,6 +109,7 @@ class App extends Component{
         scale={scale}
         onPlayClick={this.onPlayClick}
         updateIndexState={this.updateIndexState}
+        updateScale={this.updateScale}
       />
     );
 
