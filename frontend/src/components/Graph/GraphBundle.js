@@ -30,8 +30,10 @@ class GraphBundle extends Component {
     const { country, data, indexValue, scale, onPlayClick, updateIndexState, updateScale } = this.props;
     const { overall, first_derivative_data, second_derivative_data } = data;
 
+    // collect data in proper format
     const weeklyData = convertDataToWeekly(overall);
     const dates = convertToDates(overall, weeklyData.length);
+
     return (
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={12} sm={12}>
