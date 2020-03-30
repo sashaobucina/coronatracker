@@ -3,12 +3,13 @@ import { IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore } from "@material-ui/icons";
 
 function PlayButton(props) {
-  const [playing, setPlaying] = useState(false);
-  const { indexValue, maxIndex, onStepClick, updateIndexState } = props;
+  const [ playing, setPlaying ] = useState(true);
+  const { maxIndex, onStepClick, updateIndexState } = props;
 
   useEffect(() => {
     if (playing) {
       const interval = setInterval(() => {
+        const { indexValue, maxIndex, updateIndexState } = props;
         if (indexValue < maxIndex) {
           updateIndexState(indexValue + 1);
         } else {
@@ -20,7 +21,6 @@ function PlayButton(props) {
   }, [playing, props]);
 
   const restore = () => {
-    const { updateIndexState } = props;
     setPlaying(false);
     updateIndexState(0);
   }

@@ -41,7 +41,7 @@ class App extends Component{
         this.setState({
           country: country,
           data: res.data,
-          idxValue: convertDataToWeekly(res.data.overall).length,
+          idxValue: 0,
           validated: true
         });
       }).catch(err => {
