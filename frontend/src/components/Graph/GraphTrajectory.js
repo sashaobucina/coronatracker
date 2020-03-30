@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Tooltip, XAxis, YAxis, ResponsiveContainer, CartesianGrid, ScatterChart, Scatter, Legend } from "recharts";
 
 // convert to scatter chart with line prop
-class GraphRate extends Component {
+class GraphWeekly extends Component {
   render() {
     const { data, scale } = this.props;
     const domain = scale === "log" ? [1, 10000000] : [1, 10000];
@@ -15,7 +15,7 @@ class GraphRate extends Component {
           <YAxis 
             dataKey="weekly"
             name="Weekly Confirmed Cases"
-            label={{ value: "Weekly Confirmed Cases", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C" }} 
+            label={{ value: "Confirmed Cases (per week)", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C" }} 
             stroke={'#3BBA9C'}
             type="number"
             domain={domain}
@@ -30,4 +30,4 @@ class GraphRate extends Component {
   }
 }
 
-export default GraphRate;
+export default GraphWeekly;

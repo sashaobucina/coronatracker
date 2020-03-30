@@ -7,8 +7,8 @@ import GraphOverall from "./Graph/GraphOverall";
 import { Grid, ButtonGroup, Button } from "@material-ui/core"
 import { Add, Remove } from "@material-ui/icons";
 import GraphDerivative from './Graph/GraphDerivative';
-import GraphRate from './Graph/GraphRate';
 import DateSlider from './Slider/DateSlider';
+import GraphTrajectory from './Graph/GraphTrajectory';
 
 function convertData(overall, idx) {
   const filteredData = overall.filter((entry) => entry.confirmed !== 0);
@@ -141,7 +141,7 @@ class App extends Component{
         </Grid>
         <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginBottom: 20 }}>
           <h3 style={{ textAlign: "center", textTransform: "capitalize" }}>COVID-19 Trajectory ({scale})</h3>
-          <GraphRate data={rateData.slice(0, idxValue)} scale={scale} />
+          <GraphTrajectory data={rateData.slice(0, idxValue)} scale={scale} />
           <ButtonGroup color="primary">
             <Button variant="contained" disabled={scale === "log"} onClick={() => this.setState({ scale: "log" })}>Log</Button>
             <Button variant="contained" disabled={scale === "linear"} onClick={() => this.setState({ scale: "linear" })}>Linear</Button>
