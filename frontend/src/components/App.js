@@ -5,7 +5,7 @@ import { convertDataToWeekly } from '../helpers/conversions'
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
-import { Grid, Typography, Link} from "@material-ui/core"
+import { Grid, Typography, Link } from "@material-ui/core"
 import ErrorAlert from './Error/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
 
@@ -25,7 +25,7 @@ class App extends Component{
     /* Bindings */
     this.prefetchData = this.prefetchData.bind(this);
     this.fetchData = this.fetchData.bind(this);
-    this.onPlayClick = this.onPlayClick.bind(this);
+    this.onStepClick = this.onStepClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
     this.updateScale = this.updateScale.bind(this);
@@ -87,7 +87,7 @@ class App extends Component{
     this.prefetchData();
   };
 
-  onPlayClick = (n, increment) => {
+  onStepClick = (n, increment) => {
     const { idxValue } = this.state;
     if (increment) {
       this.setState({
@@ -108,7 +108,7 @@ class App extends Component{
         data={data}
         indexValue={idxValue}
         scale={scale}
-        onPlayClick={this.onPlayClick}
+        onStepClick={this.onStepClick}
         updateIndexState={this.updateIndexState}
         updateScale={this.updateScale}
       />
