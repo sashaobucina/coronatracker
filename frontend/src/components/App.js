@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../style/App.css';
+import { URL } from '../helpers/misc';
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
@@ -34,7 +35,7 @@ class App extends Component{
     const filteredCountries = validCountries.filter((country) => country.toLowerCase() === userInput.toLowerCase());
     if (filteredCountries.length > 0) {
       const country = filteredCountries[0];
-      const url = "http://localhost:5000/covid19/" + country;
+      const url = URL + country;
       axios.get(url).then(res => {
         this.setState({
           country: country,

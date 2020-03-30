@@ -54,10 +54,10 @@ class GraphBundle extends Component {
           <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory ({scale})</Typography>
           <GraphTrajectory data={weeklyData.slice(0, indexValue)} scale={scale} />
           <ButtonGroup color="primary">
-            <Tooltip title="Convert to logarithmic scale" placement="top">
+            <Tooltip title={scale !== "log" ? "Convert to logarithmic scale" : ""} placement="top">
               <Button variant="contained" disabled={scale === "log"} onClick={() => updateScale("log")}>Log</Button>
             </Tooltip>
-            <Tooltip title="Convert to linear scale" placement="right">
+            <Tooltip title={scale !== "linear" ? "Convert to linear scale" : ""} placement="right">
               <Button variant="contained" disabled={scale === "linear"} onClick={() => updateScale("linear")}>Linear</Button>
             </Tooltip>
           </ButtonGroup>
