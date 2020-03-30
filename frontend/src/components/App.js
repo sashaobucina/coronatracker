@@ -4,8 +4,8 @@ import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
 import GraphOverall from "./Graph/GraphOverall";
-import { Grid, ButtonGroup, Button } from "@material-ui/core"
-import { Add, Remove } from "@material-ui/icons";
+import { Grid, ButtonGroup, Button, Typography, Link, IconButton } from "@material-ui/core"
+import { ArrowBack, ArrowForward } from "@material-ui/icons";
 import GraphDerivative from './Graph/GraphDerivative';
 import DateSlider from './Slider/DateSlider';
 import GraphTrajectory from './Graph/GraphTrajectory';
@@ -51,11 +51,13 @@ class App extends Component{
 
   fetchData = () => {
     const { userInput, validCountries } = this.state;
-    if (validCountries.includes(userInput)) {
-      const url = "http://localhost:5000/covid19/" + userInput;
+    const filteredCountries = validCountries.filter((country) => country.toLowerCase() === userInput.toLowerCase());
+    if (filteredCountries.length > 0) {
+      const country = filteredCountries[0];
+      const url = "http://localhost:5000/covid19/" + country;
       axios.get(url).then(res => {
         this.setState({
-          country: userInput,
+          country: country,
           graphData: res.data,
           idxValue: 0,
           validated: true
@@ -65,8 +67,11 @@ class App extends Component{
       });
     } else {
       this.setState({
+        country: '',
+        graphData: undefined,
+        idxValue: 0,
         validated: false
-      })
+      });
     }
   }
 
@@ -126,37 +131,35 @@ class App extends Component{
     const component = (
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={12} sm={12}>
-          <h2 style={{ textAlign: "center" }}>COVID-19 Cases ({country})</h2>
+          <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
         </Grid>
         <Grid item xs={10} sm={10}>
           <GraphOverall data={overallData} />
         </Grid>
         <Grid item xs={5} sm={5} md={5} lg={5} >
-          <h3 style={{ textAlign: "center" }}>Rate of Change in Cases</h3>
+          <Typography align="center" variant="h5">Rate of Change in Cases</Typography>
           <GraphDerivative data={firstDerivData} dataKey={"first_derivative"} />
         </Grid>
         <Grid item xs={5} sm={5} md={5} lg={5} >
-          <h3 style={{ textAlign: "center" }}>Acceleration of Change</h3>
+          <Typography align="center" variant="h5">Acceleration of Change</Typography>
           <GraphDerivative data={secondDerivData} dataKey={"second_derivative"} />
         </Grid>
         <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginBottom: 20 }}>
-          <h3 style={{ textAlign: "center", textTransform: "capitalize" }}>COVID-19 Trajectory ({scale})</h3>
+          <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory ({scale})</Typography>
           <GraphTrajectory data={rateData.slice(0, idxValue)} scale={scale} />
           <ButtonGroup color="primary">
             <Button variant="contained" disabled={scale === "log"} onClick={() => this.setState({ scale: "log" })}>Log</Button>
             <Button variant="contained" disabled={scale === "linear"} onClick={() => this.setState({ scale: "linear" })}>Linear</Button>
           </ButtonGroup>
-          <p style={{ textAlign: "center", marginBottom: 40 }}><i>← Tune slider to view changes over time →</i></p>
+          <Typography align="center" fontStyle="oblique" style={{ marginBottom: 40 }} variant="body2">← Tune slider to view changes over time →</Typography>
           <DateSlider dates={dates} updateState={this.updateIdxState} value={idxValue} />
           <ButtonGroup color="inherit" size="medium" variant="outlined">
-            <Button 
-              onClick={(_) => this.onPlayClick(dates.length - 1, true)}
-              startIcon={<Add />}
-            />
-            <Button 
-              onClick={(_) => this.onPlayClick(dates.length - 1, false)}
-              startIcon={<Remove />}
-            />
+            <IconButton onClick={(_) => this.onPlayClick(dates.length - 1, false)}>
+              <ArrowBack />
+            </IconButton>
+            <IconButton onClick={(_) => this.onPlayClick(dates.length - 1, true)}>
+              <ArrowForward />
+            </IconButton>
           </ButtonGroup>
         </Grid>
       </Grid>
@@ -169,13 +172,13 @@ class App extends Component{
     if (!validated) {
       return (
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p style={{ color: "red", textAlign: "center", fontSize: 14 }}>Invalid country entered! (Ensure correct capitalization)</p>
+          <Typography variant="subtitle1" color="error" align="center">Invalid country entered! (Ensure correct capitalization)</Typography>
         </Grid>
       )
     } else {
       return (
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p style={{ color: "#3BBA9C", textAlign: "center", fontSize: 14 }}>Search "Global" to get world view</p>
+          <Typography variant="subtitle1" color="inherit" align="center">Search "Global" to get world view</Typography>
         </Grid>
       )
     }
@@ -201,6 +204,11 @@ class App extends Component{
           </Grid>
           <Grid item sm xs />
           { graphData ? this.generateGraphs(country) : <></> }
+        </Grid>
+        <Grid item sm xs>
+          <Typography align="center" variant="body1" style={{ margin: 20 }}>
+            Big thanks to <Link href="https://github.com/CSSEGISandData/COVID-19" color="primary" variant="body1">John Hopkins University</Link> for the data!
+          </Typography>
         </Grid>
       </div>
     )

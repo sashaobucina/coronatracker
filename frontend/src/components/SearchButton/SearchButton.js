@@ -19,7 +19,6 @@ class SearchButton extends Component {
   render() {
     const { classes, fetchData } = this.props
     return (
-      <div>
         <Button
           variant="contained"
           color="inherit"
@@ -30,7 +29,6 @@ class SearchButton extends Component {
         >
           Search
         </Button>
-      </div>
     )
   }
 }
