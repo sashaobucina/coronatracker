@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../style/App.css';
-import { URL } from '../helpers/misc';
+import { FETCH_URL, PREFETCH_URL } from '../helpers/misc';
+import { convertDataToWeekly } from '../helpers/conversions'
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
@@ -35,12 +36,12 @@ class App extends Component{
     const filteredCountries = validCountries.filter((country) => country.toLowerCase() === userInput.toLowerCase());
     if (filteredCountries.length > 0) {
       const country = filteredCountries[0];
-      const url = URL + country;
+      const url = FETCH_URL + country;
       axios.get(url).then(res => {
         this.setState({
           country: country,
           data: res.data,
-          idxValue: 0,
+          idxValue: convertDataToWeekly(res.data.overall).length,
           validated: true
         });
       }).catch(err => {
@@ -57,8 +58,7 @@ class App extends Component{
   }
 
   prefetchData = () => {
-    const url = "http://localhost:5000/valid-countries";
-    axios.get(url).then(res => {
+    axios.get(PREFETCH_URL).then(res => {
       this.setState({
         validCountries: res.data
       })
