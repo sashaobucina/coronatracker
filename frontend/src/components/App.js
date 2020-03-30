@@ -136,7 +136,7 @@ class App extends Component{
         </Grid>
         <Grid item sm xs>
           <Typography align="center" variant="body1" style={{ margin: 20 }}>
-            Big thanks to <Link href="https://github.com/CSSEGISandData/COVID-19" color="primary" variant="body1">John Hopkins University</Link> for the data!
+            Big thanks to the <Link href="https://github.com/CSSEGISandData/COVID-19" color="primary" variant="body1">John Hopkins CSSE</Link> for the data!
           </Typography>
         </Grid>
       </div>
