@@ -118,8 +118,8 @@ class App extends Component{
         <ErrorAlert open={!validated} handleClose={() => this.setState({ validated: true })} />
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Typography variant="subtitle1" color="inherit" align="center">
-              Tracking COVID-19 movements and trends - search "Global" to get world view!
+            <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
+              Tracking COVID-19 movements and trends - search "Global" to get world view
             </Typography>
           </Grid>
           <Grid item sm xs />
