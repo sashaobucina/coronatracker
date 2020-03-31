@@ -23,7 +23,7 @@ This project runs on a React frontend managed by [npm](https://www.npmjs.com/get
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements for the backend microservice component:
 
 ```bash
-cd backend
+cd microservice
 virtualenv <your-venv>
 source <your-venv>/bin/activate
 pip install -r requirements.txt
@@ -32,8 +32,7 @@ pip install -r requirements.txt
 Alternatively, use the provided Docker script to create a Docker container of the project:
 
 ```bash
-cd backend
-./docker-init.sh
+./microservice/docker-init.sh
 ```
 
 Make sure to have node and npm installed on your machine. This frontend component is running on node v10.15.0.
@@ -48,15 +47,13 @@ npm -v
 In a terminal shell, run the following to start the microservice server.
 
 ```bash
-$ cd backend
-$ python backend/server.py
+python microservice/server.py
 ```
 
 Alternatively, if built through the Docker container, run the following script:
 
 ```bash
-$ cd backend
-$ ./docker-run.sh
+./microservice/docker-run.sh
 ```
 
 In another shell, run the following to start a local instance of the website on your machine.
