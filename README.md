@@ -10,11 +10,13 @@ Tracking the movement and trends of the COVID-19 virus.
 
 ## Installation
 
-This project runs on a React frontend managed by [npm](https://www.npmjs.com/get-npm) and a [Python](https://www.python.org/downloads/release/python-362/) backend routed by Flask.
+This project runs on a React frontend managed by [npm](https://www.npmjs.com/get-npm) and a [Python3](https://www.python.org/downloads/release/python-362/) backend routed by Flask.
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements for the backend component.
 
 ```bash
+virtualenv <your-venv>
+source <your-venv>/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -30,7 +32,7 @@ npm -v
 In a terminal shell, run the following to start the development server.
 
 ```bash
-python3.6 backend/server.py
+python backend/server.py
 ```
 
 In another shell, run the following to start a local instance of the website on your machine.
