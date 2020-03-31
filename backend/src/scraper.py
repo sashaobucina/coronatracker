@@ -8,24 +8,19 @@ from generator import DataGenerator
 
 class CoronaScraper():
   def __init__(self):
-    self.user = "CSSEGISandData"
-    self.repo = "COVID-19"
-    self.daily_path = "csse_covid_19_data/csse_covid_19_daily_reports"
-    self.time_path = "csse_covid_19_data/csse_covid_19_time_series"
-
-    self.time_git_url = f"https://raw.githubusercontent.com/{self.user}/{self.repo}/master/{self.time_path}"
-
     self.reports = {}
     self.valid_countries = []
+    self.base_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series"
 
   def download_reports(self):
     """
-    Collects timeseries COVD-19 data and returns a dictionary of Pandas DFs.
+    Collects timeseries COVD-19 data and returns a dictionary of Pandas DFs for each
+    type of reported case.
     """
     reports = {}
 
     for report_type in ["confirmed", "deaths"]:
-      url = f"{self.time_git_url}/time_series_covid19_{report_type}_global.csv"
+      url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
       print(f"Requesting GitHub raw file from {url}...\n")
       req = request.urlopen(url)
 

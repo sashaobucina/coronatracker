@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 from scraper import CoronaScraper
 from generator import DataGenerator
-from helper import CONFIRMED, DEATHS, to_data
+from util import CONFIRMED, DEATHS, to_data
 
 app = Flask(__name__)
 if os.environ.get("ENV", "") != "prod":
@@ -43,7 +43,8 @@ def get_data(country):
 
     data = to_data(X, confirmed, deaths)
     return jsonify(data)
-  except Exception:
+  except Exception as e:
+    print(str(e))
     abort(404)
 
 # shut down the scheduler when exiting the app
