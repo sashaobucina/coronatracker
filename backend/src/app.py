@@ -1,4 +1,5 @@
 import os
+import logging
 import atexit
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -13,14 +14,21 @@ app = Flask(__name__)
 if os.environ.get("ENV", "") != "prod":
   CORS(app)
 
-scraper = CoronaScraper()
+# configuring the logger
+logging.basicConfig(level=logging.INFO)
+logger = app.logger
+
+# setting up proper port
+PORT = os.environ.get("PORT", 5000)
+
+scraper = CoronaScraper(logger)
 generator = DataGenerator({}, [])
 
 def initialize():
-  global scraper, generator
+  global scraper, generator, logger
+  logger.info("Updating data if available...")
   scraper.download_reports()
   generator = DataGenerator(scraper.get_reports(), scraper.get_valid_countries())
-  print(generator.valid_countries[0])
 
 # populate the data generator and web scraper
 initialize()
@@ -48,12 +56,11 @@ def get_data(country):
     data = to_data(X, confirmed, deaths)
     return jsonify(data)
   except Exception as e:
-    print(str(e))
+    logger.error(str(e))
     abort(404)
 
 # shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == "__main__":
-  port = os.environ.get("PORT", 5000)
-  app.run(debug=False, host="0.0.0.0", port=port)
+  app.run(host="0.0.0.0", port=PORT)

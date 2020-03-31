@@ -7,7 +7,8 @@ import urllib.request as request
 from generator import DataGenerator
 
 class CoronaScraper():
-  def __init__(self):
+  def __init__(self, logger):
+    self.logger = logger
     self.reports = {}
     self.valid_countries = []
     self.base_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series"
@@ -21,12 +22,11 @@ class CoronaScraper():
 
     for report_type in ["confirmed", "deaths"]:
       url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
-      print(f"Requesting GitHub raw file from {url}...\n")
       req = request.urlopen(url)
 
       # check the status code
       if req.status != 200:
-        print(f"Invalid URL given: {url}")
+        self.logger.error(f"Request failed: {req.info()}")
         return
 
       # convert data to str if returned a successful response
