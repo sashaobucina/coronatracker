@@ -1,6 +1,7 @@
 {
   "name": "coronatracker",
   "version": "0.1.0",
+  "homepage": "https://sashaobucina.github.io/coronatracker",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.7",
