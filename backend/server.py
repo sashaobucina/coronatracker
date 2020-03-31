@@ -1,5 +1,10 @@
+import time
+import atexit
+
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
+
 from scraper import CoronaScraper
 from generator import DataGenerator
 from helper import CONFIRMED, DEATHS, to_data
@@ -7,14 +12,24 @@ from helper import CONFIRMED, DEATHS, to_data
 app = Flask(__name__)
 CORS(app)
 
+scraper = CoronaScraper()
+generator = DataGenerator({}, [])
+
 def initialize():
-  scraper = CoronaScraper()
+  global scraper, generator
   scraper.download_reports()
   generator = DataGenerator(scraper.get_reports(), scraper.get_valid_countries())
-  return scraper, generator
+  print(generator.valid_countries[0])
 
-scraper, generator = initialize()
+# populate the data generator and web scraper
+initialize()
 
+# schedule job to update data every 3 hours
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=initialize, trigger="interval", hours=3)
+scheduler.start()
+
+""" Routes """
 @app.route('/valid-countries')
 def get_countries():
   return jsonify(scraper.valid_countries)
@@ -30,5 +45,8 @@ def get_data(country):
   except Exception:
     abort(404)
 
+# shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
 if __name__ == "__main__":
-  app.run(debug=True)
+  app.run(debug=False)
