@@ -10,7 +10,7 @@ from generator import DataGenerator
 from helper import CONFIRMED, DEATHS, to_data
 
 app = Flask(__name__)
-if os.environ["ENV"] == 'dev':
+if os.environ.get("ENV", "") != "prod":
   CORS(app)
 
 scraper = CoronaScraper()
