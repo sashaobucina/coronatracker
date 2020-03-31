@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../style/App.css';
 import { FETCH_URL, PREFETCH_URL } from '../helpers/misc';
-import { convertDataToWeekly } from '../helpers/conversions'
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
