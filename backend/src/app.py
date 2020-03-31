@@ -31,6 +31,10 @@ scheduler.add_job(func=initialize, trigger="interval", hours=3)
 scheduler.start()
 
 """ Routes """
+@app.route('/')
+def index():
+  return jsonify("Microservice is live, use the '/valid-countries', 'covid19/<country>' endpoints for further functionality")
+
 @app.route('/valid-countries')
 def get_countries():
   return jsonify(scraper.valid_countries)
