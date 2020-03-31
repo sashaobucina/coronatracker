@@ -5,7 +5,6 @@ import tempfile
 import urllib.request as request
 
 from generator import DataGenerator
-from visualizer import visualize
 
 class CoronaScraper():
   def __init__(self):
@@ -66,35 +65,5 @@ class CoronaScraper():
   def get_valid_countries(self):
     return self.valid_countries
 
-def main():
-  # scrape the timeseries report for COVID-19
-  scraper = CoronaScraper()
-  reports = scraper.download_reports().get_reports()
-
-  # initialize a data generator
-  generator = DataGenerator(reports)
-
-  # get all the valid countries to choose from
-  countries = scraper.valid_countries
-
-  while True:
-    country = input("Enter a country to track (type quit to exit): ")
-
-    if country == "quit":
-      break
-
-    if country == "":
-      continue
-
-    if not generator.set_country(country, valid_countries=countries):
-      print(f"Invalid country selected! Choose from the following: {str(countries)}\n")
-      continue
-
-    for case in ["confirmed", "deaths"]:
-      X, y = generator.generate(case)
-      visualize(X, y, country, case)
-
-  print("Shutting down...")
-
 if __name__ == "__main__":
-  main()
+  pass

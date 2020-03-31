@@ -1,4 +1,4 @@
-import time
+import os
 import atexit
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -10,7 +10,8 @@ from generator import DataGenerator
 from helper import CONFIRMED, DEATHS, to_data
 
 app = Flask(__name__)
-CORS(app)
+if os.environ["ENV"] == 'dev':
+  CORS(app)
 
 scraper = CoronaScraper()
 generator = DataGenerator({}, [])
@@ -49,4 +50,4 @@ def get_data(country):
 atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == "__main__":
-  app.run(debug=False)
+  app.run(debug=False, host="0.0.0.0")
