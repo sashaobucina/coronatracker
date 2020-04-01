@@ -3,7 +3,7 @@ import axios from "axios";
 import { Grid, Typography, Link } from "@material-ui/core";
 
 import SearchBar from './SearchBar/SearchBar';
-import SearchButton from "./SearchButton/SearchButton";
+import SearchButton from "./Buttons/SearchButton";
 import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
 import TabsContainer from './Tabs/TabsContainer';

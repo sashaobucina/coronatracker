@@ -30,5 +30,5 @@ export default function SearchButton(props) {
         Search
       </Button>
     </Tooltip>
-  )
+  );
 }

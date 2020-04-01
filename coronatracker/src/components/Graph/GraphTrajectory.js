@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { Tooltip, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Legend, LineChart, Line } from "recharts";
 
-// convert to scatter chart with line prop
-class GraphWeekly extends Component {
-  render() {
-    const { data, scale } = this.props;
-    const domain = scale === "log" ? [1, 10000000] : [1, 10000];
-    const ticks = [1, 10, 100, 1000, 10000, 100000, 10000000];
-    return (
-      <ResponsiveContainer height={550} style={{ minWidth: "100%" }}>
+export default function GraphWeekly(props) {
+  const { data, scale } = props;
+  const domain = scale === "log" ? [1, 10000000] : [1, 10000];
+  const ticks = [1, 10, 100, 1000, 10000, 100000, 10000000];
+
+  return (
+    <ResponsiveContainer height={550} style={{ minWidth: "100%" }}>
       <LineChart data={data} margin={{ top: 15, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeWidth={0.5} strokeDasharray="3 3"/>
         <XAxis dataKey="cases" name="Total Confirmed Cases" stroke={'#3BBA9C'} type="number" domain={[1, 1000000]} scale="log" ticks={ticks} />
@@ -26,8 +25,5 @@ class GraphWeekly extends Component {
         <Legend />
       </LineChart>
     </ResponsiveContainer>
-    )
-  }
+  );
 }
-
-export default GraphWeekly;
