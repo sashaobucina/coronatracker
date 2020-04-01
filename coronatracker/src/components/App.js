@@ -6,7 +6,7 @@ import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
 import { Grid, Typography, Link, IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
-import { ClearAll, Close } from '@material-ui/icons';
+import { ClearAll, Close, ArrowBack, ArrowForward } from '@material-ui/icons';
 import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
 import ScrollableTabs from './Tabs/ScrollableTabs';
@@ -134,12 +134,22 @@ class App extends Component{
           </Grid>
           <Grid item xs={2} sm={2} md={2} lg={2}>
             <ButtonGroup color="inherit">
-            <Tooltip title="Close tab" placement="top">
+            <Tooltip title="Previous tab" placement="top">
+                <IconButton onClick={() => this.setState({ tabIndex: Math.max(0, this.state.tabIndex - 1) })}>
+                  <ArrowBack />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Next tab" placement="top">
+                <IconButton onClick={() => this.setState({ tabIndex: Math.min(this.state.tabIndex + 1, this.state.tabs.length - 1) })}>
+                  <ArrowForward />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Close tab" placement="top">
                 <IconButton onClick={(e) => this.removeTab(e, tabIndex)}>
                   <Close />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Clear all" placement="right">
+              <Tooltip title="Clear all" placement="top">
                 <IconButton onClick={() => this.clearState(true)}>
                   <ClearAll />
                 </IconButton>
