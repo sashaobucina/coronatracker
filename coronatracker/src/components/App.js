@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import '../style/App.css';
-import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
-import { strings } from "../helpers/strings"
 import axios from "axios";
-import SearchBar from './SearchBar/SearchBar';
-import SearchButton from "./SearchButton/SearchButton";
 import { Grid, Typography, Link, IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ClearAll, Close, ArrowBack, ArrowForward } from '@material-ui/icons';
+
+import SearchBar from './SearchBar/SearchBar';
+import SearchButton from "./SearchButton/SearchButton";
 import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
 import ScrollableTabs from './Tabs/ScrollableTabs';
 import CountryTab from './Tabs/CountryTab';
+import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
+import { strings } from "../helpers/strings"
+
+import '../style/App.css';
 
 class App extends Component{
   constructor(props) {
