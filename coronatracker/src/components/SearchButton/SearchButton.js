@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Button } from "@material-ui/core";
+import React from "react";
+import { Button, Tooltip } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { withStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 
-
-const styles = {
+const useStyles = makeStyles({
   root: {
     background: '#3C3F58',
     color: '#3BBA9C',
@@ -13,24 +12,23 @@ const styles = {
       background: '#3C3F58',
     }
   }
-}
+})
 
-class SearchButton extends Component {
-  render() {
-    const { classes, fetchData } = this.props
-    return (
-        <Button
-          variant="contained"
-          color="inherit"
-          fullWidth={true}
-          className={classes.root}
-          onClick={fetchData}
-          startIcon={ <SearchIcon /> }
-        >
-          Search
-        </Button>
-    )
-  }
+export default function SearchButton(props) {
+  const { fetchData } = props;
+  const classes = useStyles();
+  return (
+    <Tooltip title="Search">
+      <Button
+        className={classes.root}
+        color="inherit"
+        fullWidth
+        variant="contained"
+        onClick={fetchData}
+        startIcon={ <SearchIcon /> }
+      >
+        Search
+      </Button>
+    </Tooltip>
+  )
 }
-
-export default withStyles(styles)(SearchButton);

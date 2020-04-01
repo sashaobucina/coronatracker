@@ -27,14 +27,14 @@ export default function SliderButtonGroup(props) {
 
   const playButton = playing
     ? (
-      <Tooltip title="Pause animation" placement="bottom">
+      <Tooltip title="Pause animation" placement="top">
         <IconButton color="inherit" size="medium" onClick={() => setPlaying(false)}>
           <Pause />
         </IconButton>
       </Tooltip>
     )
     : (
-      <Tooltip title="Play animation" placement="bottom">
+      <Tooltip title="Play animation" placement="top">
         <IconButton onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
           <PlayArrow />
         </IconButton>
@@ -44,22 +44,22 @@ export default function SliderButtonGroup(props) {
   return (
     <ButtonGroup color="inherit">
       {playButton}
-      <Tooltip title="Skip animation" placement="bottom">
+      <Tooltip title="Skip animation" placement="top">
         <IconButton onClick={() => updateIndexState(maxIndex)}>
           <SkipNext />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Reset" placement="bottom">
+      <Tooltip title="Reset" placement="top">
         <IconButton onClick={restore}>
           <Restore />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Decrement">
+      <Tooltip title="Decrement" placement="top">
         <IconButton onClick={(_) => onStepClick(maxIndex, false)}>
           <ArrowBack />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Increment">
+      <Tooltip title="Increment" placement="top">
         <IconButton onClick={(_) => onStepClick(maxIndex, true)}>
           <ArrowForward />
         </IconButton>

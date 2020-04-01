@@ -6,7 +6,7 @@ import GraphOverall from "./GraphOverall";
 import GraphTrajectory from "./GraphTrajectory";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
-import { convertDataToWeekly, convertToDates } from "../../helpers/conversions";
+import { convertDataToWeekly, convertToDates, getSummary } from "../../helpers/conversions";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
 
 export default function GraphBundle(props) {
@@ -20,7 +20,21 @@ export default function GraphBundle(props) {
   const maxIndex = dates.length - 1;
 
   return (
-    <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 30 }}>
+    <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container direction="row" justify="center" alignItems="center" style={{ margin: 50 }}>
+        <Grid item xs={3} sm={3} md={3} lg={3} />
+        <Grid item xs={3} sm={3} md={3} lg={3}>
+          <Typography variant="h5" color="inherit" align="center">
+            +{getSummary(overall, "confirmed")} Cases
+          </Typography>
+        </Grid>
+        <Grid item xs={3} sm={3} md={3} lg={3}>
+          <Typography variant="h5" color="error" align="center">
+            +{getSummary(overall, "deaths")} Deaths
+          </Typography>
+        </Grid>
+        <Grid item xs={2} sm={2} md={2} lg={2} />
+      </Grid>
       <Grid item xs={12} sm={12}>
         <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
       </Grid>

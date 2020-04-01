@@ -16,3 +16,8 @@ export function convertToDates(overall, offset) {
   const n = overall.length
   return overall.slice(n - offset, n).map(entry => entry["date"])
 }
+
+export function getSummary(data, key) {
+  const n = data.length;
+  return n <= 1 ? "0" : (data[n - 1][key] - data[n - 2][key]).toString();
+}

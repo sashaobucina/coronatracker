@@ -31,7 +31,6 @@ export default function ScaleButtonGroup(props) {
         exclusive
         onChange={handleChange}
       >
-
         <ToggleButton className={classes.root} value="log">
           Log
         </ToggleButton>

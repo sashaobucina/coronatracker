@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "@material-ui/core"
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
 import { makeStyles } from "@material-ui/styles"
 
@@ -24,24 +25,26 @@ export default function SpeedButtonGroup(props) {
   };
 
   return (
-    <ToggleButtonGroup
-      className={classes.root}
-      value={speed}
-      exclusive
-      onChange={handleChange}
-    >
-      <ToggleButton className={classes.toggleRoot} value={0.25}>
-        0.25x
-      </ToggleButton>
-      <ToggleButton className={classes.toggleRoot} value={0.5}>
-        0.5x
-      </ToggleButton>
-      <ToggleButton className={classes.toggleRoot} value={1}>
-        1x
-      </ToggleButton>
-      <ToggleButton className={classes.toggleRoot} value={2}>
-        2x
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <Tooltip title="Change playback speed">
+      <ToggleButtonGroup
+        className={classes.root}
+        value={speed}
+        exclusive
+        onChange={handleChange}
+      >
+        <ToggleButton className={classes.toggleRoot} value={0.25}>
+          0.25x
+        </ToggleButton>
+        <ToggleButton className={classes.toggleRoot} value={0.5}>
+          0.5x
+        </ToggleButton>
+        <ToggleButton className={classes.toggleRoot} value={1}>
+          1x
+        </ToggleButton>
+        <ToggleButton className={classes.toggleRoot} value={2}>
+          2x
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Tooltip>
   )
 }
