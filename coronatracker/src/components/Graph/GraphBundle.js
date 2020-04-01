@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
 import DateSlider from "../Slider/DateSlider"
 import GraphDerivative from "./GraphDerivative"
 import GraphOverall from "./GraphOverall";
 import GraphTrajectory from "./GraphTrajectory";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
-import { convertDataToWeekly, convertToDates, getSummary } from "../../helpers/conversions";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
+import { convertDataToWeekly, convertToDates, getSummary, getDate } from "../../helpers/conversions";
+
+const useStyles = makeStyles({
+  root: {
+    color: "#fcba03"
+  }
+})
 
 export default function GraphBundle(props) {
   const [ speed, setSpeed ] = useState(1);
   const { country, data, indexValue, scale, onStepClick, updateIndexState, updateScale } = props;
+  const classes = useStyles();
 
   // collect data in proper format
   const { overall, first_derivative_data, second_derivative_data } = data;
@@ -21,10 +30,18 @@ export default function GraphBundle(props) {
 
   return (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid container direction="row" justify="center" alignItems="center" style={{ margin: 50 }}>
+      <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 50, marginBottom: 10 }}>
+        <Grid item xs={1} sm={1} md={1} lg={1} />
+        <Grid item xs={11} sm={11} md={11} lg={11}>
+          <Typography color="inherit" variant="h5" align="center">
+            {getDate(overall, overall.length - 1)}:
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 40 }}>
         <Grid item xs={3} sm={3} md={3} lg={3} />
         <Grid item xs={3} sm={3} md={3} lg={3}>
-          <Typography variant="h5" color="inherit" align="center">
+          <Typography className={classes.root} variant="h5" align="center">
             +{getSummary(overall, "confirmed")} Cases
           </Typography>
         </Grid>
