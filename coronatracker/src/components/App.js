@@ -61,6 +61,7 @@ class App extends Component{
           validated: true
         });
       }).catch(err => {
+        this.clearState(false);
         console.error(err);
       });
     } else {
@@ -127,7 +128,7 @@ class App extends Component{
                 </IconButton>
               </Tooltip>
               <Tooltip title="Clear all" placement="right">
-                <IconButton onClick={this.clearState}>
+                <IconButton onClick={() => this.clearState(true)}>
                   <ClearAll />
                 </IconButton>
               </Tooltip>
@@ -154,13 +155,14 @@ class App extends Component{
       )
   }
 
-  clearState = () => {
+  clearState = (validated) => {
     this.setState({
       countries: [],
       datum: [],
       tabs: [],
       idxValue: 0,
       tabIndex: 0,
+      validated: validated
     });
   }
 
