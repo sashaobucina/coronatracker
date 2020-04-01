@@ -15,7 +15,7 @@ class GraphWeekly extends Component {
           <YAxis 
             dataKey="weekly"
             name="Weekly Confirmed Cases"
-            label={{ value: "Confirmed Cases (per week)", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C" }} 
+            label={{ value: "Confirmed Cases (per week)", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C", fontSize: 18 }} 
             stroke={'#3BBA9C'}
             type="number"
             domain={domain}

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore, SkipNext } from "@material-ui/icons";
 
-function SliderButtonGroup(props) {
+export default function SliderButtonGroup(props) {
   const [ playing, setPlaying ] = useState(true);
-  const { indexValue, maxIndex, onStepClick, updateIndexState } = props;
+  const { indexValue, maxIndex, onStepClick, speed, updateIndexState } = props;
 
   useEffect(() => {
     if (playing) {
@@ -15,10 +15,10 @@ function SliderButtonGroup(props) {
         } else {
           setPlaying(!playing);
         }
-      }, 100);
+      }, 100 / speed);
       return () => clearInterval(interval)
     }
-  }, [playing, props]);
+  }, [playing, speed, props]);
 
   const restore = () => {
     setPlaying(false);
@@ -35,7 +35,7 @@ function SliderButtonGroup(props) {
     )
     : (
       <Tooltip title="Play animation" placement="bottom">
-        <IconButton onClick={() => indexValue < maxIndex ? setPlaying(true) : () => {}}>
+        <IconButton onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
           <PlayArrow />
         </IconButton>
       </Tooltip>
@@ -67,5 +67,3 @@ function SliderButtonGroup(props) {
     </ButtonGroup>
   );
 }
-
-export default SliderButtonGroup;

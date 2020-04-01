@@ -1,24 +1,44 @@
-import React, { Component } from "react";
-import { ButtonGroup, Tooltip, Button } from "@material-ui/core";
+import React from "react";
+import { Tooltip } from "@material-ui/core";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
+import { makeStyles } from "@material-ui/styles";
 
-class ScaleButtonGroup extends Component {
-  render() {
-    const { scale, updateScale } = this.props;
-    return (
-      <ButtonGroup color="primary">
-        <Tooltip title={scale !== "log" ? "Convert to logarithmic scale" : ""} placement="top">
-          <Button variant="contained" disabled={scale === "log"} onClick={() => updateScale("log")}>
-            Log
-          </Button>
-        </Tooltip>
-        <Tooltip title={scale !== "linear" ? "Convert to linear scale" : ""} placement="right">
-          <Button variant="contained" disabled={scale === "linear"} onClick={() => updateScale("linear")}>
-            Linear
-          </Button>
-        </Tooltip>
-      </ButtonGroup>
-    )
+const useStyles = makeStyles({
+  root: {
+    background: '#3C3F58',
+    color: '#3BBA9C',
+    "&:hover": {
+      background: '#3C3F58',
+    }
   }
-}
+})
 
-export default ScaleButtonGroup;
+export default function ScaleButtonGroup(props) {
+  const { scale, updateScale } = props;
+  const classes = useStyles();
+
+  const handleChange = (_, newScale) => {
+    if (newScale) {
+      updateScale(newScale)
+    }
+  }
+
+  return (
+    <Tooltip title="Convert scale" placement="top">
+      <ToggleButtonGroup
+        className={classes.root}
+        value={scale}
+        exclusive
+        onChange={handleChange}
+      >
+
+        <ToggleButton className={classes.root} value="log">
+          Log
+        </ToggleButton>
+        <ToggleButton className={classes.root} value="linear">
+          Linear
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Tooltip>
+  )
+}
