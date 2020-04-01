@@ -8,6 +8,8 @@ The trends of the virus are visualized through interactive graphs that show the 
 - The acceleration per day
 - The exponential trajectory path
 
+The data is accmulated from the [John Hopkins University CSSE](https://github.com/CSSEGISandData/COVID-19) repository.
+
 ## Demo
 
 ![demo](demo.gif)
