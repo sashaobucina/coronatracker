@@ -50,14 +50,21 @@ class App extends Component{
 
     maybeCountry = getCountry(userInput, validCountries);
     if (maybeCountry) {
+      // prepare the data; limit tabs to 8
+      const n = countries.length
+      const MAX_TABS = 8;
+      const currCountries = n < MAX_TABS ? countries: countries.slice(0, -1);
+      const currDatum = n < MAX_TABS ? datum : datum.slice(0, -1);
+      const currTabs = n < MAX_TABS ? tabs : tabs.slice(0, -1)
+
       const url = FETCH_URL + maybeCountry;
       axios.get(url).then(res => {
         this.setState({
-          countries: [...countries, maybeCountry],
-          datum: [...datum, res.data],
+          countries: [...currCountries, maybeCountry],
+          datum: [...currDatum, res.data],
           idxValue: 0,
-          tabs: [...tabs, this.newTab(maybeCountry, tabs.length)],
-          tabIndex: tabs.length,
+          tabs: [...currTabs, this.newTab(maybeCountry, currTabs.length)],
+          tabIndex: currTabs.length,
           validated: true
         });
       }).catch(err => {
