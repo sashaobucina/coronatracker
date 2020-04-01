@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import { Grid, Typography, Link } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
@@ -8,6 +8,7 @@ import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
 import TabsContainer from './Tabs/TabsContainer';
 import CountryTab from './Tabs/CountryTab';
+import Footer from './Footer/Footer';
 import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
 import { strings } from "../helpers/strings"
 
@@ -241,11 +242,7 @@ class App extends Component{
         </Grid>
         { this.showTabs() }
         { this.showGraphs() }
-        <Grid item sm xs>
-          <Typography align="center" variant="body1" style={{ margin: 20 }}>
-            Big thanks to the <Link href="https://github.com/CSSEGISandData/COVID-19" color="primary" variant="body1">John Hopkins CSSE</Link> for the data!
-          </Typography>
-        </Grid>
+        <Footer />
       </div>
     )
   };
