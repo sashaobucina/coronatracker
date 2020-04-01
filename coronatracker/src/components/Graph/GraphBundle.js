@@ -30,15 +30,15 @@ export default function GraphBundle(props) {
 
   return (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 50, marginBottom: 10 }}>
+      <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 50, marginBottom: 20 }}>
         <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item xs={11} sm={11} md={11} lg={11}>
           <Typography color="inherit" variant="h5" align="center">
-            {getDate(overall, overall.length - 1)}:
+            Daily Report for {country} - {getDate(overall, overall.length - 1)}
           </Typography>
         </Grid>
       </Grid>
-      <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 40 }}>
+      <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 50 }}>
         <Grid item xs={3} sm={3} md={3} lg={3} />
         <Grid item xs={3} sm={3} md={3} lg={3}>
           <Typography className={classes.root} variant="h5" align="center">
