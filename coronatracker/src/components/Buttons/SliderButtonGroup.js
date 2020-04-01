@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore } from "@material-ui/icons";
 
-function PlayButton(props) {
+function SliderButtonGroup(props) {
   const [ playing, setPlaying ] = useState(false);
   const { maxIndex, onStepClick, updateIndexState } = props;
 
@@ -15,7 +15,7 @@ function PlayButton(props) {
         } else {
           setPlaying(!playing);
         }
-      }, 150);
+      }, 100);
       return () => clearInterval(interval)
     }
   }, [playing, props]);
@@ -63,4 +63,4 @@ function PlayButton(props) {
   );
 }
 
-export default PlayButton;
+export default SliderButtonGroup;
