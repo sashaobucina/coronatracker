@@ -150,7 +150,7 @@ class App extends Component{
                 </IconButton>
               </Tooltip>
               <Tooltip title="Clear all" placement="top">
-                <IconButton onClick={() => this.clearState(true)}>
+                <IconButton onClick={() => this.clearState("")}>
                   <ClearAll />
                 </IconButton>
               </Tooltip>
