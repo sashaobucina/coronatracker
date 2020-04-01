@@ -3,7 +3,7 @@ import { IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore } from "@material-ui/icons";
 
 function PlayButton(props) {
-  const [ playing, setPlaying ] = useState(true);
+  const [ playing, setPlaying ] = useState(false);
   const { maxIndex, onStepClick, updateIndexState } = props;
 
   useEffect(() => {

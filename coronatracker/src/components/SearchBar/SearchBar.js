@@ -48,6 +48,7 @@ class SearchBar extends Component {
             paper: classes.paper,
             noOptions: classes.color
           }}
+          freeSolo
           options={suggestions}
           onSelect={(e) => updateState(e.target.value)}
           noOptionsText={"No countries match your search..."}

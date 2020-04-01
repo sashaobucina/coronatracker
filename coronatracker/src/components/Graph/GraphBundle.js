@@ -19,7 +19,7 @@ class GraphBundle extends Component {
     const maxIndex = dates.length - 1;
 
     return (
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 30 }}>
         <Grid item xs={12} sm={12}>
           <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
         </Grid>

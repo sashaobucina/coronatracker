@@ -1,46 +1,63 @@
 import React, { Component } from 'react';
 import '../style/App.css';
-import { FETCH_URL, PREFETCH_URL } from '../helpers/misc';
+import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
-import { Grid, Typography, Link } from "@material-ui/core"
-import ErrorAlert from './Error/ErrorAlert';
+import { Grid, Typography, Link, IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
+import { ClearAll, Close } from '@material-ui/icons';
+import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
+import ScrollableTabs from './Tabs/ScrollableTabs';
+import CountryTab from './Tabs/CountryTab';
 
 class App extends Component{
   constructor(props) {
     super(props)
     this.state = {
-      country: '',
+      countries: [],
       idxValue: 0,
       userInput: '',
-      data: undefined,
+      datum: [],
       scale: "log",
+      tabs: [],
+      tabIndex: 0,
       validCountries: [],
       validated: true
     };
 
     /* Bindings */
-    this.prefetchData = this.prefetchData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+    this.clearState = this.clearState.bind(this);
     this.onStepClick = this.onStepClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
     this.updateScale = this.updateScale.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   };
 
   fetchData = () => {
-    const { userInput, validCountries } = this.state;
-    const filteredCountries = validCountries.filter((country) => country.toLowerCase() === userInput.toLowerCase());
-    if (filteredCountries.length > 0) {
-      const country = filteredCountries[0];
-      const url = FETCH_URL + country;
+    const { countries, datum, tabs, userInput, validCountries } = this.state;
+    let maybeCountry;
+
+    maybeCountry = getCountry(userInput, countries);
+    if (maybeCountry) {
+      this.setState({
+        idxValue: 0,
+        tabIndex: countries.indexOf(maybeCountry)
+      });
+      return;
+    }
+
+    maybeCountry = getCountry(userInput, validCountries);
+    if (maybeCountry) {
+      const url = FETCH_URL + maybeCountry;
       axios.get(url).then(res => {
         this.setState({
-          country: country,
-          data: res.data,
+          countries: [...countries, maybeCountry],
+          datum: [...datum, res.data],
           idxValue: 0,
+          tabs: [...tabs, this.newTab(maybeCountry, tabs.length)],
+          tabIndex: tabs.length,
           validated: true
         });
       }).catch(err => {
@@ -48,8 +65,6 @@ class App extends Component{
       });
     } else {
       this.setState({
-        country: '',
-        data: undefined,
         idxValue: 0,
         validated: false
       });
@@ -63,6 +78,110 @@ class App extends Component{
       })
     })
   };
+
+  newTab = (country, index) => {
+    return (
+      <CountryTab
+        country={country}
+        key={index}
+        index={index}
+        handleClose={this.removeTab}
+        handleChange={this.handleTabChange}
+      />
+    )
+  }
+
+  removeTab = (e, index) => {
+    e.stopPropagation();
+
+    const { countries, datum, tabs, tabIndex } = this.state;
+    const fn = (_, i) => i !== index;
+    const newTabIndex = index > tabIndex ? tabIndex : Math.max(0, tabIndex - 1);
+    const newTabs = tabs.map((tab, i) => {
+      return i > index ? this.newTab(countries[i], i - 1) : tab;
+    })
+
+    this.setState({
+      countries: countries.filter(fn),
+      datum: datum.filter(fn),
+      tabs: newTabs.filter(fn),
+      tabIndex: newTabIndex
+    });
+  }
+
+  showTabs = () => {
+    const { tabs, tabIndex } = this.state;
+    return tabs.length === 0
+      ? (<></>)
+      : (
+        <Grid container direction="row" alignItems="center" style={{ marginTop: 50 }}>
+          <Grid item xs={1} sm={1} md={1} lg={1} />
+          <Grid item xs={8} sm={8} md={8} lg={8}>
+            <ScrollableTabs tabs={tabs} tabIndex={tabIndex} />
+          </Grid>
+          <Grid item xs={2} sm={2} md={2} lg={2}>
+            <ButtonGroup color="inherit">
+            <Tooltip title="Close tab" placement="top">
+                <IconButton onClick={(e) => this.removeTab(e, tabIndex)}>
+                  <Close />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Clear all" placement="right">
+                <IconButton onClick={this.clearState}>
+                  <ClearAll />
+                </IconButton>
+              </Tooltip>
+            </ButtonGroup>
+          </Grid>
+        </Grid>
+      )
+  }
+
+  showGraphs = () => {
+    const { countries, datum, idxValue, scale, tabIndex } = this.state;
+    return datum.length === 0
+      ? (<></>)
+      : (
+        <GraphBundle
+          country={countries[tabIndex]}
+          data={datum[tabIndex]}
+          indexValue={idxValue}
+          scale={scale}
+          onStepClick={this.onStepClick}
+          updateIndexState={this.updateIndexState}
+          updateScale={this.updateScale}
+        />
+      )
+  }
+
+  clearState = () => {
+    this.setState({
+      countries: [],
+      datum: [],
+      tabs: [],
+      idxValue: 0,
+      tabIndex: 0,
+    });
+  }
+
+  onStepClick = (n, increment) => {
+    const { idxValue } = this.state;
+    if (increment) {
+      this.setState({
+        idxValue: idxValue < n ? idxValue + 1 : 0
+      })
+    } else {
+      this.setState({
+        idxValue: idxValue > 0 ? idxValue - 1 : n
+      })
+    }
+  }
+
+  handleTabChange = (value) => {
+    this.setState({
+      tabIndex: value
+    })
+  }
 
   updateInputState = (value) => {
     this.setState({
@@ -86,32 +205,8 @@ class App extends Component{
     this.prefetchData();
   };
 
-  onStepClick = (n, increment) => {
-    const { idxValue } = this.state;
-    if (increment) {
-      this.setState({
-        idxValue: idxValue < n ? idxValue + 1 : 0
-      })
-    } else {
-      this.setState({
-        idxValue: idxValue > 0 ? idxValue - 1 : n
-      })
-    }
-  }
-
   render() {
-    const { country, data, idxValue, scale, validated, validCountries } = this.state;
-    const graphBundle = (
-      <GraphBundle
-        country={country}
-        data={data}
-        indexValue={idxValue}
-        scale={scale}
-        onStepClick={this.onStepClick}
-        updateIndexState={this.updateIndexState}
-        updateScale={this.updateScale}
-      />
-    );
+    const { validated, validCountries, userInput } = this.state;
 
     return (
       <div id="root-app">
@@ -122,20 +217,22 @@ class App extends Component{
               Tracking COVID-19 movements and trends - search "Global" to get world view
             </Typography>
           </Grid>
-          <Grid item sm xs />
+          <Grid item sm xs md lg />
           <Grid item xs={5} sm={5} md={4} lg={4}>
             <SearchBar
               suggestions={validCountries}
               fetchData={this.fetchData}
               updateState={this.updateInputState}
+              value={userInput}
             />
           </Grid>
           <Grid item sm={3} xs={3} md={2} lg={2}>
             <SearchButton fetchData={this.fetchData} />
           </Grid>
-          <Grid item sm xs />
-          { data ? graphBundle : <></> }
+          <Grid item sm xs md lg />
         </Grid>
+        { this.showTabs() }
+        { this.showGraphs() }
         <Grid item sm xs>
           <Typography align="center" variant="body1" style={{ margin: 20 }}>
             Big thanks to the <Link href="https://github.com/CSSEGISandData/COVID-19" color="primary" variant="body1">John Hopkins CSSE</Link> for the data!
