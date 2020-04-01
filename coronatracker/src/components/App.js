@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../style/App.css';
 import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
+import { strings } from "../helpers/strings"
 import axios from "axios";
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
@@ -23,16 +24,17 @@ class App extends Component{
       tabs: [],
       tabIndex: 0,
       validCountries: [],
-      validated: true
+      validated: ""
     };
 
     /* Bindings */
     this.clearState = this.clearState.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
     this.onStepClick = this.onStepClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
     this.updateScale = this.updateScale.bind(this);
-    this.handleTabChange = this.handleTabChange.bind(this);
+    this.updateValidation = this.updateValidation.bind(this);
   };
 
   fetchData = () => {
@@ -65,16 +67,16 @@ class App extends Component{
           idxValue: 0,
           tabs: [...currTabs, this.newTab(maybeCountry, currTabs.length)],
           tabIndex: currTabs.length,
-          validated: true
+          validated: ""
         });
       }).catch(err => {
-        this.clearState(false);
+        this.clearState(strings.fetch);
         console.error(err);
       });
     } else {
       this.setState({
         idxValue: 0,
-        validated: false
+        validated: strings.invalid
       });
     }
   }
@@ -84,6 +86,9 @@ class App extends Component{
       this.setState({
         validCountries: res.data
       })
+    }).catch(err => {
+      this.updateValidation(strings.fetch)
+      console.error(err);
     })
   };
 
@@ -210,6 +215,12 @@ class App extends Component{
     })
   }
 
+  updateValidation = (validated) => {
+    this.setState({
+      validated: validated
+    })
+  }
+
   componentDidMount() {
     this.prefetchData();
   };
@@ -219,7 +230,7 @@ class App extends Component{
 
     return (
       <div id="root-app">
-        <ErrorAlert open={!validated} handleClose={() => this.setState({ validated: true })} />
+        <ErrorAlert open={validated !== ""} message={validated} handleClose={() => this.updateValidation("")} />
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
