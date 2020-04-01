@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab, IconButton } from "@material-ui/core";
+import { Tab, IconButton, Tooltip } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 
 export default function CountryTab(props) {
@@ -12,9 +12,11 @@ export default function CountryTab(props) {
       label={(
         <div>
           {country}
-          <IconButton color="inherit" size="small" onClick={(e) => handleClose(e, index)}>
-            <Close />
-          </IconButton>
+          <Tooltip title="Remove tab" placement="bottom">
+            <IconButton color="inherit" size="small" onClick={(e) => handleClose(e, index)}>
+              <Close />
+            </IconButton>
+          </Tooltip>
         </div>
       )}
     />
