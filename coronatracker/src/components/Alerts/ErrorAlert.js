@@ -4,11 +4,11 @@ import { Alert } from "@material-ui/lab";
 
 class ErrorAlert extends Component {
   render() {
-    const { open, handleClose } = this.props;
+    const { open, message, handleClose } = this.props;
     return (
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{  horizontal: "left", vertical: "bottom"}}>
         <Alert severity="error" variant="filled" onClose={handleClose}>
-          Invalid country selected - please select another!
+          {message}
         </Alert>
       </Snackbar>
     )
