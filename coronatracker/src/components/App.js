@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import { Grid, Typography, Link, IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
-import { ClearAll, Close, ArrowBack, ArrowForward } from '@material-ui/icons';
+import { Grid, Typography, Link } from "@material-ui/core";
 
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./SearchButton/SearchButton";
 import ErrorAlert from './Alerts/ErrorAlert';
 import GraphBundle from './Graph/GraphBundle';
-import ScrollableTabs from './Tabs/ScrollableTabs';
+import TabsContainer from './Tabs/TabsContainer';
 import CountryTab from './Tabs/CountryTab';
 import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
 import { strings } from "../helpers/strings"
@@ -129,36 +128,13 @@ class App extends Component{
     return tabs.length === 0
       ? (<></>)
       : (
-        <Grid container direction="row" alignItems="center" style={{ marginTop: 50 }}>
-          <Grid item xs={1} sm={1} md={1} lg={1} />
-          <Grid item xs={8} sm={8} md={8} lg={8}>
-            <ScrollableTabs tabs={tabs} tabIndex={tabIndex} />
-          </Grid>
-          <Grid item xs={2} sm={2} md={2} lg={2}>
-            <ButtonGroup color="inherit">
-            <Tooltip title="Previous tab" placement="top">
-                <IconButton onClick={() => this.setState({ tabIndex: Math.max(0, this.state.tabIndex - 1) })}>
-                  <ArrowBack />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Next tab" placement="top">
-                <IconButton onClick={() => this.setState({ tabIndex: Math.min(this.state.tabIndex + 1, this.state.tabs.length - 1) })}>
-                  <ArrowForward />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Close tab" placement="top">
-                <IconButton onClick={(e) => this.removeTab(e, tabIndex)}>
-                  <Close />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Clear all" placement="top">
-                <IconButton onClick={() => this.clearState("")}>
-                  <ClearAll />
-                </IconButton>
-              </Tooltip>
-            </ButtonGroup>
-          </Grid>
-        </Grid>
+        <TabsContainer
+          clearState={this.clearState}
+          handleTabChange={this.handleTabChange}
+          tabs={tabs}
+          tabIndex={tabIndex}
+          removeTab={this.removeTab}
+        />
       )
   }
 
