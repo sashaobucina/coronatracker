@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from '@material-ui/core/TextField';
 import AutoComplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from '@material-ui/styles';
@@ -34,8 +34,15 @@ const useStyles = makeStyles({
 })
 
 export default function SearchBar(props) {
-  const { suggestions, updateState } = props;
+  const [ opened, setOpened ] = useState(false);
+  const { fetchData, suggestions, updateState, value } = props;
   const classes = useStyles();
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      opened ? setOpened(false) : fetchData(value)
+    }
+  }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -50,9 +57,10 @@ export default function SearchBar(props) {
           noOptions: classes.color
         }}
         freeSolo
+        onClose={() => {setOpened(false)}}
+        onOpen={() => {setOpened(true)}}
         options={suggestions}
         onSelect={(e) => updateState(e.target.value)}
-        noOptionsText={"No countries match your search..."}
         renderInput={params => (
           <TextField
             {...params}
@@ -60,6 +68,7 @@ export default function SearchBar(props) {
             label="Search for a country"
             margin="normal"
             variant="outlined"
+            onKeyDown={handleKeyDown}
             InputProps={{ ...params.InputProps, type: 'search' }}
           />
         )}
