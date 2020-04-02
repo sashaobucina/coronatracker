@@ -24,6 +24,7 @@ export default function LoadingProgress(props) {
   return (
     <Backdrop className={classes.backdrop} open={open}>
       <Typography className={classes.text} variant="overline">Fetching data...</Typography>
+      <Typography className={classes.text} variant="overline" style={{fontSize: 10 }}>(may take up to 15 secs)</Typography>
       <CircularProgress className={classes.progress} size={60} thickness={3} />
     </Backdrop>
   );
