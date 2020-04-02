@@ -1,6 +1,6 @@
 FROM python:3.6
 
-ENV ENV=dev
+ENV ENV=prod
 
 COPY ./requirements.txt /app/requirements.txt
 
