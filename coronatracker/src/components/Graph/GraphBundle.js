@@ -67,7 +67,7 @@ export default function GraphBundle(props) {
         <GraphDerivative data={second_derivative_data} dataKey={"second_derivative"} />
       </Grid>
       <Grid item xs={11} sm={11} md={11} lg={11} style={{ margin: 20 }}>
-        <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory ({scale})</Typography>
+        <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory</Typography>
         <ScaleButtonGroup scale={scale} updateScale={updateScale} />
         <GraphTrajectory data={weeklyData.slice(0, indexValue)} scale={scale} />
         <Typography align="center" fontStyle="oblique"style={{ marginTop: 20 }} variant="body2">← Tune slider to view changes over time →</Typography>
