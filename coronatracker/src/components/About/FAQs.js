@@ -70,7 +70,7 @@ export default function FAQs() {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography variant="subtitle1">
-                  When dealing with rate of change, the first derivative is involved. Hence, this figure plots the amount of new cases per day against time. The greater the points, the more cases a country is experiencing per day. This can be seen as the speed at which the virus growing.
+                  A: When dealing with rate of change, the first derivative is involved. Hence, this figure plots the amount of new cases per day against time. The greater the points, the more cases a country is experiencing per day. This can be seen as the speed at which the virus growing.
                   <br /><br />
                   The acceleration figure plots the change in the speed of new cases over time. When this plot is positive, it means the amount of new cases is accelerating, and negative values means it is decelerating.
                 </Typography>
@@ -85,9 +85,9 @@ export default function FAQs() {
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Grid container direction="row" spacing={2}>
+                <Grid container direction="column" spacing={2}>
                   <Grid item>
-                    <Typography align="center">
+                    <Typography>
                       A: The following is a great video explaining the interpretation and motivation behind this plot:
                     </Typography>
                   </Grid>
