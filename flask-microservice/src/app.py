@@ -11,8 +11,7 @@ from generator import DataGenerator
 from util import CONFIRMED, DEATHS, to_data
 
 app = Flask(__name__)
-if os.environ.get("ENV", "") != "prod":
-  CORS(app)
+CORS(app)
 
 # configuring the logger
 logging.basicConfig(level=logging.INFO)

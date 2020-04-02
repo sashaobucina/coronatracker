@@ -1,7 +1,5 @@
 FROM python:3.6
 
-ENV ENV=prod
-
 COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
