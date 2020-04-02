@@ -44,6 +44,11 @@ export default function SearchBar(props) {
     }
   }
 
+  const handleFilter = (options, state) => {
+    const inputValue = state["inputValue"];
+    return options.filter((opt) => opt.toLowerCase().startsWith(inputValue.toLowerCase()));
+  }
+
   return (
     <div style={{ textAlign: "center" }}>
       <AutoComplete
@@ -57,6 +62,7 @@ export default function SearchBar(props) {
           noOptions: classes.color
         }}
         freeSolo
+        filterOptions={handleFilter}
         onClose={() => {setOpened(false)}}
         onOpen={() => {setOpened(true)}}
         options={suggestions}
