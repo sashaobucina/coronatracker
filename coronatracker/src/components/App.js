@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
+import CountryTab from './Tabs/CountryTab';
+import ErrorAlert from './Alerts/ErrorAlert';
+import Footer from './Footer/Footer';
+import GraphBundle from './Graph/GraphBundle';
+import LoadingProgress from './Progress/LoadingProgress';
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
-import ErrorAlert from './Alerts/ErrorAlert';
-import GraphBundle from './Graph/GraphBundle';
 import TabsContainer from './Tabs/TabsContainer';
-import CountryTab from './Tabs/CountryTab';
-import Footer from './Footer/Footer';
+
 import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
 import { strings } from "../helpers/strings"
 
@@ -22,6 +24,7 @@ class App extends Component{
       idxValue: 0,
       userInput: '',
       datum: [],
+      loaded: false,
       scale: "log",
       tabs: [],
       tabIndex: 0,
@@ -86,10 +89,14 @@ class App extends Component{
   prefetchData = () => {
     axios.get(PREFETCH_URL).then(res => {
       this.setState({
+        loaded: true,
         validCountries: res.data
       })
     }).catch(err => {
-      this.updateValidation(strings.fetch)
+      this.setState({
+        loaded: true,
+        validated: strings.fetch
+      })
       console.error(err);
     })
   };
@@ -215,11 +222,12 @@ class App extends Component{
   };
 
   render() {
-    const { validated, validCountries, userInput } = this.state;
+    const { loaded, validated, validCountries, userInput } = this.state;
 
     return (
       <div id="root-app">
         <ErrorAlert open={validated !== ""} message={validated} handleClose={() => this.updateValidation("")} />
+        <LoadingProgress open={!loaded} />
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
