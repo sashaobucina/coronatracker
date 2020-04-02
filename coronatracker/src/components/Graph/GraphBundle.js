@@ -58,11 +58,11 @@ export default function GraphBundle(props) {
       <Grid item xs={10} sm={10}>
         <GraphOverall data={overall} />
       </Grid>
-      <Grid item xs={5} sm={5} md={5} lg={5} >
+      <Grid item xs={11} sm={5} md={5} lg={5} >
         <Typography align="center" variant="h5">Rate of Change in Cases</Typography>
         <GraphDerivative data={first_derivative_data} dataKey={"first_derivative"} />
       </Grid>
-      <Grid item xs={5} sm={5} md={5} lg={5} >
+      <Grid item xs={11} sm={5} md={5} lg={5} >
         <Typography align="center" variant="h5">Acceleration of Change</Typography>
         <GraphDerivative data={second_derivative_data} dataKey={"second_derivative"} />
       </Grid>
