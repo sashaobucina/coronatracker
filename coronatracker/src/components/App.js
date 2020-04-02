@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
+import FAQs from './About/FAQs';
 import CountryTab from './Tabs/CountryTab';
 import ErrorAlert from './Alerts/ErrorAlert';
 import Footer from './Footer/Footer';
@@ -149,7 +150,7 @@ class App extends Component{
   showGraphs = () => {
     const { countries, datum, idxValue, scale, tabIndex } = this.state;
     return datum.length === 0
-      ? (<></>)
+      ? (<FAQs />)
       : (
         <GraphBundle
           country={countries[tabIndex]}

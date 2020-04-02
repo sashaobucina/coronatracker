@@ -1,0 +1,113 @@
+import React from "react";
+import { Button, Divider, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanelActions, Tooltip, Typography } from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: 45,
+    marginBottom: 50
+  },
+  panel: {
+    background: "#3C3F58",
+    color: "#3BBA9C"
+  },
+  divider: {
+    background: "#3BBA9C"
+  },
+  button: {
+    background: '#3C3F58',
+    borderColor: '#3BBA9C',
+    color: '#3BBA9C',
+    "&:hover": {
+      background: '#3C3F58',
+      opacity: 0.8
+    }
+  }
+});
+
+export default function FAQs() {
+  const classes = useStyles();
+
+  return (
+    <Grid className={classes.root} container direction="row" alignItems="center" spacing={3}>
+      <Grid item xs={1} sm={2} md={2} lg={2} />
+      <Grid item xs={10} sm={8} md={8} lg={8}>
+        <Grid container direction="column" alignItems="stretch" spacing={2}>
+          <Grid item>
+            <Typography variant="h5">
+              FAQs
+            </Typography>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+                <Typography align="center">
+                  Q: What are key indicators that the virus is no longer exponentially growing or that we are "flattening the curve"?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>
+                  A: When dealing with exponential growth, flattening occurs when the rate of change of new cases is decreasing over a sustained period of time, meaning the rate of change plot starts trending downward for a consecutive period of time. On the rate of change plot, graphically, this looks as though we are descending from the peak.
+                </Typography>
+              </ExpansionPanelDetails>
+              <Divider className={classes.divider} />
+              <ExpansionPanelActions>
+                <Tooltip title="Stay informed" placement="right">
+                  <Button className={classes.button} href="https://www.google.com/covid19/" size="small">
+                    Learn more
+                  </Button>
+                </Tooltip>
+              </ExpansionPanelActions>
+            </ExpansionPanel>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+                <Typography align="center">
+                  Q: How should the derivative plots be interpreted for rate of change and acceleration?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography variant="subtitle1">
+                  When dealing with rate of change, the first derivative is involved. Hence, this figure plots the amount of new cases per day against time. The greater the points, the more cases a country is experiencing per day. This can be seen as the speed at which the virus growing.
+                  <br /><br />
+                  The acceleration figure plots the change in the speed of new cases over time. When this plot is positive, it means the amount of new cases is accelerating, and negative values means it is decelerating.
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+                <Typography align="center">
+                  Q: How should the trajectory plot be interpreted?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Grid container direction="row" spacing={2}>
+                  <Grid item>
+                    <Typography align="center">
+                      A: The following is a great video explaining the interpretation and motivation behind this plot:
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <iframe
+                      width="560"
+                      height="315"
+                      src="https://www.youtube-nocookie.com/embed/54XLXg4fYsc?start=170"
+                      title="Trajectory video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </Grid>
+                </Grid>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+}

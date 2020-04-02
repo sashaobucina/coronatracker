@@ -22,7 +22,7 @@ export default function GraphWeekly(props) {
         <YAxis 
           dataKey="weekly"
           name="Weekly Confirmed Cases"
-          label={{ value: "New Cases (per week)", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C", fontSize: 18, fontWeight: "lighter" }} 
+          label={{ value: "New Cases (per week)", angle: -90, position: "insideBottomLeft", fill: "#3BBA9C", fontSize: 18, fontWeight: "normal" }} 
           stroke={'#3BBA9C'}
           type="number"
           domain={domain}

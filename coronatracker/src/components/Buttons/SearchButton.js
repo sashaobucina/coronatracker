@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     height: 48,
     "&:hover": {
       background: '#3C3F58',
+      opacity: 0.8
     }
   }
 })
