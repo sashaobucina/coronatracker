@@ -24,7 +24,7 @@ export default function ScaleButtonGroup(props) {
   }
 
   return (
-    <Tooltip title="Convert scale" placement="top">
+    <Tooltip title="Modify scale" placement="top">
       <ToggleButtonGroup
         className={classes.root}
         value={scale}
