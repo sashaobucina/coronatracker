@@ -93,7 +93,6 @@ export default function FAQs() {
                   </Grid>
                   <Grid item>
                     <iframe
-                      width="560"
                       height="315"
                       src="https://www.youtube-nocookie.com/embed/54XLXg4fYsc?start=170"
                       title="Trajectory video"
