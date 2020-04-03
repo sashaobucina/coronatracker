@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     color: "#3BBA9C"
   },
   divider: {
-    background: "#3BBA9C"
+    background: "#2E3047"
   },
   button: {
     background: '#3C3F58',
