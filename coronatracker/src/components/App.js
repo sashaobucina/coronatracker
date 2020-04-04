@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
+import AlertManager from "./Alerts/AlertManager"
 import FAQs from './About/FAQs';
 import CountryTab from './Tabs/CountryTab';
-import ErrorAlert from './Alerts/ErrorAlert';
 import Footer from './Footer/Footer';
 import Header from './Header/Header'
 import GraphBundle from './Graph/GraphBundle';
@@ -26,6 +26,7 @@ class App extends Component{
       idxValue: 0,
       userInput: '',
       datum: [],
+      fetched: "",
       loaded: false,
       scale: "log",
       tabs: [],
@@ -40,6 +41,7 @@ class App extends Component{
     this.onStepClick = this.onStepClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
+    this.updateFetched = this.updateFetched.bind(this);
     this.updateScale = this.updateScale.bind(this);
     this.updateValidation = this.updateValidation.bind(this);
   };
@@ -91,6 +93,7 @@ class App extends Component{
   prefetchData = () => {
     axios.get(PREFETCH_URL).then(res => {
       this.setState({
+        fetched: strings.success,
         loaded: true,
         validCountries: res.data
       })
@@ -123,7 +126,7 @@ class App extends Component{
     const newTabIndex = index > tabIndex ? tabIndex : Math.max(0, tabIndex - 1);
     const newTabs = tabs.map((tab, i) => {
       return i > index ? this.newTab(countries[i], i - 1) : tab;
-    })
+    });
 
     this.setState({
       countries: countries.filter(fn),
@@ -181,42 +184,48 @@ class App extends Component{
     if (increment) {
       this.setState({
         idxValue: idxValue < n ? idxValue + 1 : 0
-      })
+      });
     } else {
       this.setState({
         idxValue: idxValue > 0 ? idxValue - 1 : n
-      })
+      });
     }
   }
 
   handleTabChange = (value) => {
     this.setState({
       tabIndex: value
-    })
+    });
   }
 
   updateInputState = (value) => {
     this.setState({
       userInput: value
-    })
+    });
   }
 
   updateIndexState = (idx) => {
     this.setState({
       idxValue: idx
-    })
+    });
+  }
+
+  updateFetched = (fetched) => {
+    this.setState({
+      fetched: fetched
+    });
   }
 
   updateScale = (scale) => {
     this.setState({
       scale: scale
-    })
+    });
   }
 
   updateValidation = (validated) => {
     this.setState({
       validated: validated
-    })
+    });
   }
 
   componentDidMount() {
@@ -224,12 +233,12 @@ class App extends Component{
   };
 
   render() {
-    const { loaded, validated, validCountries, userInput } = this.state;
+    const { fetched, loaded, validated, validCountries, userInput } = this.state;
 
     return (
       <div id="root-app">
-        <ErrorAlert open={validated !== ""} message={validated} handleClose={() => this.updateValidation("")} />
         <LoadingProgress open={!loaded} />
+        <AlertManager fetched={fetched} validated={validated} updateFetched={this.updateFetched} updateValidation={this.updateValidation}/>
         <Header />
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
