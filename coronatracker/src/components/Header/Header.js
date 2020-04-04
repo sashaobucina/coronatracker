@@ -14,7 +14,7 @@ export default function Header() {
   const classes = useStyles();
 
   return (
-    <AppBar className={classes.root} position="sticky">
+    <AppBar className={classes.root} position="relative">
       <Toolbar>
         <Grid container direction="row" alignItems="baseline">
           <Grid item xs={7} sm={6} md={6} lg={6}>
