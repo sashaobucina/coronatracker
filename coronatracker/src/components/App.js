@@ -6,6 +6,7 @@ import FAQs from './About/FAQs';
 import CountryTab from './Tabs/CountryTab';
 import ErrorAlert from './Alerts/ErrorAlert';
 import Footer from './Footer/Footer';
+import Header from './Header/Header'
 import GraphBundle from './Graph/GraphBundle';
 import LoadingProgress from './Progress/LoadingProgress';
 import SearchBar from './SearchBar/SearchBar';
@@ -229,6 +230,7 @@ class App extends Component{
       <div id="root-app">
         <ErrorAlert open={validated !== ""} message={validated} handleClose={() => this.updateValidation("")} />
         <LoadingProgress open={!loaded} />
+        <Header />
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>

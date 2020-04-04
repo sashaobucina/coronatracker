@@ -7,7 +7,7 @@ export default function GraphWeekly(props) {
   const ticks = [1, 10, 100, 1000, 10000, 100000, 1000000];
 
   return (
-    <ResponsiveContainer height={550}>
+    <ResponsiveContainer height={480}>
       <LineChart data={data} margin={{ top: 15, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeWidth={0.5} strokeDasharray="3 3"/>
         <XAxis
