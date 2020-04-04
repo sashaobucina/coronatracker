@@ -7,6 +7,7 @@ export default function SliderButtonGroup(props) {
   const { indexValue, maxIndex, onStepClick, speed, updateIndexState } = props;
 
   useEffect(() => {
+    console.log(playing)
     if (playing) {
       const interval = setInterval(() => {
         const { indexValue, maxIndex, updateIndexState } = props;

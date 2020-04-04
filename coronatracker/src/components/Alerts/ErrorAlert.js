@@ -5,7 +5,7 @@ import { strings } from "../../helpers/strings";
 
 export default function ErrorAlert(props) {
   const { open, message, handleClose } = props;
-  const onClose = message === strings.fetch ? () => {} : handleClose;
+  const onClose = message === strings.noFetch ? () => {} : handleClose;
 
   return (
     <Snackbar open={open} autoHideDuration={6000} onClose={onClose} anchorOrigin={{  horizontal: "left", vertical: "bottom"}}>

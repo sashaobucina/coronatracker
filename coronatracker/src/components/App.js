@@ -3,18 +3,14 @@ import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
 import AlertManager from "./Alerts/AlertManager"
-import FAQs from './About/FAQs';
 import CountryTab from './Tabs/CountryTab';
 import Footer from './Footer/Footer';
-import Header from './Header/Header'
 import GraphBundle from './Graph/GraphBundle';
-import LoadingProgress from './Progress/LoadingProgress';
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
 import TabsContainer from './Tabs/TabsContainer';
 
-import { getCountry, FETCH_URL, PREFETCH_URL } from '../helpers/misc';
-import { strings } from "../helpers/strings"
+import { getCountry, FETCH_URL } from '../helpers/misc';
 
 import '../style/App.css';
 
@@ -26,13 +22,10 @@ class App extends Component{
       idxValue: 0,
       userInput: '',
       datum: [],
-      fetched: "",
-      loaded: false,
       scale: "log",
       tabs: [],
       tabIndex: 0,
-      validCountries: [],
-      validated: ""
+      validated: true
     };
 
     /* Bindings */
@@ -41,14 +34,19 @@ class App extends Component{
     this.onStepClick = this.onStepClick.bind(this);
     this.updateInputState = this.updateInputState.bind(this);
     this.updateIndexState = this.updateIndexState.bind(this);
-    this.updateFetched = this.updateFetched.bind(this);
     this.updateScale = this.updateScale.bind(this);
     this.updateValidation = this.updateValidation.bind(this);
   };
 
   fetchData = () => {
-    const { countries, datum, tabs, userInput, validCountries } = this.state;
+    const { countries, datum, tabs, userInput } = this.state;
+    const { fetchState } = this.props;
+    const { fetched, validCountries } = fetchState;
     let maybeCountry;
+
+    if (!fetched) {
+      return;
+    }
 
     maybeCountry = getCountry(userInput, countries);
     if (maybeCountry) {
@@ -76,35 +74,19 @@ class App extends Component{
           idxValue: 0,
           tabs: [...currTabs, this.newTab(maybeCountry, currTabs.length)],
           tabIndex: currTabs.length,
-          validated: ""
+          validated: true
         });
       }).catch(err => {
-        this.clearState(strings.fetch);
+        this.clearState(true);
         console.error(err);
       });
     } else {
       this.setState({
         idxValue: 0,
-        validated: strings.invalid
+        validated: false
       });
     }
   }
-
-  prefetchData = () => {
-    axios.get(PREFETCH_URL).then(res => {
-      this.setState({
-        fetched: strings.success,
-        loaded: true,
-        validCountries: res.data
-      })
-    }).catch(err => {
-      this.setState({
-        loaded: true,
-        validated: strings.fetch
-      })
-      console.error(err);
-    })
-  };
 
   newTab = (country, index) => {
     return (
@@ -154,7 +136,7 @@ class App extends Component{
   showGraphs = () => {
     const { countries, datum, idxValue, scale, tabIndex } = this.state;
     return datum.length === 0
-      ? (<FAQs />)
+      ? (<></>)
       : (
         <GraphBundle
           country={countries[tabIndex]}
@@ -210,12 +192,6 @@ class App extends Component{
     });
   }
 
-  updateFetched = (fetched) => {
-    this.setState({
-      fetched: fetched
-    });
-  }
-
   updateScale = (scale) => {
     this.setState({
       scale: scale
@@ -228,18 +204,13 @@ class App extends Component{
     });
   }
 
-  componentDidMount() {
-    this.prefetchData();
-  };
-
   render() {
-    const { fetched, loaded, validated, validCountries, userInput } = this.state;
+    const { validated, userInput } = this.state;
+    const { fetchState, setFetchState } = this.props;
 
     return (
       <div id="root-app">
-        <LoadingProgress open={!loaded} />
-        <AlertManager fetched={fetched} validated={validated} updateFetched={this.updateFetched} updateValidation={this.updateValidation}/>
-        <Header />
+        <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={this.updateValidation}/>
         <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
@@ -249,7 +220,7 @@ class App extends Component{
           <Grid item sm xs md lg />
           <Grid item xs={5} sm={5} md={4} lg={4}>
             <SearchBar
-              suggestions={validCountries}
+              suggestions={fetchState["validCountries"]}
               fetchData={this.fetchData}
               updateState={this.updateInputState}
               value={userInput}

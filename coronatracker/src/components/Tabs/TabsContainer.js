@@ -62,7 +62,7 @@ export default function TabsContainer(props) {
               </IconButton>
             </Tooltip>
             <Tooltip title="Clear all" placement="top">
-              <IconButton onClick={() => clearState("")}>
+              <IconButton onClick={() => clearState(true)}>
                 <ClearAll />
               </IconButton>
             </Tooltip>
