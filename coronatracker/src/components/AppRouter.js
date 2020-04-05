@@ -59,7 +59,7 @@ export default function AppRouter() {
         <Switch>
           <Route
             exact
-            path="/coronatracker/"
+            path="/coronatracker"
             render={(props) => <App {...props} fetchState={fetchState} setFetchState={setState} />}
           />
           <Route exact path="/coronatracker/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <></>} />
