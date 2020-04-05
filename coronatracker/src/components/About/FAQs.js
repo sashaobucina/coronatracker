@@ -42,7 +42,7 @@ export default function FAQs() {
           <Grid item>
             <ExpansionPanel className={classes.panel}>
               <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
-                <Typography align="center">
+                <Typography>
                   Q: What are key indicators that the virus is no longer exponentially growing or that we are "flattening the curve"?
                 </Typography>
               </ExpansionPanelSummary>
