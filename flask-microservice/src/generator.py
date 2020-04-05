@@ -1,9 +1,10 @@
 import numpy as np
+from util import div, numpy_to_native
 
 class DataGenerator:
   def __init__(self, reports: dict, valid_countries: list):
     self.reports = reports
-    self.valid_countries = valid_countries
+    self.valid_countries = [country for country in valid_countries if country != "Global"]
     self._clean_dfs()
 
   def _clean_dfs(self):
@@ -43,7 +44,7 @@ class DataGenerator:
     # get all the country values and summing them together
     else:
       global_arr = np.zeros(df.shape[1])
-      for country in filter(lambda x: x != "Global", self.valid_countries):
+      for country in self.valid_countries:
         country_arr = df.xs((country)).values
         summed = np.nan_to_num(country_arr.sum(axis=0))
         global_arr += summed
