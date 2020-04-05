@@ -1,5 +1,5 @@
 import numpy as np
-from util import div, numpy_to_native
+from util import div, numpy_to_native, CONFIRMED, DEATHS
 
 class DataGenerator:
   def __init__(self, reports: dict, valid_countries: list):
@@ -76,7 +76,8 @@ class DataGenerator:
         diff = value1 - value2
 
         # only process countries with more than 1000 cases and up-to date info
-        if value1 < 1000 or diff == 0:
+        threshold = 1000 if report_type == CONFIRMED else 10
+        if value1 < threshold or diff == 0:
           continue
 
         percentage_diff = div((value1 - value2), value2) * 100
