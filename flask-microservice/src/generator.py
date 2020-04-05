@@ -63,6 +63,39 @@ class DataGenerator:
 
     return self.X(report_type), self.y(report_type, country)
 
+  def top_movers(self):
+    movers = {k: {} for (k, _) in self.reports.items()}
+
+    # populate the movers dict
+    for report_type, df in self.reports.items():
+      last, sec_last = df.columns[-1], df.columns[-2]
+      for country in self.valid_countries:
+        row = df.xs(country)
+        value1 = numpy_to_native(row[last][0])
+        value2 = numpy_to_native(row[sec_last][0])
+        diff = value1 - value2
+
+        # only process countries with more than 1000 cases and up-to date info
+        if value1 < 1000 or diff == 0:
+          continue
+
+        percentage_diff = div((value1 - value2), value2) * 100
+        movers[report_type][country] = (percentage_diff, diff, value1)
+
+    # sort by top gainers and top losers by case category
+    top_movers = {k: {} for (k, _) in self.reports.items()}
+    for report_type, mover in movers.items():
+      # sort all movers and convert to list
+      sorted_movers = list(sorted(mover.items(), key=lambda kv: kv[1][0]))
+
+      # get top movers from all movers and accumulate them in top movers dict, by case category
+      top_gainers = sorted_movers[-1:-11:-1]
+      top_losers = sorted_movers[0:10]
+      top_movers[report_type]["top_gainers"] = top_gainers
+      top_movers[report_type]["top_losers"] = top_losers
+
+    return top_movers
+
 
 if __name__ == "__main__":
   pass
