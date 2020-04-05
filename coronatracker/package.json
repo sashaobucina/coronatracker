@@ -1,7 +1,7 @@
 {
   "author": "Sasha Obucina",
   "name": "coronatracker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://sashaobucina.github.io/coronatracker",
   "private": true,
   "dependencies": {
