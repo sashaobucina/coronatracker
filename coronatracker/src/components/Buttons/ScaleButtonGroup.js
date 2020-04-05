@@ -10,8 +10,27 @@ const useStyles = makeStyles({
     "&:hover": {
       background: '#3C3F58',
     }
+  },
+  button: {
+    background: "#3C3F58",
+    color: "#212121",
+    "&:hover": {
+      background: "#3C3F58",
+      color: "#3BBA9C",
+      fontWeight: "bolder",
+      opacity: 0.8,
+    },
+    "&.Mui-selected": {
+      background: '#3C3F58',
+      color: "#3BBA9C",
+      fontWeight: "bold",
+      "&:hover": {
+        background: "#3C3F58",
+        opacity: 1,
+      },
+    }
   }
-})
+});
 
 export default function ScaleButtonGroup(props) {
   const { scale, updateScale } = props;
@@ -27,14 +46,15 @@ export default function ScaleButtonGroup(props) {
     <Tooltip title="Modify scale" placement="top">
       <ToggleButtonGroup
         className={classes.root}
-        value={scale}
         exclusive
+        size="small"
+        value={scale}
         onChange={handleChange}
       >
-        <ToggleButton className={classes.root} value="log">
+        <ToggleButton className={classes.button} value="log">
           Log
         </ToggleButton>
-        <ToggleButton className={classes.root} value="linear">
+        <ToggleButton className={classes.button} value="linear">
           Linear
         </ToggleButton>
       </ToggleButtonGroup>
