@@ -44,7 +44,7 @@ class App extends Component{
     const { fetched, validCountries } = fetchState;
     let maybeCountry;
 
-    if (!fetched) {
+    if (!fetched || userInput === "") {
       return;
     }
 

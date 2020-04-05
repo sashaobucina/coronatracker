@@ -31,13 +31,13 @@ export default function Header() {
           <ButtonGroup color="inherit">
             <Tooltip title="Search" placement="bottom">
               <Link to="/">
-                <IconButton className={classes.root}>
+                <IconButton className={classes.root} disableFocusRipple>
                   <Search />
                 </IconButton>
               </Link>
             </Tooltip>
-            <Tooltip title="Graphs" placement="bottom">
-              <Link to="/">
+            <Tooltip title="Top Movers" placement="bottom">
+              <Link to="/top-movers">
                 <IconButton className={classes.root}>
                   <TrendingUp />
                 </IconButton>
@@ -45,8 +45,8 @@ export default function Header() {
             </Tooltip>
             <Tooltip title="FAQs" placement="bottom">
               <Link to="/faqs">
-                <IconButton className={classes.root}>
-                  <InfoOutlined />
+                <IconButton >
+                  <InfoOutlined className={classes.root} />
                 </IconButton>
               </Link>
             </Tooltip>

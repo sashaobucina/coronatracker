@@ -6,6 +6,7 @@ import axios from "axios";
 import App from "./App";
 import Main from "./Main"
 import FAQs from "./About/FAQs";
+import TopMovers from "./TopMovers/TopMovers";
 
 import { PREFETCH_URL } from "../helpers/misc";
 
@@ -14,6 +15,7 @@ export default function AppRouter() {
     alerts: { errAlert: false, successAlert: false },
     fetched: false,
     loaded: false,
+    topMovers: undefined,
     validCountries: []
   });
 
@@ -25,7 +27,6 @@ export default function AppRouter() {
       axios.spread((...responses) => {
         const validCountries = responses[0].data;
         const topMovers = responses[1].data;
-
         setState({
           alerts: { errAlert: false, successAlert: true },
           fetched: true,
@@ -50,6 +51,8 @@ export default function AppRouter() {
     preFetchData();
   }, []);
 
+  const { topMovers } = fetchState;
+
   return (
     <Router>
       <Main loaded={fetchState.loaded}>
@@ -59,6 +62,7 @@ export default function AppRouter() {
             path="/"
             render={(props) => <App {...props} fetchState={fetchState} setFetchState={setState} />}
           />
+          <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <></>} />
           <Route exact path="/faqs" component={FAQs} />
         </Switch>
       </Main>
