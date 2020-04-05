@@ -1,7 +1,7 @@
 import React from "react";
 import { Brush, Legend, AreaChart, XAxis, YAxis, Area, Tooltip, ResponsiveContainer } from "recharts";
 
-export default function GraphOverall(props) {
+export default function OverallGraph(props) {
   const { data } = props;
 
   return (

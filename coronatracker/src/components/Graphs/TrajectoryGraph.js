@@ -1,7 +1,7 @@
 import React from "react";
 import { Tooltip, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Legend, LineChart, Line } from "recharts";
 
-export default function GraphWeekly(props) {
+export default function TrajectoryGraph(props) {
   const { data, scale } = props;
   const domain = scale === "log" ? [1, 10000000] : [1, 10000];
   const ticks = [1, 10, 100, 1000, 10000, 100000, 1000000];

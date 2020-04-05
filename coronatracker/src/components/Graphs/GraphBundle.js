@@ -3,9 +3,9 @@ import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import DateSlider from "../Slider/DateSlider"
-import GraphDerivative from "./GraphDerivative"
-import GraphOverall from "./GraphOverall";
-import GraphTrajectory from "./GraphTrajectory";
+import DerivativeGraph from "./DerivativeGraph"
+import OverallGraph from "./OverallGraph";
+import TrajectoryGraph from "./TrajectoryGraph";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
@@ -56,20 +56,20 @@ export default function GraphBundle(props) {
         <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
       </Grid>
       <Grid item xs={10} sm={10}>
-        <GraphOverall data={overall} />
+        <OverallGraph data={overall} />
       </Grid>
       <Grid item xs={11} sm={5} md={5} lg={5} >
         <Typography align="center" variant="h5">Rate of Change in Cases</Typography>
-        <GraphDerivative data={first_derivative_data} dataKey={"first_derivative"} />
+        <DerivativeGraph data={first_derivative_data} dataKey={"first_derivative"} />
       </Grid>
       <Grid item xs={11} sm={5} md={5} lg={5} >
         <Typography align="center" variant="h5">Acceleration of Change</Typography>
-        <GraphDerivative data={second_derivative_data} dataKey={"second_derivative"} />
+        <DerivativeGraph data={second_derivative_data} dataKey={"second_derivative"} />
       </Grid>
       <Grid item xs={11} sm={11} md={11} lg={11} style={{ margin: 20 }}>
         <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory</Typography>
         <ScaleButtonGroup scale={scale} updateScale={updateScale} />
-        <GraphTrajectory data={weeklyData.slice(0, indexValue)} scale={scale} />
+        <TrajectoryGraph data={weeklyData.slice(0, indexValue)} scale={scale} />
         <Typography align="center" fontStyle="oblique"style={{ marginTop: 20 }} variant="body2">← Tune slider to view changes over time →</Typography>
         <DateSlider dates={dates} updateState={updateIndexState} value={indexValue} />
         <Grid container direction="column">

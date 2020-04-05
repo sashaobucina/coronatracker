@@ -5,7 +5,7 @@ import { Grid, Typography } from "@material-ui/core";
 import AlertManager from "./Alerts/AlertManager"
 import CountryTab from './Tabs/CountryTab';
 import Footer from './Footer/Footer';
-import GraphBundle from './Graph/GraphBundle';
+import GraphBundle from './Graphs/GraphBundle';
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
 import TabsContainer from './Tabs/TabsContainer';

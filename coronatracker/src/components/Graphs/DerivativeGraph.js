@@ -1,7 +1,7 @@
 import React from "react";
 import { Brush, CartesianGrid, Legend, XAxis, YAxis, LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 
-export default function GraphDerivative(props) {
+export default function DerivativeGraph(props) {
   const { data, dataKey } = props;
 
   return (
