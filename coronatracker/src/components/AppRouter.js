@@ -7,6 +7,7 @@ import App from "./App";
 import Main from "./Main"
 import FAQs from "./About/FAQs";
 import TopMovers from "./TopMovers/TopMovers";
+import NotLoaded from "./NotFound/NotLoaded";
 
 import { PREFETCH_URL } from "../helpers/misc";
 
@@ -62,7 +63,7 @@ export default function AppRouter() {
             path="/coronatracker"
             render={(props) => <App {...props} fetchState={fetchState} setFetchState={setState} />}
           />
-          <Route exact path="/coronatracker/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <></>} />
+          <Route exact path="/coronatracker/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
           <Route exact path="/coronatracker/faqs" component={FAQs} />
         </Switch>
       </Main>
