@@ -25,7 +25,7 @@ export default function AppRouter() {
       axios.spread((...responses) => {
         const validCountries = responses[0].data;
         const topMovers = responses[1].data;
-        console.log(topMovers);
+
         setState({
           alerts: { errAlert: false, successAlert: true },
           fetched: true,
