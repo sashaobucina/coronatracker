@@ -90,8 +90,8 @@ class DataGenerator:
       sorted_movers = list(sorted(mover.items(), key=lambda kv: kv[1][0]))
 
       # get top movers from all movers and accumulate them in top movers dict, by case category
-      top_gainers = sorted_movers[-1:-11:-1]
-      top_losers = sorted_movers[0:10]
+      top_gainers = sorted_movers[::-1]
+      top_losers = sorted_movers[:]
       top_movers[report_type]["top_gainers"] = top_gainers
       top_movers[report_type]["top_losers"] = top_losers
 
