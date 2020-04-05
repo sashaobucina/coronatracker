@@ -76,7 +76,7 @@ class DataGenerator:
         diff = value1 - value2
 
         # only process countries with more than 1000 cases and up-to date info
-        threshold = 1000 if report_type == CONFIRMED else 10
+        threshold = 1000 if report_type == CONFIRMED else 100
         if value1 < threshold or diff == 0:
           continue
 
