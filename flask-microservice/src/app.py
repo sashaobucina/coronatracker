@@ -40,11 +40,15 @@ scheduler.start()
 """ Routes """
 @app.route('/')
 def index():
-  return jsonify("Microservice is live, use the '/valid-countries', 'covid19/<country>' endpoints for further functionality")
+  return jsonify("Microservice is live, use the '/valid-countries', 'top-movers', 'covid19/<country>' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
   return jsonify(scraper.valid_countries)
+
+@app.route('/top-movers')
+def get_top_movers():
+  return jsonify(generator.top_movers())
 
 @app.route('/covid19/<string:country>', methods=['GET'])
 def get_data(country):
