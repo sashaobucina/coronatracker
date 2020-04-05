@@ -11,4 +11,4 @@ export function getCountry(country, countries) {
 }
 
 export const FETCH_URL = isDev() ? "http://localhost:5000/covid19/" : "https://coronatracker-rest.herokuapp.com/covid19/";
-export const PREFETCH_URL = isDev() ? "http://localhost:5000/valid-countries" : "https://coronatracker-rest.herokuapp.com/valid-countries";
+export const PREFETCH_URL = isDev() ? "http://localhost:5000/" : "https://coronatracker-rest.herokuapp.com/";

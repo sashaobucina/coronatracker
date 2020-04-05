@@ -18,19 +18,28 @@ export default function AppRouter() {
   });
 
   const preFetchData = () => {
-    axios.get(PREFETCH_URL).then(res => {
-      console.log(res)
-      setState({
-        alerts: { errAlert: false, successAlert: true },
-        fetched: true,
-        loaded: true,
-        validCountries: res.data
+    const request1 = axios.get(PREFETCH_URL + "valid-countries")
+    const request2 = axios.get(PREFETCH_URL + "top-movers")
+
+    axios.all([request1, request2]).then(
+      axios.spread((...responses) => {
+        const validCountries = responses[0].data;
+        const topMovers = responses[1].data;
+        console.log(topMovers);
+        setState({
+          alerts: { errAlert: false, successAlert: true },
+          fetched: true,
+          loaded: true,
+          topMovers: topMovers,
+          validCountries: validCountries
+        })
       })
-    }).catch(err => {
+    ).catch(err => {
       setState({
         alerts: { errAlert: true, successAlert: false },
         fetched: false,
         loaded: true,
+        topMovers: undefined,
         validCountries: []
       })
       console.error(err);
