@@ -46,7 +46,14 @@ def to_data(X, confirmed, deaths):
 def _convert_to_dates(dates: str):
   return [datetime.datetime.strptime(d, "%m/%d/%y").date() for d in dates]
 
+def _is_numpy(obj):
+  return type(obj).__module__ == np.__name__
+
 def _ndarray_to_list(arr):
-  if type(arr).__module__ == np.__name__:
-    return arr.tolist()
-  return arr
+  return arr.tolist() if _is_numpy(arr) else arr
+
+def numpy_to_native(value):
+  return value.item() if _is_numpy(value) else value
+
+def div(divided, divisor):
+  return divided / divisor if divisor != 0 else 0
