@@ -71,15 +71,20 @@ class DataGenerator:
       last, sec_last = df.columns[-1], df.columns[-2]
       for country in self.valid_countries:
         row = df.xs(country)
-        value1 = numpy_to_native(row[last][0])
-        value2 = numpy_to_native(row[sec_last][0])
-        total = (row.values).flatten()[-1]
+        total = np.nan_to_num(np.sum(row.values, axis=0)).flatten()
+
+        # skip countries with no data
+        if len(total) < 2:
+          continue
+
+        value1 = numpy_to_native(total[-1])
+        value2 = numpy_to_native(total[-2])
 
         diff = value1 - value2
 
         # only process countries with more than 1000 cases and up-to date info
         threshold = 1000 if report_type == CONFIRMED else 50
-        if total < threshold or diff == 0:
+        if value1 < threshold or diff == 0:
           continue
 
         percentage_diff = div((value1 - value2), value2) * 100
