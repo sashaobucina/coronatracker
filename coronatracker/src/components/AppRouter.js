@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 
@@ -55,16 +55,16 @@ export default function AppRouter() {
   const { topMovers } = fetchState;
 
   return (
-    <Router>
+    <Router hashType="noslash">
       <Main loaded={fetchState.loaded}>
         <Switch>
           <Route
             exact
-            path="/coronatracker"
+            path="/"
             render={(props) => <App {...props} fetchState={fetchState} setFetchState={setState} />}
           />
-          <Route exact path="/coronatracker/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
-          <Route exact path="/coronatracker/faqs" component={FAQs} />
+          <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
+          <Route exact path="/faqs" component={FAQs} />
         </Switch>
       </Main>
     </Router>

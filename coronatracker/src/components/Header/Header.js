@@ -19,7 +19,7 @@ export default function Header() {
       <Toolbar>
         <Grid container direction="row" alignItems="baseline">
           <Grid item xs={7} sm={6} md={6} lg={6}>
-            <Link to="/coronatracker" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+            <Link to="/" style={{ color: 'inherit', textDecoration: 'inherit'}}>
               <Typography variant="h6" align="left">
                 COVID-19 Tracker
               </Typography>
@@ -30,21 +30,21 @@ export default function Header() {
         <Grid item xs={5} sm={2} md={2} lg={2}>
           <ButtonGroup color="inherit">
             <Tooltip title="Search" placement="bottom">
-              <Link to="/coronatracker">
+              <Link to="/">
                 <IconButton className={classes.root} disableFocusRipple>
                   <Search />
                 </IconButton>
               </Link>
             </Tooltip>
             <Tooltip title="Top Movers" placement="bottom">
-              <Link to="/coronatracker/top-movers">
+              <Link to="/top-movers">
                 <IconButton className={classes.root}>
                   <TrendingUp />
                 </IconButton>
               </Link>
             </Tooltip>
             <Tooltip title="FAQs" placement="bottom">
-              <Link to="/coronatracker/faqs">
+              <Link to="/faqs">
                 <IconButton >
                   <InfoOutlined className={classes.root} />
                 </IconButton>
