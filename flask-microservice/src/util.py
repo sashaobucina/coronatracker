@@ -14,10 +14,13 @@ def to_data(X, confirmed, deaths):
     "first_derivative_data": [],
     "second_derivative_data": []
   }
-  drv1 = np.gradient(confirmed)
-  drv2 = np.gradient(drv1)
+  drv1_confirmed = np.gradient(confirmed)
+  drv2_confirmed = np.gradient(drv1_confirmed)
 
-  for x, c, d, dydx1, dydx2 in zip(X, confirmed, deaths, drv1, drv2):
+  drv1_deaths = np.gradient(deaths)
+  drv2_deaths = np.gradient(drv1_deaths)
+
+  for x, c, d, dydx1_c, dydx2_c, dydx1_d, dydx2_d in zip(X, confirmed, deaths, drv1_confirmed, drv2_confirmed, drv1_deaths, drv2_deaths):
     x = _ndarray_to_list(x)
     data["overall"].append(
       {
@@ -30,14 +33,16 @@ def to_data(X, confirmed, deaths):
     data["first_derivative_data"].append(
       {
         "date": x,
-        "first_derivative": _ndarray_to_list(dydx1),
+        CONFIRMED: _ndarray_to_list(dydx1_c),
+        DEATHS: _ndarray_to_list(dydx1_d)
       }
     )
 
     data["second_derivative_data"].append(
       {
         "date": x,
-        "second_derivative": _ndarray_to_list(dydx2)
+        CONFIRMED: _ndarray_to_list(dydx2_c),
+        DEATHS: _ndarray_to_list(dydx2_d)
       }
     )
 
