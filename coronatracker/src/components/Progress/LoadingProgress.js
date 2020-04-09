@@ -1,5 +1,5 @@
 import React from "react";
-import { Backdrop, CircularProgress, Typography } from "@material-ui/core";
+import { Backdrop, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
@@ -14,6 +14,10 @@ const useStyles = makeStyles({
     color: "#3BBA9C",
     fontSize: "1.25rem",
     marginRight: 20,
+  },
+  subText: {
+    color: "#3BBA9C",
+    fontSize: "0.65rem"
   }
 });
 
@@ -23,8 +27,20 @@ export default function LoadingProgress(props) {
 
   return (
     <Backdrop className={classes.backdrop} open={open}>
-      <Typography className={classes.text} variant="overline">Fetching data...</Typography>
-      <CircularProgress className={classes.progress} size={60} thickness={3} />
+      <Grid container direction="column" alignItems="center" justify="center" spacing={1}>
+        <Grid item>
+          <Typography className={classes.text} variant="overline">Initializing data...</Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.subText} variant="overline">Spinning server out of idle mode</Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.subText} variant="overline">(May take up to 20 secs)</Typography>
+        </Grid>
+        <Grid item>
+          <CircularProgress className={classes.progress} size={60} thickness={3} />
+        </Grid>
+      </Grid>
     </Backdrop>
   );
 }
