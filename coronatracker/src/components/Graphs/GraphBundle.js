@@ -6,6 +6,7 @@ import DateSlider from "../Slider/DateSlider"
 import DerivativeGraph from "./DerivativeGraph"
 import OverallGraph from "./OverallGraph";
 import TrajectoryGraph from "./TrajectoryGraph";
+import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
@@ -13,12 +14,13 @@ import { convertDataToWeekly, convertToDates, getSummary, getDate } from "../../
 
 const useStyles = makeStyles({
   root: {
-    color: "#fcba03"
+    color: "#DB7C00"
   }
 })
 
 export default function GraphBundle(props) {
   const [ speed, setSpeed ] = useState(1);
+  const [ report, setReport ] = useState("confirmed")
   const { country, data, indexValue, scale, onStepClick, updateIndexState, updateScale } = props;
   const classes = useStyles();
 
@@ -59,14 +61,15 @@ export default function GraphBundle(props) {
         <OverallGraph data={overall} />
       </Grid>
       <Grid item xs={11} sm={5} md={5} lg={5} >
-        <Typography align="center" variant="h5">Rate of Change in Cases</Typography>
-        <DerivativeGraph data={first_derivative_data} dataKey={"first_derivative"} />
+        <Typography align="center" variant="h5">Rate of Change</Typography>
+        <DerivativeGraph data={first_derivative_data} report={report} />
       </Grid>
       <Grid item xs={11} sm={5} md={5} lg={5} >
         <Typography align="center" variant="h5">Acceleration of Change</Typography>
-        <DerivativeGraph data={second_derivative_data} dataKey={"second_derivative"} />
+        <DerivativeGraph data={second_derivative_data} report={report} />
       </Grid>
       <Grid item xs={11} sm={11} md={11} lg={11} style={{ margin: 20 }}>
+        <MoverButtonGroup report={report} setReport={setReport} />
         <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory</Typography>
         <ScaleButtonGroup scale={scale} updateScale={updateScale} />
         <TrajectoryGraph data={weeklyData.slice(0, indexValue)} scale={scale} />

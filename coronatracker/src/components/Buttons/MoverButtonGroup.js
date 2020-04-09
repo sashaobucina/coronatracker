@@ -16,13 +16,13 @@ const useStyles = makeStyles({
     color: "#212121",
     "&:hover": {
       background: "#3C3F58",
-      color: "#FFC107",
+      color: "#DB7C00",
       fontWeight: "bolder",
       opacity: 0.8,
     },
     "&.Mui-selected": {
       background: '#3C3F58',
-      color: "#FFC107",
+      color: "#DB7C00",
       fontWeight: "bold",
       "&:hover": {
         background: "#3C3F58",

@@ -2,7 +2,9 @@ import React from "react";
 import { Brush, CartesianGrid, Legend, XAxis, YAxis, LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 
 export default function DerivativeGraph(props) {
-  const { data, dataKey } = props;
+  const { data, report } = props;
+
+  const stroke = report !== "deaths" ? "#DB7C00" : "#F44336";
 
   return (
     <ResponsiveContainer height={400}>
@@ -11,7 +13,7 @@ export default function DerivativeGraph(props) {
         <CartesianGrid strokeWidth={0.5} />
         <XAxis dataKey="date" stroke={'#3BBA9C'} />
         <YAxis stroke={'#3BBA9C'} />
-        <Line type="monotone" dataKey={dataKey} stroke="#3BBA9C" strokeWidth={2} dot={false} />
+        <Line type="monotone" dataKey={report} stroke={stroke} strokeWidth={2} dot={false} />
         <Tooltip />
         <Legend />
       </LineChart>
