@@ -17,7 +17,7 @@ export default function AlertManager(props) {
   return (
     <>
       <ErrorAlert open={errAlert} message={strings.noFetch} handleClose={handleFetchState} />
-      <ErrorAlert open={!validated} message={strings.invalid} handleClose={() => updateValidation(false)} />
+      <ErrorAlert open={!validated} message={strings.invalid} handleClose={() => updateValidation(true)} />
       <SuccessAlert open={successAlert} message={strings.success} handleClose={handleFetchState} />
     </>
   );
