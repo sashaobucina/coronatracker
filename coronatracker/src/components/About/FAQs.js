@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Divider, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanelActions, Tooltip, Typography } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
@@ -38,6 +39,30 @@ export default function FAQs() {
             <Typography variant="h5">
               FAQs
             </Typography>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+                <Typography>
+                  Q: What is the COVID-19 Tracker?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>
+                  A: The COVID-19 Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and graphical data. Go to the main page and search for a country of interest to get started!
+                </Typography>
+              </ExpansionPanelDetails>
+              <Divider className={classes.divider} />
+              <ExpansionPanelActions>
+                <Tooltip title="Go to home" placement="right">
+                  <Link to = "/">
+                    <Button className={classes.button} size="small">
+                      Back to home
+                    </Button>
+                  </Link>
+                </Tooltip>
+              </ExpansionPanelActions>
+            </ExpansionPanel>
           </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
