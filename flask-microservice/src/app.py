@@ -46,7 +46,7 @@ scheduler.start()
 ###################### Routes ######################
 @app.route('/')
 def index():
-  return jsonify("Microservice is live, use the '/valid-countries', 'top-movers', 'covid19/<country>' endpoints for further functionality")
+  return jsonify("Microservice is live, use the '/valid-countries', 'top-movers', 'cases/<country>' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
@@ -63,7 +63,7 @@ def get_top_contributors():
   data += [generator.get_dates()]
   return jsonify(util.json_like(labels, data))
 
-@app.route('/covid19/<string:country>', methods=['GET'])
+@app.route('/cases/<string:country>', methods=['GET'])
 def get_data(country):
   try:
     dates = generator.get_dates()

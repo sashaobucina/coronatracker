@@ -6,7 +6,7 @@ class DataGenerator:
   Aggregates and generates data for the following microservice endpoints:
     - /valid-countries
     - /top-movers
-    - /covid19/<country>
+    - /cases/<country>
   """
   def __init__(self, dates=[], reports={}, valid_countries=[]):
     self.dates = dates
