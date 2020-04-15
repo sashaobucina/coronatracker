@@ -61,7 +61,12 @@ def get_top_contributors():
   labels, data = generator.top_contributors()
   labels += ["date"]
   data += [generator.get_dates()]
-  return jsonify(util.json_like(labels, data))
+
+  response = {
+    "labels": labels,
+    "contributors": util.json_like(labels, data)
+  }
+  return jsonify(response)
 
 @app.route('/cases/<string:country>', methods=['GET'])
 def get_data(country):
@@ -78,13 +83,13 @@ def get_data(country):
     first_derivative = util.json_like(labels, [dates, drv1_confirmed, drv1_deaths])
     second_derivative = util.json_like(labels, [dates, drv2_confirmed, drv2_deaths])
 
-    data = {
+    response = {
       "overall": overall,
       "first_derivative_data": first_derivative,
       "second_derivative_data": second_derivative
     }
 
-    return jsonify(data)
+    return jsonify(response)
 
   except Exception as e:
     logger.error(str(e))
