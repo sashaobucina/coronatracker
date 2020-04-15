@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 
-import App from "./App";
+import Home from "./Home";
 import Main from "./Main"
 import FAQs from "./About/FAQs";
 import TopMovers from "./TopMovers/TopMovers";
@@ -61,7 +61,7 @@ export default function AppRouter() {
           <Route
             exact
             path="/"
-            render={(props) => <App {...props} fetchState={fetchState} setFetchState={setState} />}
+            render={(props) => <Home {...props} fetchState={fetchState} setFetchState={setState} />}
           />
           <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
           <Route exact path="/faqs" component={FAQs} />
