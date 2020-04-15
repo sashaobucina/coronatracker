@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 export default function TopMoversTable(props) {
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
-  const { dense, rows, report, title } = props;
+  const { dense, rows, report, title, up } = props;
 
   const classes = useStyles();
 
@@ -34,7 +34,7 @@ export default function TopMoversTable(props) {
 
   return (
     <Paper className={classes.paper}>
-      <TableToolbar title={title} up={true} report={report} />
+      <TableToolbar title={title} report={report} up={up} />
         <TableContainer>
           <Table size={dense ? "small" : "medium"}>
             <TableHead>

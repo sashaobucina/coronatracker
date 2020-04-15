@@ -73,6 +73,7 @@ export default function TopMovers(props) {
           report={report}
           rows={ query ? gainerRows.filter(x => x["country"].toLowerCase().includes(query)) : gainerRows }
           title="Top Gainers"
+          up={true}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={5} lg={5}>
@@ -82,6 +83,7 @@ export default function TopMovers(props) {
           rows={ query ? loserRows.filter(x => x["country"].toLowerCase().includes(query)) : loserRows }
           setDense={setDense}
           title="Top Losers"
+          up={false}
         />
       </Grid>
       <Grid item md={1} lg={1} />
