@@ -2,105 +2,82 @@ import numpy as np
 from util import div, numpy_to_native, CONFIRMED, DEATHS
 
 class DataGenerator:
-  def __init__(self, reports: dict, valid_countries: list):
+  """
+  Aggregates and generates data for the following microservice endpoints:
+    - /valid-countries
+    - /top-movers
+    - /covid19/<country>
+  """
+  def __init__(self, dates=[], reports={}, valid_countries=[]):
+    self.dates = dates
     self.reports = reports
-    self.valid_countries = [country for country in valid_countries if country != "Global"]
-    self._clean_dfs()
+    self.valid_countries = valid_countries
 
-  def _clean_dfs(self):
-    for report_type, raw_df in self.reports.items():
-      self.reports[report_type] = \
-        raw_df.drop(['Lat', 'Long'], axis=1).set_index(["Country/Region", "Province/State"])
-
-  def X(self, report_type: str) -> list:
+  def get_dates(self):
     """
-    Generate the dates so far of reported cases.
+    Return all the dates from the inception of the virus, to now.
     """
-    if report_type not in self.reports:
-      raise ValueError("Invalid report type given!")
+    return self.dates
 
-    df = self.reports[report_type]
-    return df.columns.values
-
-
-  def y(self, report_type: str, country="global") -> list:
+  def get_valid_countries(self):
     """
-    Generate the reported numbers given a the type of report and a country.
+    Return all the countries that are being tracked.
+    """
+    return sorted(self.valid_countries + ["Global"])
 
-    Precondidtion:
-      report_type in ["confirmed", "deaths"]
+  def get_country_data(self, country, report_type):
+    """
+    Return the number of cases given the report type and country
 
+    Preconditions:
+      - country in self.valid_countries
+      - report_type in ["Confirmed", "Deaths"]
     """
     if report_type not in self.reports:
       raise ValueError(f"Invalid report type given - {report_type}")
 
-    df = self.reports[report_type]
-
-    # get only the country values and sum up all provinces
-    if country != "global":
-      country_arr = df.xs((country)).values
-      return np.nan_to_num(country_arr.sum(axis=0))
-
-    # get all the country values and summing them together
-    else:
-      global_arr = np.zeros(df.shape[1])
-      for country in self.valid_countries:
-        country_arr = df.xs((country)).values
-        summed = np.nan_to_num(country_arr.sum(axis=0))
-        global_arr += summed
-      return global_arr
-
-
-  def generate(self, report_type, country):
-    """
-    Accumulate both the x and y values of a query.
-    """
-    if country == "Global":
-      return self.X(report_type), self.y(report_type)
-
-    if country not in self.valid_countries:
-      raise ValueError("Invalid country set!")
-
-    return self.X(report_type), self.y(report_type, country)
+    return self.reports[report_type][country]
 
   def top_movers(self):
-    movers = {k: {} for (k, _) in self.reports.items()}
+    """
+    Return a dictionary containing the top movers for both confirmed cases and deaths.
+    """
+    top_movers = {k: {} for k, _ in self.reports.items()}
+    thresholds = {
+      DEATHS: 50,
+      CONFIRMED: 1000
+    }
 
     # populate the movers dict
-    for report_type, df in self.reports.items():
-      last, sec_last = df.columns[-1], df.columns[-2]
+    for report_type, report in self.reports.items():
+      movers = {}
+
       for country in self.valid_countries:
-        row = df.xs(country)
-        total = np.nan_to_num(np.sum(row.values, axis=0)).flatten()
+        data = report[country]
 
         # skip countries with no data
-        if len(total) < 2:
+        if len(data) < 2:
           continue
 
-        value1 = numpy_to_native(total[-1])
-        value2 = numpy_to_native(total[-2])
+        value1 = numpy_to_native(data[-1])
+        value2 = numpy_to_native(data[-2])
 
         diff = value1 - value2
 
         # only process countries with more than 1000 cases and up-to date info
-        threshold = 1000 if report_type == CONFIRMED else 50
-        if value1 < threshold or diff == 0:
+        threshold = thresholds[report_type]
+        if value1 < threshold or diff <= 0:
           continue
 
         percentage_diff = div((value1 - value2), value2) * 100
-        movers[report_type][country] = (percentage_diff, diff, value1)
+        movers[country] = (percentage_diff, diff, value1)
 
-    # sort by top gainers and top losers by case category
-    top_movers = {k: {} for (k, _) in self.reports.items()}
-    for report_type, mover in movers.items():
-      # sort all movers and convert to list
-      sorted_movers = list(sorted(mover.items(), key=lambda kv: kv[1][0]))
+      # sort all movers
+      sorted_movers = list(sorted(movers.items(), key=lambda kv: kv[1][0]))
 
-      # get top movers from all movers and accumulate them in top movers dict, by case category
-      top_gainers = sorted_movers[::-1]
-      top_losers = sorted_movers[:]
-      top_movers[report_type]["top_gainers"] = top_gainers
-      top_movers[report_type]["top_losers"] = top_losers
+      # get top movers and accumulate them
+      top_movers[report_type]["top_gainers"] = sorted_movers[::-1]
+      top_movers[report_type]["top_losers"] = sorted_movers[:]
 
     return top_movers
 

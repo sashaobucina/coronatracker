@@ -1,6 +1,7 @@
+import atexit
 import os
 import logging
-import atexit
+import numpy as np
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
@@ -8,7 +9,8 @@ from flask_cors import CORS
 
 from scraper import CoronaScraper
 from generator import DataGenerator
-from util import CONFIRMED, DEATHS, to_data
+from preprocess import process_data, process_dates
+import util
 
 app = Flask(__name__)
 CORS(app)
@@ -21,13 +23,17 @@ logger = app.logger
 PORT = os.environ.get("PORT", 5000)
 
 scraper = CoronaScraper(logger)
-generator = DataGenerator({}, [])
+generator = DataGenerator()
 
 def initialize():
   global scraper, generator, logger
   logger.info("Updating data if available...")
   scraper.download_reports()
-  generator = DataGenerator(scraper.get_reports(), scraper.get_valid_countries())
+  reports, countries = scraper.reports, scraper.valid_countries
+  dates = process_dates(reports)
+  data = process_data(reports, countries)
+
+  generator = DataGenerator(dates, data, countries)
 
 # populate the data generator and web scraper
 initialize()
@@ -37,14 +43,14 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(func=initialize, trigger="interval", hours=3)
 scheduler.start()
 
-""" Routes """
+###################### Routes ######################
 @app.route('/')
 def index():
   return jsonify("Microservice is live, use the '/valid-countries', 'top-movers', 'covid19/<country>' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
-  return jsonify(scraper.valid_countries)
+  return jsonify(generator.get_valid_countries())
 
 @app.route('/top-movers')
 def get_top_movers():
@@ -53,11 +59,26 @@ def get_top_movers():
 @app.route('/covid19/<string:country>', methods=['GET'])
 def get_data(country):
   try:
-    X, confirmed = generator.generate(CONFIRMED, country)
-    _, deaths = generator.generate(DEATHS, country)
+    dates = generator.get_dates()
+    confirmed = generator.get_country_data(country, util.CONFIRMED)
+    deaths = generator.get_country_data(country, util.DEATHS)
 
-    data = to_data(X, confirmed, deaths)
+    labels = ["date", util.CONFIRMED, util.DEATHS]
+    drv1_confirmed, drv1_deaths = np.gradient(confirmed), np.gradient(deaths)
+    drv2_confirmed, drv2_deaths = np.gradient(drv1_confirmed), np.gradient(drv1_deaths)
+
+    overall = util.json_like(labels, [dates, confirmed, deaths])
+    first_derivative = util.json_like(labels, [dates, drv1_confirmed, drv1_deaths])
+    second_derivative = util.json_like(labels, [dates, drv2_confirmed, drv2_deaths])
+
+    data = {
+      "overall": overall,
+      "first_derivative_data": first_derivative,
+      "second_derivative_data": second_derivative
+    }
+
     return jsonify(data)
+
   except Exception as e:
     logger.error(str(e))
     abort(404)

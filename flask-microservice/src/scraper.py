@@ -5,6 +5,8 @@ import tempfile
 import urllib.request as request
 
 from generator import DataGenerator
+from preprocess import process_data, process_dates
+from util import CONFIRMED, DEATHS
 
 class CoronaScraper():
   def __init__(self, logger):
@@ -17,6 +19,8 @@ class CoronaScraper():
     """
     Collects timeseries COVD-19 data and returns a dictionary of Pandas DFs for each
     type of reported case.
+
+    Data recovered from John Hopkins CSSE repository.
     """
     reports = {}
 
@@ -44,21 +48,24 @@ class CoronaScraper():
       finally:
         os.remove(path)
 
-    self.valid_countries.append("Global")
     self.valid_countries.sort()
 
     if len(reports) > 0:
       self.reports = reports
     return self
 
-  def get_reports(self):
-    return self.reports
-
-  def get_report(self, report_type: str):
-    return self.reports.get(report_type, d=None)
-
-  def get_valid_countries(self):
-    return self.valid_countries
-
 if __name__ == "__main__":
-  pass
+  # TESTING ONLY
+  scraper = CoronaScraper(None)
+  reports = scraper.download_reports().reports
+  valid_countries = scraper.valid_countries
+
+  data = process_data(reports, valid_countries)
+  dates = process_dates(reports)
+  confirmed = data[CONFIRMED]
+  deaths = data[DEATHS]
+
+  generator = DataGenerator(dates, data, valid_countries)
+  top_movers = generator.top_movers()
+
+  countries, top10 = generator.top_contributors()
