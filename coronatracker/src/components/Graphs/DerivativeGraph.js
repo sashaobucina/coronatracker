@@ -1,5 +1,6 @@
 import React from "react";
 import { Brush, CartesianGrid, Legend, XAxis, YAxis, LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
+import CustomTooltip from "./CustomTooltip";
 
 export default function DerivativeGraph(props) {
   const { data, report } = props;
@@ -14,7 +15,7 @@ export default function DerivativeGraph(props) {
         <XAxis dataKey="date" stroke={'#3BBA9C'} />
         <YAxis stroke={'#3BBA9C'} />
         <Line type="monotone" dataKey={report} stroke={stroke} strokeWidth={2} dot={false} />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip title="Date" />} />
         <Legend />
       </LineChart>
     </ResponsiveContainer>

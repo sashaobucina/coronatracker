@@ -1,5 +1,6 @@
 import React from "react";
 import { Brush, Legend, AreaChart, XAxis, YAxis, Area, Tooltip, ResponsiveContainer } from "recharts";
+import CustomTooltip from "./CustomTooltip";
 
 export default function OverallGraph(props) {
   const { data } = props;
@@ -25,7 +26,7 @@ export default function OverallGraph(props) {
         <YAxis stroke={'#3BBA9C'} />
         <Area type="monotone" dataKey="confirmed" stroke={confirmedColor} fillOpacity={1} fill="url(#colorConfirmed)"/>
         <Area type="monotone" dataKey="deaths" stroke="#F44336" fillOpacity={1} fill="url(#colorDeaths)"/>
-        <Tooltip />
+        <Tooltip content={<CustomTooltip title="Date" />} />
         <Legend />
       </AreaChart>
     </ResponsiveContainer>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Tooltip, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Legend, LineChart, Line } from "recharts";
+import CustomTooltip from "./CustomTooltip";
 
 export default function TrajectoryGraph(props) {
   const { data, scale } = props;
@@ -29,7 +30,7 @@ export default function TrajectoryGraph(props) {
           scale={scale}
         />
         <Line type="monotone" name="Total Confirmed Cases" dataKey={"weekly"} stroke="#3BBA9C" strokeWidth={2} animationDuration={400} dot={false} />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip title="Confirmed Cases" />}/>
         <Legend iconSize={0} />
       </LineChart>
     </ResponsiveContainer>

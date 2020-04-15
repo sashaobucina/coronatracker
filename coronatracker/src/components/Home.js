@@ -4,6 +4,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import AlertManager from "./Alerts/AlertManager"
 import CountryTab from './Tabs/CountryTab';
+import ContributorGraph from './Graphs/ContributorGraph';
 import Footer from './Footer/Footer';
 import GraphBundle from './Graphs/GraphBundle';
 import SearchBar from './SearchBar/SearchBar';
@@ -135,8 +136,10 @@ class App extends Component{
 
   showGraphs = () => {
     const { countries, datum, idxValue, scale, tabIndex } = this.state;
+    const { fetchState } = this.props;
+    const { labels, contributors } = fetchState["topContributors"];
     return datum.length === 0
-      ? (<></>)
+      ? fetchState["fetched"] ? (<ContributorGraph labels={labels} data={contributors} />) : (<></>)
       : (
         <GraphBundle
           country={countries[tabIndex]}
