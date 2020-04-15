@@ -81,6 +81,19 @@ class DataGenerator:
 
     return top_movers
 
+  def top_contributors(self):
+    """
+    Return the data associated with countries that have the most confirmed cases.
 
-if __name__ == "__main__":
-  pass
+    Only aggregate the top 10 contributors
+    """
+    confirmed = self.reports[CONFIRMED]
+    contributions = [(country, confirmed[country][-1]) for country in self.valid_countries]
+    top10 = sorted(contributions, key=lambda x: x[1], reverse=True)[:10]
+
+    countries, top10_data = [], []
+    for country, _ in top10:
+      countries.append(country)
+      top10_data.append(self.get_country_data(country, report_type=CONFIRMED))
+
+    return countries, top10_data

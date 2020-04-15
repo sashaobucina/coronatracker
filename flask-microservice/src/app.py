@@ -56,6 +56,13 @@ def get_countries():
 def get_top_movers():
   return jsonify(generator.top_movers())
 
+@app.route('/top-contributors')
+def get_top_contributors():
+  labels, data = generator.top_contributors()
+  labels += ["date"]
+  data += [generator.get_dates()]
+  return jsonify(util.json_like(labels, data))
+
 @app.route('/covid19/<string:country>', methods=['GET'])
 def get_data(country):
   try:
