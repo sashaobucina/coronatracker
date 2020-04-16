@@ -2,7 +2,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tooltip } from "recharts";
+import { Brush, ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tooltip } from "recharts";
+
 import CustomTooltip from "./CustomTooltip";
 import { COLOURS } from "../../helpers/misc";
 
@@ -26,7 +27,7 @@ export default function ContributorGraph(props) {
         dot={false}
         stroke={COLOURS[i]}
         strokeWidth={2}
-        type="natural"
+        type="monotone"
       />);
     }
   );
@@ -40,11 +41,25 @@ export default function ContributorGraph(props) {
       <Grid item xs={10} sm={10} md={10} lg={10}>
         <ResponsiveContainer height={650}>
           <LineChart data={data}>
-            <XAxis dataKey="date" stroke="#3BBA9C" padding={{ bottom: 100 }} />
-            <YAxis stroke="#3BBA9C" />
+            <XAxis
+              dataKey="date"
+              stroke="#3BBA9C"
+            />
+            <YAxis stroke="#3BBA9C"/>
             { lines }
-            <Tooltip content={<CustomTooltip title="Date" />} cursor={false} />
+            <Tooltip
+              content={<CustomTooltip title="Date" />}
+              cursor={false}
+            />
             <Legend />
+            <Brush
+              dataKey="date"
+              startIndex={5}
+              fill="#3C3F58"
+              height={20}
+              stroke='#3BBA9C'
+              travellerWidth={8}
+            />
           </LineChart>
         </ResponsiveContainer>
       </Grid>
