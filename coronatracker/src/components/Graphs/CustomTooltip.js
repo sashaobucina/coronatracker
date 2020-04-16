@@ -9,15 +9,21 @@ const compareFn = (a, b) => {
   return 0;
 }
 
-export default function CustomTooltip ({ active, label, payload, title }) {
+export default function CustomTooltip (props) {
+  const { active, label, payload, title, withIndex } = props;
+
   if (active && payload) {
     // sort the payload
     payload.sort(compareFn);
 
     // accumulate the labels
-    const labels = payload.map((entry, i) =>
-      <p className="label" key={i} style={{ color: entry.stroke }}>{`${entry.dataKey} : ${entry.value}`}</p>
-    );
+    const labels = payload.map((entry, i) => {
+      if (withIndex) {
+        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${i+1}) ${entry.dataKey} : ${entry.value}`}</p>);
+      } else {
+        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${entry.dataKey} : ${entry.value}`}</p>);
+      }
+    });
 
     return (
       <div className="custom-tooltip" style={{ backgroundColor: "#3C3F58", padding: 5 }}>

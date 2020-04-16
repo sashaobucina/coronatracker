@@ -51,7 +51,7 @@ export default function ContributorGraph(props) {
             <YAxis stroke="#3BBA9C"/>
             { lines }
             <Tooltip
-              content={<CustomTooltip title="Date" />}
+              content={<CustomTooltip title="Date" withIndex={true} />}
               cursor={false}
             />
             <Legend />
