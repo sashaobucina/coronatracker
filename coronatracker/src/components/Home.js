@@ -13,8 +13,6 @@ import TabsContainer from './Tabs/TabsContainer';
 
 import { getCountry, FETCH_URL } from '../helpers/misc';
 
-import '../style/App.css';
-
 class App extends Component{
   constructor(props) {
     super(props)
