@@ -4,6 +4,8 @@ import { Button, Divider, Grid, ExpansionPanel, ExpansionPanelSummary, Expansion
 import { ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
+import { useWindowDimensions } from "../../helpers/windowProvider";
+
 const useStyles = makeStyles({
   root: {
     marginTop: 45,
@@ -28,6 +30,7 @@ const useStyles = makeStyles({
 });
 
 export default function FAQs() {
+  const { height } = useWindowDimensions();
   const classes = useStyles();
 
   return (
@@ -118,7 +121,7 @@ export default function FAQs() {
                   </Grid>
                   <Grid item>
                     <iframe
-                      height="315"
+                      height={height * 0.5}
                       src="https://www.youtube-nocookie.com/embed/54XLXg4fYsc?start=170"
                       title="Trajectory video"
                       frameBorder="0"

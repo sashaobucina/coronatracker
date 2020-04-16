@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import { Brush, ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tooltip } from "recharts";
 
 import CustomTooltip from "./CustomTooltip";
+import { useWindowDimensions } from "../../helpers/windowProvider";
 import { COLOURS } from "../../helpers/misc";
 
 const useStyles = makeStyles({
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
 
 export default function ContributorGraph(props) {
   const { labels, data } = props;
+  const { height } = useWindowDimensions();
   const classes = useStyles();
 
   const lines = labels
@@ -39,7 +41,7 @@ export default function ContributorGraph(props) {
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
-        <ResponsiveContainer height={650}>
+        <ResponsiveContainer height={0.75 * height}>
           <LineChart data={data}>
             <XAxis
               dataKey="date"
