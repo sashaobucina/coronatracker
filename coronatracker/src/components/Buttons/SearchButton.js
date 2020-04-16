@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     background: '#3C3F58',
     color: '#3BBA9C',
     height: 48,
+    marginLeft: 8,
     "&:hover": {
       background: '#3C3F58',
       opacity: 0.8

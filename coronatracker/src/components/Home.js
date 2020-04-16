@@ -212,25 +212,26 @@ class App extends Component{
     return (
       <div id="root-app">
         <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={this.updateValidation}/>
-        <Grid container spacing={2} direction="row" justify="center" alignItems="center" >
+        <Grid container direction="row" justify="center" alignItems="center">
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
               Tracking COVID-19 movements and trends - search "Global" to get world view
             </Typography>
           </Grid>
-          <Grid item sm xs md lg />
+          <Grid item sm={2} xs={2} md={3} lg={3} />
           <Grid item xs={5} sm={5} md={4} lg={4}>
             <SearchBar
               suggestions={fetchState["validCountries"]}
               fetchData={this.fetchData}
               updateState={this.updateInputState}
               value={userInput}
+              style={{ paddingLeft: 10 }}
             />
           </Grid>
           <Grid item sm={3} xs={3} md={2} lg={2}>
             <SearchButton fetchData={this.fetchData} />
           </Grid>
-          <Grid item sm xs md lg />
+          <Grid item xs={2} sm={2} md={3} lg={3} />
         </Grid>
         { this.showTabs() }
         { this.showGraphs() }
