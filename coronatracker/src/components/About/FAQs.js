@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 export default function FAQs() {
-  const { height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   const classes = useStyles();
 
   return (
@@ -122,6 +122,7 @@ export default function FAQs() {
                   <Grid item>
                     <iframe
                       height={height * 0.5}
+                      width={width * 0.5}
                       src="https://www.youtube-nocookie.com/embed/54XLXg4fYsc?start=170"
                       title="Trajectory video"
                       frameBorder="0"

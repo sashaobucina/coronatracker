@@ -12,8 +12,7 @@ const useStyles = makeStyles({
   },
   text: {
     color: "#3BBA9C",
-    fontSize: "1.25rem",
-    marginRight: 20,
+    fontSize: "1.25rem"
   },
   subText: {
     color: "#3BBA9C",
@@ -27,7 +26,7 @@ export default function LoadingProgress(props) {
 
   return (
     <Backdrop className={classes.backdrop} open={open}>
-      <Grid container direction="column" alignItems="center" justify="center" spacing={1}>
+      <Grid container direction="column" alignItems="center" justify="center">
         <Grid item>
           <Typography className={classes.text} variant="overline">Initializing data...</Typography>
         </Grid>

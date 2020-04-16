@@ -32,7 +32,7 @@ export default function TabsContainer(props) {
   const { clearState, handleTabChange, tabs, tabIndex, removeTab } = props;
 
   return (
-    <Grid container direction="row" alignItems="center" style={{ marginTop: 50, marginLeft: 5, marginRight: 5 }} spacing={1}>
+    <Grid container direction="row" alignItems="center" style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }} spacing={1}>
       <Grid container direction="row" justify="flex-start">
         <Grid item sm={1} md={1} lg={1} />
         <Grid item xs={4} sm={2} md={2} lg={2}>

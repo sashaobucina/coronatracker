@@ -1,14 +1,16 @@
 import React from "react";
 import { Brush, CartesianGrid, Legend, XAxis, YAxis, LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 import CustomTooltip from "./CustomTooltip";
+import { useWindowDimensions } from "../../helpers/windowProvider";
 
 export default function DerivativeGraph(props) {
   const { data, report } = props;
+  const { height } = useWindowDimensions();
 
   const stroke = report !== "deaths" ? "#DB7C00" : "#F44336";
 
   return (
-    <ResponsiveContainer height={400}>
+    <ResponsiveContainer height={height * 0.5}>
       <LineChart data={data} >
         <Brush dataKey="date" stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
         <CartesianGrid strokeWidth={0.5} />

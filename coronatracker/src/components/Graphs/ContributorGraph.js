@@ -27,6 +27,7 @@ export default function ContributorGraph(props) {
         key={i}
         dataKey={label}
         dot={false}
+        animationDuration={750}
         stroke={COLOURS[i]}
         strokeWidth={2}
         type="monotone"
@@ -37,7 +38,7 @@ export default function ContributorGraph(props) {
   return (
     <Grid container className={classes.root} direction="row" alignItems="center" justify="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <Typography align="center" variant="h5">Top 10 Contributors (by # of confirmed cases)</Typography>
+        <Typography align="center" variant="h5">Most Impacted Countries (by # of confirmed cases)</Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>

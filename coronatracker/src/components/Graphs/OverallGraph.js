@@ -1,15 +1,17 @@
 import React from "react";
 import { Brush, Legend, AreaChart, XAxis, YAxis, Area, Tooltip, ResponsiveContainer } from "recharts";
 import CustomTooltip from "./CustomTooltip";
+import { useWindowDimensions } from "../../helpers/windowProvider";
 
 export default function OverallGraph(props) {
   const { data } = props;
+  const { height } = useWindowDimensions();
 
   const confirmedColor = "#DB7C00";
   const deathsColor = "#9C3321";
 
   return (
-    <ResponsiveContainer height={500} style={{ minWidth: "100%" }}>
+    <ResponsiveContainer height={height * 0.6} style={{ minWidth: "100%" }}>
       <AreaChart data={data} title="Cases of COVID-19">
         <defs>
           <linearGradient id="colorConfirmed" x1="0" y1="0" x2="0" y2="1">
