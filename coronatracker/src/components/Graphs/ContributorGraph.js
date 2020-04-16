@@ -54,7 +54,6 @@ export default function ContributorGraph(props) {
             <Legend />
             <Brush
               dataKey="date"
-              startIndex={5}
               fill="#3C3F58"
               height={20}
               stroke='#3BBA9C'
