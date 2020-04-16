@@ -1,6 +1,6 @@
 import React from "react";
 
-const compareFn = (a, b) => {
+const comparator = (a, b) => {
   if (a.value < b.value) {
     return 1;
   } else if (a.value > b.value) {
@@ -14,7 +14,7 @@ export default function CustomTooltip (props) {
 
   if (active && payload) {
     // sort the payload
-    payload.sort(compareFn);
+    payload.sort(comparator);
 
     // accumulate the labels
     const labels = payload.map((entry, i) => {

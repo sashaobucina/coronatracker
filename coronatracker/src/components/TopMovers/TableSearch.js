@@ -33,7 +33,7 @@ export default function TableSearch(props) {
   const classes = useStyles();
 
   const handleOnChange = (e) => {
-    setQuery(e.target.value.toLowerCase())
+    setQuery(e.target.value.toLowerCase());
   }
 
   return (

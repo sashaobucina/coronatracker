@@ -1,4 +1,4 @@
-import { Switch, TableCell } from "@material-ui/core";
+import { Switch, TableCell, TableSortLabel } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 
 export const CustomSwitch = withStyles({
@@ -29,3 +29,19 @@ export const StyledTableCell = withStyles(() => ({
     fontSize: 14
   }
 }))(TableCell);
+
+export const StyledTableSortLabel = withStyles(() => ({
+  root: {
+    color: '#3BBA9C',
+    "&:hover": {
+      color: '#3BBA9C',
+      opacity: 0.7,
+    },
+    "&.MuiTableSortLabel-active": {
+      color: '#3BBA9C'
+    }
+  },
+  icon: {
+    color: '#3BBA9C !important'
+  }
+}))(TableSortLabel);

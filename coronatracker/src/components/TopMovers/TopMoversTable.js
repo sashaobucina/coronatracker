@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Paper, Table, TableHead, TableBody, TableRow, TableContainer, TablePagination } from "@material-ui/core";
+import { Paper, Table, TableHead, TableBody, TableRow, TableContainer, TablePagination, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { StyledTableCell } from "./CustomComponents";
+import { StyledTableCell, StyledTableSortLabel } from "./CustomComponents";
 import TableToolbar from "./TableToolbar";
 
 const useStyles = makeStyles({
@@ -14,10 +14,54 @@ const useStyles = makeStyles({
   }
 });
 
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] > a[orderBy]) {
+    return -1;
+  } else if (b[orderBy] < a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(arr, comparator) {
+  const stabilizedThis = arr.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0])
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+function createRows(rows) {
+  return rows.map((row, index) => {
+    let { country, change, percent, total } = row;
+    index += 1;
+    change = `+${change}`;
+    percent = `${percent.toFixed(3)}%`;
+    return { index, country, change, percent, total };
+  })
+}
+
+const headCells = [
+  { id: "index", align: false, label: "#", sort: false },
+  { id: "country", align: false, label: "Country", sort: false },
+  { id: "percent", align: true, label: "Percent Change (%)", sort: true },
+  { id: "change", align: true, label: "Change", sort: true },
+  { id: "total", align: true, label: "Total Cases", sort: true }
+];
+
 export default function TopMoversTable(props) {
+  const [ orderBy, setOrderBy ] = useState('percent');
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
-  const { dense, rows, report, title, up } = props;
+  const { dense, order, rows, report, title, up } = props;
 
   const classes = useStyles();
 
@@ -30,6 +74,10 @@ export default function TopMoversTable(props) {
     setPage(0);
   };
 
+  const handleSort = (property) => (_) => {
+    setOrderBy(property);
+  }
+
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
@@ -39,15 +87,32 @@ export default function TopMoversTable(props) {
           <Table size={dense ? "small" : "medium"}>
             <TableHead>
               <TableRow>
-                <StyledTableCell>#</StyledTableCell>
-                <StyledTableCell>Country</StyledTableCell>
-                <StyledTableCell align="right">Percent Change (%)</StyledTableCell>
-                <StyledTableCell align="right">Change</StyledTableCell>
-                <StyledTableCell align="right">Total Cases</StyledTableCell>
+                {headCells.map((headCell) => (
+                  <StyledTableCell
+                    id={headCell.id}
+                    key={headCell.id}
+                    align={headCell.align ? "right" : "left"}
+                    sortDirection={orderBy === headCell.id ? order : false}
+                  >
+                    {headCell.sort
+                      ?
+                        (<Tooltip title="Sort by" placement="top">
+                          <StyledTableSortLabel
+                            active={orderBy === headCell.id}
+                            direction={order}
+                            onClick={handleSort(headCell.id)}
+                          >
+                            { headCell.label }
+                          </StyledTableSortLabel>
+                        </Tooltip>)
+                      : headCell.label
+                    }
+                  </StyledTableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {createRows(stableSort(rows, getComparator(order, orderBy)))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.country}>

@@ -15,14 +15,11 @@ const useStyles = makeStyles({
   }
 })
 
-const createRows = (topMovers) => {
-  return topMovers.map((mover, index) => {
+const formatRows = (topMovers) => {
+  return topMovers.map((mover) => {
     const country = mover[0];
-    let [ percent, change, total ] = mover[1];
-    index = index + 1
-    change = "+" + change.toString()
-    percent = percent.toFixed(3).toString() + "%"
-    return { index, country, total, change, percent };
+    const [ percent, change, total ] = mover[1];
+    return { country, change, percent, total };
   })
 }
 
@@ -36,8 +33,8 @@ export default function TopMovers(props) {
   const [ report, setReport ] = useState(initialReport);
 
   const { top_gainers, top_losers } = data;
-  const gainerRows = createRows(top_gainers);
-  const loserRows = createRows(top_losers);
+  const gainerRows = formatRows(top_gainers);
+  const loserRows = formatRows(top_losers);
 
   const classes = useStyles();
 
@@ -70,6 +67,7 @@ export default function TopMovers(props) {
       <Grid item xs={12} sm={12} md={5} lg={5}>
         <TopMoversTable
           dense={dense}
+          order="asc"
           report={report}
           rows={ query ? gainerRows.filter(x => x["country"].toLowerCase().includes(query)) : gainerRows }
           title="Top Gainers"
@@ -79,6 +77,7 @@ export default function TopMovers(props) {
       <Grid item xs={12} sm={12} md={5} lg={5}>
         <TopMoversTable
           dense={dense}
+          order="desc"
           report={report}
           rows={ query ? loserRows.filter(x => x["country"].toLowerCase().includes(query)) : loserRows }
           setDense={setDense}
