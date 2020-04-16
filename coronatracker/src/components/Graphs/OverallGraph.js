@@ -21,7 +21,7 @@ export default function OverallGraph(props) {
             <stop offset="95%" stopColor={deathsColor} stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <Brush stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
+        <Brush dataKey="date" stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
         <XAxis dataKey="date" stroke={'#3BBA9C'} />
         <YAxis stroke={'#3BBA9C'} />
         <Area type="monotone" dataKey="confirmed" stroke={confirmedColor} fillOpacity={1} fill="url(#colorConfirmed)"/>

@@ -10,7 +10,7 @@ export default function DerivativeGraph(props) {
   return (
     <ResponsiveContainer height={400}>
       <LineChart data={data} >
-        <Brush stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
+        <Brush dataKey="date" stroke='#3BBA9C' height={25} fill="#3C3F58" travellerWidth={8} />
         <CartesianGrid strokeWidth={0.5} />
         <XAxis dataKey="date" stroke={'#3BBA9C'} />
         <YAxis stroke={'#3BBA9C'} />
