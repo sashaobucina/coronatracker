@@ -34,7 +34,7 @@ export default function SliderButtonGroup(props) {
       </Tooltip>
     )
     : (
-      <Tooltip title="Play animation" placement="top">
+      <Tooltip title="Play" placement="top">
         <IconButton onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
           <PlayArrow />
         </IconButton>

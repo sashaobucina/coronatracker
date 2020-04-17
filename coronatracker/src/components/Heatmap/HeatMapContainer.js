@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import DateSlider from "../Slider/DateSlider";
 import HeatMap from "./HeatMap";
 import HeatMapButtons from "./HeatMapButtons";
 import HeatMapLegend from "./HeatMapLegend";
@@ -20,14 +21,16 @@ const useStyle = makeStyles({
 
 export default function HeatMapContainer() {
   const [content, setContent] = useState("");
-  const [data, setData] = useState([]);
+  const [fullData, setFullData] = useState([])
+  const [index, setIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
   const classes = useStyle();
 
   useEffect(() => {
     axios.get(FETCH_URL).then(res => {
-      setData(res.data);
+      setFullData(res.data);
+      setIndex(res.data.length - 1);
     });
   }, []);
 
@@ -49,13 +52,26 @@ export default function HeatMapContainer() {
     setPosition({ coordinates: [0, 0], zoom: 1 });
   }
 
+  function getDates() {
+    return fullData.map(entry => entry.date);
+  }
+
+  const dates = getDates();
+  const data = index !== -1 ? fullData[index]["data"] : [];
+
   return (
     <Grid container className={classes.root} direction="row" justify="center">
-      <Grid item xs={12} sm={12} md={12} lg={12} style={{ marginBottom: 20 }}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
           COVID-19 HeatMap
         </Typography>
       </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1}/>
+      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 25, marginBottom: 10 }}>
+        <DateSlider dates={dates} updateState={setIndex} value={index} />
+  <Typography variant="body">{`Slide to view changes over time - (${dates[index]})`}</Typography>
+      </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1}/>
       <Grid item xs={4} sm={5} md={5} lg={5} />
       <Grid item xs={4} sm={2} md={2} lg={2} align="center">
         <HeatMapButtons

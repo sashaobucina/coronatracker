@@ -16,7 +16,7 @@ export default function DateSlider(props) {
   const classes = useStyles();
 
   const valueToDate = (value) => {
-    return props.dates[value];
+    return dates[value];
   };
 
   return (
