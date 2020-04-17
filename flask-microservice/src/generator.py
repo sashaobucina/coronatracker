@@ -38,6 +38,23 @@ class DataGenerator:
 
     return self.reports[report_type][country]
 
+  def get_all_data(self, report_type):
+    """
+    Return the number of cases for all countries, throughout time.
+
+    Preconditions:
+      - report_type in ["Confirmed", "Deaths"]
+    """
+    data = []
+    report = self.reports[report_type]
+    for country in self.valid_countries:
+      country_data = report[country]
+      data.append({
+        "country": country,
+        "value": numpy_to_native(country_data[-1])
+      })
+    return data
+
   def top_movers(self):
     """
     Return a dictionary containing the top movers for both confirmed cases and deaths.
