@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AppBar, ButtonGroup, IconButton, Grid, Toolbar, Typography, Tooltip } from "@material-ui/core";
-import { Search, InfoOutlined, TrendingUp } from "@material-ui/icons";
+import { Search, InfoOutlined, TrendingUp, Public } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
@@ -26,8 +26,8 @@ export default function Header() {
             </Link>
           </Grid>
         </Grid>
-        <Grid item sm={4} md={4} lg={4} />
-        <Grid item xs={5} sm={2} md={2} lg={2}>
+        <Grid item sm={4} md={3} lg={3} />
+        <Grid item xs={6} sm={4} md={3} lg={3}>
           <ButtonGroup color="inherit">
             <Tooltip title="Search" placement="bottom">
               <Link to="/">
@@ -40,6 +40,13 @@ export default function Header() {
               <Link to="/top-movers">
                 <IconButton className={classes.root}>
                   <TrendingUp />
+                </IconButton>
+              </Link>
+            </Tooltip>
+            <Tooltip title="HeatMap" placement="bottom">
+              <Link to="/heatmap">
+                <IconButton className={classes.root}>
+                  <Public />
                 </IconButton>
               </Link>
             </Tooltip>

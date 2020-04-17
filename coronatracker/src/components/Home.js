@@ -65,7 +65,7 @@ class App extends Component{
       const currDatum = n < MAX_TABS ? datum : datum.slice(0, -1);
       const currTabs = n < MAX_TABS ? tabs : tabs.slice(0, -1)
 
-      const url = FETCH_URL + maybeCountry;
+      const url = `${FETCH_URL}/${maybeCountry}`
       axios.get(url).then(res => {
         this.setState({
           countries: [...currCountries, maybeCountry],

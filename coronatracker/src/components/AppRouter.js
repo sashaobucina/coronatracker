@@ -4,6 +4,7 @@ import axios from "axios";
 
 
 import Home from "./Home";
+import HeatMapContainer from './Heatmap/HeatMapContainer';
 import Main from "./Main"
 import FAQs from "./About/FAQs";
 import TopMovers from "./TopMovers/TopMovers";
@@ -69,6 +70,7 @@ export default function AppRouter() {
             render={(props) => <Home {...props} fetchState={fetchState} setFetchState={setState} />}
           />
           <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
+          <Route exact path="/heatmap" component={HeatMapContainer} />
           <Route exact path="/faqs" component={FAQs} />
         </Switch>
       </Main>
