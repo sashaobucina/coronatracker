@@ -47,12 +47,17 @@ class DataGenerator:
     """
     data = []
     report = self.reports[report_type]
-    for country in self.valid_countries:
-      country_data = report[country]
-      data.append({
-        "country": country,
-        "value": numpy_to_native(country_data[-1])
-      })
+
+    for i, date in enumerate(self.get_dates()):
+      data_for_date = []
+      for country in self.valid_countries:
+        country_data = report[country]
+        data_for_date.append({
+          "country": country,
+          "value": numpy_to_native(country_data[i])
+        })
+      data.append({"date": date, "data": data_for_date})
+
     return data
 
   def top_movers(self):
