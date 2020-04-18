@@ -46,7 +46,7 @@ export default function HeatMapContainer(props) {
   }, [props]);
 
   function handleZoomIn() {
-    if (position.zoom >= 4) return;
+    if (position.zoom >= 5) return;
     setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
   }
 
