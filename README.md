@@ -2,7 +2,7 @@
 
 Tracking the movement and trends of the COVID-19 virus. Visit the site [here](https://sashaobucina.github.io/coronatracker/).
 
-The trends of the virus are visualized through interactive graphs that show the movement on a per-country or global basis. These visualizations show:
+The trends of the virus are visualized through interactive graphs and tables that show the movement on a per-country or global basis. These visualizations show:
 - The total number of cases (confirmed & deaths)
 - The rate of change per day
 - The acceleration per day
@@ -10,9 +10,19 @@ The trends of the virus are visualized through interactive graphs that show the 
 
 The data is accmulated from the [John Hopkins University CSSE](https://github.com/CSSEGISandData/COVID-19) repository.
 
-## Demo
+## Demos
 
-![demo](demo.gif)
+### Country Search
+
+![demo](assets/demo.gif)
+
+### Top Movers
+
+![demo](assets/top-movers.gif)
+
+### Heat Map
+
+![demo](assets/heatmap.gif)
 
 *Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
 
