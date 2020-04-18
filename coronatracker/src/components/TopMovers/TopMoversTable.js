@@ -3,6 +3,10 @@ import { Paper, Table, TableHead, TableBody, TableRow, TableContainer, TablePagi
 import { makeStyles } from "@material-ui/styles";
 import { StyledTableCell, StyledTableSortLabel } from "./CustomComponents";
 import TableToolbar from "./TableToolbar";
+import {
+  getComparator,
+  stableSort
+} from "../../helpers/sorting";
 
 const useStyles = makeStyles({
   paper: {
@@ -13,31 +17,6 @@ const useStyles = makeStyles({
     color: '#3BBA9C'
   }
 });
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] > a[orderBy]) {
-    return -1;
-  } else if (b[orderBy] < a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(arr, comparator) {
-  const stabilizedThis = arr.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0])
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 function createRows(rows) {
   return rows.map((row, index) => {
@@ -83,64 +62,64 @@ export default function TopMoversTable(props) {
   return (
     <Paper className={classes.paper}>
       <TableToolbar title={title} report={report} up={up} />
-        <TableContainer>
-          <Table size={dense ? "small" : "medium"}>
-            <TableHead>
-              <TableRow>
-                {headCells.map((headCell) => (
-                  <StyledTableCell
-                    id={headCell.id}
-                    key={headCell.id}
-                    align={headCell.align ? "right" : "left"}
-                    sortDirection={orderBy === headCell.id ? order : false}
-                  >
-                    {headCell.sort
-                      ?
-                        (<Tooltip title="Sort by" placement="top">
-                          <StyledTableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={order}
-                            onClick={handleSort(headCell.id)}
-                          >
-                            { headCell.label }
-                          </StyledTableSortLabel>
-                        </Tooltip>)
-                      : headCell.label
-                    }
-                  </StyledTableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {createRows(stableSort(rows, getComparator(order, orderBy)))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow key={row.country}>
-                    <StyledTableCell>{row.index}</StyledTableCell>
-                    <StyledTableCell>{row.country}</StyledTableCell>
-                    <StyledTableCell align="right">{row.percent}</StyledTableCell>
-                    <StyledTableCell align="right">{row.change}</StyledTableCell>
-                    <StyledTableCell align="right">{row.total}</StyledTableCell>
-                  </TableRow>
+      <TableContainer>
+        <Table size={dense ? "small" : "medium"}>
+          <TableHead>
+            <TableRow>
+              {headCells.map((headCell) => (
+                <StyledTableCell
+                  id={headCell.id}
+                  key={headCell.id}
+                  align={headCell.align ? "right" : "left"}
+                  sortDirection={orderBy === headCell.id ? order : false}
+                >
+                  {headCell.sort
+                    ?
+                      (<Tooltip title="Sort by" placement="top">
+                        <StyledTableSortLabel
+                          active={orderBy === headCell.id}
+                          direction={order}
+                          onClick={handleSort(headCell.id)}
+                        >
+                          { headCell.label }
+                        </StyledTableSortLabel>
+                      </Tooltip>)
+                    : headCell.label
+                  }
+                </StyledTableCell>
               ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <StyledTableCell colSpan={6} />
-                  </TableRow>
-                )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          className={classes.pagination}
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {createRows(stableSort(rows, getComparator(order, orderBy)))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow key={row.country}>
+                  <StyledTableCell>{row.index}</StyledTableCell>
+                  <StyledTableCell>{row.country}</StyledTableCell>
+                  <StyledTableCell align="right">{row.percent}</StyledTableCell>
+                  <StyledTableCell align="right">{row.change}</StyledTableCell>
+                  <StyledTableCell align="right">{row.total}</StyledTableCell>
+                </TableRow>
+            ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <StyledTableCell colSpan={6} />
+                </TableRow>
+              )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        className={classes.pagination}
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 }

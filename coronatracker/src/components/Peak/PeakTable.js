@@ -8,11 +8,14 @@ import {
   TableRow,
   TableContainer,
   TablePagination,
-  Toolbar, Typography
+  Toolbar,
+  Tooltip,
+  Typography
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/styles";
-
 import { daysSinceScale, percentBelowScale } from "./scales";
+import { StyledTableSortLabel } from "../TopMovers/CustomComponents";
+import { getComparator, stableSort} from "../../helpers/sorting";
 
 const useStyle = makeStyles({
   paper: {
@@ -25,12 +28,12 @@ const useStyle = makeStyles({
 });
 
 const headCells = [
-  { id: "country", align: false, label: "Country" },
-  { id: "newCases", align: true, label: "New Cases" },
-  { id: "peak", align: true, label: "Peak" },
-  { id: "peakDate", align: true, label: "Date of Peak" },
-  { id: "daysSince", align: true, label: "Days Since" },
-  { id: "percentBelow", align: true, label: "% Below Peak" }
+  { id: "country", align: false, label: "Country", sort: false },
+  { id: "newCases", align: true, label: "New Cases", sort: true },
+  { id: "peak", align: true, label: "Peak", sort: true },
+  { id: "peakDate", align: true, label: "Date of Peak", sort: false },
+  { id: "daysSince", align: true, label: "Days Since", sort: true },
+  { id: "percentBelow", align: true, label: "% Below Peak", sort: true }
 ];
 
 function PeakToolbar(props) {
@@ -66,6 +69,8 @@ const generateStyle = (value, scale) => ({
 });
 
 export default function PeakTable(props) {
+  const [ order, setOrder ] = useState("asc");
+  const [ orderBy, setOrderBy ] = useState('daysSince');
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(20);
   const { dense, rows, title } = props;
@@ -80,6 +85,12 @@ export default function PeakTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleRequestSort = (property) => () => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -96,13 +107,25 @@ export default function PeakTable(props) {
                   key={headCell.id}
                   align={headCell.align ? "right" : "left"}
                 >
-                  {headCell.label}
+                  {headCell.sort
+                    ?
+                      (<Tooltip title="Sort by" placement="top">
+                        <StyledTableSortLabel
+                          active={orderBy === headCell.id}
+                          direction={order}
+                          onClick={handleRequestSort(headCell.id)}
+                        >
+                          { headCell.label }
+                        </StyledTableSortLabel>
+                      </Tooltip>)
+                    : headCell.label
+                  }
                 </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row.country}>
