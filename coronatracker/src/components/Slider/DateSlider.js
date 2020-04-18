@@ -8,6 +8,9 @@ const useStyles = makeStyles({
   },
   slider: {
     height: 5,
+  },
+  label: {
+    height: 10
   }
 });
 
@@ -25,7 +28,8 @@ export default function DateSlider(props) {
         colorPrimary: classes.color,
         colorSecondary: classes.color,
         rail: classes.slider,
-        track: classes.slider
+        track: classes.slider,
+        valueLabel: classes.label
       }}
       defaultValue={0}
       valueLabelFormat={valueToDate}

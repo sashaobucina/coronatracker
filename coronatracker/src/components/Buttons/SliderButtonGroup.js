@@ -4,7 +4,7 @@ import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore, SkipNext } from "@m
 
 export default function SliderButtonGroup(props) {
   const [ playing, setPlaying ] = useState(true);
-  const { indexValue, maxIndex, onStepClick, speed, updateIndexState } = props;
+  const { indexValue, maxIndex, onStepClick, size, speed, updateIndexState } = props;
 
   useEffect(() => {
     if (playing) {
@@ -28,21 +28,21 @@ export default function SliderButtonGroup(props) {
   const playButton = playing
     ? (
       <Tooltip title="Pause animation" placement="top">
-        <IconButton color="inherit" size="medium" onClick={() => setPlaying(false)}>
+        <IconButton size={size} onClick={() => setPlaying(false)}>
           <Pause />
         </IconButton>
       </Tooltip>
     )
     : (
       <Tooltip title="Play" placement="top">
-        <IconButton onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
+        <IconButton size={size} onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
           <PlayArrow />
         </IconButton>
       </Tooltip>
     );
 
   return (
-    <ButtonGroup color="inherit">
+    <ButtonGroup color="inherit" size={size}>
       {playButton}
       <Tooltip title="Skip animation" placement="top">
         <IconButton onClick={() => updateIndexState(maxIndex)}>

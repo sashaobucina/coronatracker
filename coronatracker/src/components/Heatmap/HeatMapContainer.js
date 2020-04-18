@@ -70,6 +70,7 @@ export default function HeatMapContainer() {
 
   const dates = getDates();
   const data = index !== -1 ? fullData[index]["data"] : [];
+  const currDate = dates.length > 0 ? dates[index] : ""
 
   return (
     <Grid container className={classes.root} direction="row" justify="center" alignItems="center">
@@ -81,14 +82,15 @@ export default function HeatMapContainer() {
       <Grid item xs={1} sm={1} md={1} lg={1}/>
       <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 25 }}>
         <DateSlider dates={dates} updateState={setIndex} value={index} />
-        <Typography variant="body">{`Slide to view changes over time - (${dates[index]})`}</Typography>
+        <Typography variant="body">{`Slide to view changes over time - (${currDate})`}</Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={1} sm={1} md={1} lg={1} />
-      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginBottom: 10 }}>
+      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 5, marginBottom: 10 }}>
         <SliderButtonGroup
           indexValue={index}
           maxIndex={maxIndex}
+          size={matches ? "medium" : "small"}
           speed={1}
           onStepClick={onStepClick}
           updateIndexState={setIndex}

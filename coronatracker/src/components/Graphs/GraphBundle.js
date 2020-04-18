@@ -80,6 +80,7 @@ export default function GraphBundle(props) {
             <SliderButtonGroup
               indexValue={indexValue}
               maxIndex={maxIndex}
+              size={"medium"}
               speed={speed}
               onStepClick={onStepClick}
               updateIndexState={updateIndexState}
