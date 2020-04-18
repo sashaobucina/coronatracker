@@ -16,7 +16,7 @@ import { FETCH_URL } from "../../helpers/misc";
 
 const useStyle = makeStyles({
   root: {
-    marginTop: 25,
+    marginTop: 76,
     marginBottom: 30
   }
 })

@@ -8,6 +8,11 @@ const useStyles = makeStyles({
   navigation : {
     background: '#3C3F58',
     color: '#3BBA9C',
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    opacity: 0.95,
+    zIndex: 9999
   },
   navigationAction: {
     color: '#12131C',

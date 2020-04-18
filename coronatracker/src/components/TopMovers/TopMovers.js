@@ -11,7 +11,7 @@ import { CustomSwitch } from "./CustomComponents"
 
 const useStyles = makeStyles({
   grid: {
-    marginTop: 25
+    marginTop: 75
   }
 })
 

@@ -8,7 +8,7 @@ import { useWindowDimensions } from "../../helpers/windowProvider";
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 45,
+    marginTop: 55,
     marginBottom: 50
   },
   panel: {

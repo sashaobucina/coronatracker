@@ -215,7 +215,7 @@ class App extends Component{
     const { fetchState, setFetchState } = this.props;
 
     return (
-      <div id="root-app">
+      <div id="root-app" style={{ marginTop: "50px" }}>
         <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={this.updateValidation}/>
         <Grid container direction="row" justify="center" alignItems="center">
           <Grid item xs={12} sm={12} md={12} lg={12}>
