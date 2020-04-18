@@ -10,9 +10,6 @@ import {
 import { HEATMAP_COLORS, HEATMAP_VALUES } from "../../helpers/misc";
 import worldMap from "../../static/world-110m.json";
 
-// const geoUrl =
-//   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
 const rounded = num => {
   if (num > 1000) {
     return Math.round(num / 100) / 10 + "K";
@@ -47,6 +44,14 @@ export default function HeatMap(props) {
               return geographies.map(geo => {
                 const { NAME, NAME_LONG, FORMAL_EN, ISO_A2 } = geo.properties;
                 const possibilites = [NAME, NAME_LONG, FORMAL_EN, ISO_A2];
+
+                // handling misnamings
+                if (NAME === "South Korea") possibilites.push("Korea, South");
+                if (NAME === "Macedonia") possibilites.push("North Macedonia");
+                if (NAME === "Myanmar") possibilites.push("Burma");
+                if (NAME === "Congo") possibilites.push("Congo (Brazzaville)");
+                if (NAME === "Dem. Rep. Congo") possibilites.push("Congo (Kinshasa)");
+
                 const d = data.find(entry => possibilites.includes(entry.country));
                 return (
                   <Geography
