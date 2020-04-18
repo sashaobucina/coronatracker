@@ -155,5 +155,5 @@ class DataGenerator:
         }
       )
 
-    peak_data = sorted(peak_data, key=lambda d: d["percentBelow"], reverse=True)
+    peak_data = sorted(peak_data, key=lambda d: d["daysSince"], reverse=True)
     return peak_data
