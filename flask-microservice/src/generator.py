@@ -47,7 +47,7 @@ class DataGenerator:
     """
     data = []
     report = self.reports[report_type]
-    for i, date in enumerate(self.get_dates()):
+    for i, date in enumerate(self.dates):
       data.append(
         {
           "date": date,
@@ -115,3 +115,45 @@ class DataGenerator:
       top10_data.append(self.get_country_data(country, report_type=CONFIRMED))
 
     return countries, top10_data
+
+  def get_peak_data(self, report_type="confirmed"):
+    peak_data = []
+    report = self.reports[report_type]
+
+    for country in self.valid_countries:
+      country_data = report[country]
+      num_cases = country_data[-1]
+
+      # dont account for countries with less than 5000 cases
+      if num_cases < 5000:
+        continue
+
+      # get changes per day
+      changes = np.diff(country_data)
+      recent = changes[-1]
+
+      # get peak
+      idx = changes.argmax(axis=0)
+      peak = changes[idx]
+      peak_date = self.dates[idx + 1]
+
+      # percent diff between recent and peak
+      percent_below = round((1 - div(recent, peak)) * 100, 1)
+
+      # days since recent and peak
+      days_since = (len(self.dates) - 1) - (idx + 1)
+
+      # aggregate all data needed
+      peak_data.append(
+        {
+          "country": country,
+          "daysSince": numpy_to_native(days_since),
+          "percentBelow": numpy_to_native(percent_below),
+          "newCases": numpy_to_native(recent),
+          "peak": numpy_to_native(peak),
+          "peakDate": peak_date
+        }
+      )
+
+    peak_data = sorted(peak_data, key=lambda d: d["percentBelow"], reverse=True)
+    return peak_data

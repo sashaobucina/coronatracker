@@ -46,7 +46,7 @@ scheduler.start()
 ###################### Routes ######################
 @app.route('/')
 def index():
-  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/cases', '/cases/<country>' endpoints for further functionality")
+  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/peak-data', '/cases', '/cases/<country>' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
@@ -68,13 +68,18 @@ def get_top_contributors():
   }
   return jsonify(response)
 
+@app.route('/peak-data')
+def peak_data():
+  response = generator.get_peak_data(report_type=util.CONFIRMED)
+  return jsonify(response)
+
 @app.route('/cases')
-def get_all_data():
+def all_data():
   response = generator.get_all_data(util.CONFIRMED)
   return jsonify(response)
 
 @app.route('/cases/<string:country>', methods=['GET'])
-def get_data(country):
+def country_data(country):
   try:
     dates = generator.get_dates()
     confirmed = generator.get_country_data(country, util.CONFIRMED)
@@ -104,4 +109,4 @@ def get_data(country):
 atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=PORT)
+  app.run(host="0.0.0.0", port=PORT, debug=True)
