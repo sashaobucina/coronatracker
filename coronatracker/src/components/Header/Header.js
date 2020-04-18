@@ -43,7 +43,7 @@ export default function Header() {
                 </IconButton>
               </Link>
             </Tooltip>
-            <Tooltip title="HeatMap" placement="bottom">
+            <Tooltip title="Heat Map" placement="bottom">
               <Link to="/heatmap">
                 <IconButton className={classes.root}>
                   <Public />
