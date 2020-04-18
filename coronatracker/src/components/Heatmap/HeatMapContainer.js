@@ -3,13 +3,15 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import {
   Grid,
-  Typography
+  Typography,
+  useMediaQuery
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import DateSlider from "../Slider/DateSlider";
 import HeatMap from "./HeatMap";
 import HeatMapButtons from "./HeatMapButtons";
 import HeatMapLegend from "./HeatMapLegend";
+import SliderButtonGroup from "../Buttons/SliderButtonGroup";
 import { FETCH_URL } from "../../helpers/misc";
 
 const useStyle = makeStyles({
@@ -23,14 +25,18 @@ export default function HeatMapContainer() {
   const [content, setContent] = useState("");
   const [fullData, setFullData] = useState([])
   const [index, setIndex] = useState(-1);
+  const [maxIndex, setMaxIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
   const classes = useStyle();
+  const matches = useMediaQuery('(min-width:960px)');
 
   useEffect(() => {
     axios.get(FETCH_URL).then(res => {
+      const len = res.data.length;
       setFullData(res.data);
-      setIndex(res.data.length - 1);
+      setIndex(len - 1);
+      setMaxIndex(len - 1);
     });
   }, []);
 
@@ -56,20 +62,37 @@ export default function HeatMapContainer() {
     return fullData.map(entry => entry.date);
   }
 
+  function onStepClick(ceilIndex, isIncrement) {
+    isIncrement
+      ? setIndex(index < ceilIndex ? index + 1 : 0)
+      : setIndex(index > 0 ? index - 1 : ceilIndex);
+  }
+
   const dates = getDates();
   const data = index !== -1 ? fullData[index]["data"] : [];
 
   return (
-    <Grid container className={classes.root} direction="row" justify="center">
+    <Grid container className={classes.root} direction="row" justify="center" alignItems="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
           COVID-19 HeatMap
         </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1}/>
-      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 25, marginBottom: 10 }}>
+      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 25 }}>
         <DateSlider dates={dates} updateState={setIndex} value={index} />
-  <Typography variant="body">{`Slide to view changes over time - (${dates[index]})`}</Typography>
+        <Typography variant="body">{`Slide to view changes over time - (${dates[index]})`}</Typography>
+      </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginBottom: 10 }}>
+        <SliderButtonGroup
+          indexValue={index}
+          maxIndex={maxIndex}
+          speed={1}
+          onStepClick={onStepClick}
+          updateIndexState={setIndex}
+        />
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1}/>
       <Grid item xs={4} sm={5} md={5} lg={5} />
