@@ -63,11 +63,9 @@ export default function FAQs(props) {
               <Divider className={classes.divider} />
               <ExpansionPanelActions>
                 <Tooltip title="Go to home" placement="right">
-                  <Link to = "/">
-                    <Button className={classes.button} size="small">
-                      Back to home
-                    </Button>
-                  </Link>
+                  <Button className={classes.button} size="small" component={Link} to="/">
+                    Back to home
+                  </Button>
                 </Tooltip>
               </ExpansionPanelActions>
             </ExpansionPanel>
