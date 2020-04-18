@@ -215,7 +215,7 @@ class App extends Component{
         <Grid container direction="row" justify="center" alignItems="center">
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
-              Tracking COVID-19 movements and trends - search "Global" to get world view
+              Tracking COVID-19 movements and trends - search "<b>Global</b>" to get world view
             </Typography>
           </Grid>
           <Grid item sm={2} xs={2} md={3} lg={3} />
