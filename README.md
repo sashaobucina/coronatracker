@@ -16,6 +16,8 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 
 ![demo](assets/demo.gif)
 
+*Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
+
 ### Top Movers
 
 ![demo](assets/top-movers.gif)
@@ -23,8 +25,6 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 ### Heat Map
 
 ![demo](assets/heatmap.gif)
-
-*Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
 
 ## Usage Locally
 
