@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
-
 import Home from "./Home";
 import HeatMapContainer from './Heatmap/HeatMapContainer';
 import Main from "./Main"
@@ -13,6 +12,7 @@ import NotLoaded from "./NotFound/NotLoaded";
 import { PREFETCH_URL } from "../helpers/misc";
 
 export default function AppRouter() {
+  const [path, setPath] = useState("/");
   const [ fetchState, setState] = useState({
     alerts: { errAlert: false, successAlert: false },
     fetched: false,
@@ -62,16 +62,16 @@ export default function AppRouter() {
 
   return (
     <Router hashType="noslash">
-      <Main loaded={fetchState.loaded}>
+      <Main loaded={fetchState.loaded} path={path} updatePath={setPath}>
         <Switch>
           <Route
             exact
             path="/"
-            render={(props) => <Home {...props} fetchState={fetchState} setFetchState={setState} />}
+            render={(props) => <Home {...props} fetchState={fetchState} setFetchState={setState} updatePath={setPath} />}
           />
-          <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} /> : <NotLoaded />} />
-          <Route exact path="/heatmap" component={HeatMapContainer} />
-          <Route exact path="/faqs" component={FAQs} />
+          <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} updatePath={setPath} /> : <NotLoaded />} />
+          <Route exact path="/heatmap" render={(props) => <HeatMapContainer {...props} updatePath={setPath} />} />
+          <Route exact path="/faqs" render={(props) => <FAQs {...props} updatePath={setPath} />} />
         </Switch>
       </Main>
     </Router>

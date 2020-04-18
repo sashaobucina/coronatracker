@@ -205,6 +205,11 @@ class App extends Component{
     });
   }
 
+  componentDidMount() {
+    const { match, updatePath } = this.props;
+    updatePath(match.url);
+  }
+
   render() {
     const { validated, userInput } = this.state;
     const { fetchState, setFetchState } = this.props;

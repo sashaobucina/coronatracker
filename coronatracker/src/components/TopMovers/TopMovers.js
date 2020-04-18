@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -25,6 +25,12 @@ const formatRows = (topMovers) => {
 
 export default function TopMovers(props) {
   const { topMovers } = props;
+
+  useEffect(() => {
+    const { match, updatePath } = props;
+    updatePath(match.url);
+  }, [props]);
+
   const initialReport = "confirmed";
 
   const [ dense, setDense ] = useState(false);

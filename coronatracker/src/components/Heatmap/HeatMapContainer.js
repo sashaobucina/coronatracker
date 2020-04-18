@@ -21,7 +21,7 @@ const useStyle = makeStyles({
   }
 })
 
-export default function HeatMapContainer() {
+export default function HeatMapContainer(props) {
   const [content, setContent] = useState("");
   const [fullData, setFullData] = useState([])
   const [index, setIndex] = useState(-1);
@@ -39,6 +39,11 @@ export default function HeatMapContainer() {
       setMaxIndex(len - 1);
     });
   }, []);
+
+  useEffect(() => {
+    const { match, updatePath } = props;
+    updatePath(match.url);
+  }, [props]);
 
   function handleZoomIn() {
     if (position.zoom >= 4) return;
@@ -82,7 +87,7 @@ export default function HeatMapContainer() {
       <Grid item xs={1} sm={1} md={1} lg={1}/>
       <Grid item xs={10} sm={10} md={10} lg={10} style={{ marginTop: 25 }}>
         <DateSlider dates={dates} updateState={setIndex} value={index} />
-        <Typography variant="body">{`Slide to view changes over time - (${currDate})`}</Typography>
+        <Typography variant="body1">{`Slide to view changes over time - (${currDate})`}</Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={1} sm={1} md={1} lg={1} />

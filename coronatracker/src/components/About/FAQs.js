@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Divider, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanelActions, Tooltip, Typography } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
@@ -29,9 +29,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function FAQs() {
+export default function FAQs(props) {
   const { height, width } = useWindowDimensions();
   const classes = useStyles();
+
+  useEffect(() => {
+    const { match, updatePath } = props;
+    updatePath(match.url);
+  }, [props]);
 
   return (
     <Grid className={classes.root} container direction="row" alignItems="center" spacing={3}>
@@ -52,7 +57,7 @@ export default function FAQs() {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography>
-                  A: The COVID-19 Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and graphical data. Go to the main page and search for a country of interest to get started!
+                  A: The COVID-19 Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and graphical data. Go to the home page and search for a country of interest to get started!
                 </Typography>
               </ExpansionPanelDetails>
               <Divider className={classes.divider} />
