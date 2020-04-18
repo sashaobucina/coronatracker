@@ -47,6 +47,7 @@ export default function HeatMap(props) {
 
                 // handling misnamings
                 if (NAME === "South Korea") possibilites.push("Korea, South");
+                if (NAME === "Taiwan") possibilites.push("Taiwan*");
                 if (NAME === "Macedonia") possibilites.push("North Macedonia");
                 if (NAME === "Myanmar") possibilites.push("Burma");
                 if (NAME === "Congo") possibilites.push("Congo (Brazzaville)");
