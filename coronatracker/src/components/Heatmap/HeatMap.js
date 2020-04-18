@@ -8,9 +8,10 @@ import {
   ZoomableGroup
 } from "react-simple-maps";
 import { HEATMAP_COLORS, HEATMAP_VALUES } from "../../helpers/misc";
+import worldMap from "../../static/world-110m.json";
 
-const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+// const geoUrl =
+//   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 const rounded = num => {
   if (num > 1000) {
@@ -41,7 +42,7 @@ export default function HeatMap(props) {
       >
         <Graticule strokeWidth={0.75} strokeOpacity={0.5} />
         {data.length > 0 && (
-          <Geographies geography={geoUrl}>
+          <Geographies geography={worldMap}>
             {({ geographies }) => {
               return geographies.map(geo => {
                 const { NAME, NAME_LONG, FORMAL_EN, ISO_A2 } = geo.properties;
