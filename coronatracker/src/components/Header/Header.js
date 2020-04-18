@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
   navigationAction: {
     color: '#12131C',
+    padding: 0,
     "&:hover": {
       color: '#3BBA9C',
       opacity: 0.9
@@ -58,14 +59,14 @@ export default function Header(props) {
       />
       <BottomNavigationAction
         className={classes.navigationAction}
-        label="Top Movers"
+        label="Movers"
         icon={<TrendingUp />}
         component={Link}
         to="/top-movers"
       />
       <BottomNavigationAction
         className={classes.navigationAction}
-        label="Days Since Peak"
+        label="Peak"
         icon={<DateRange />}
         component={Link}
         to="/peak-data"
