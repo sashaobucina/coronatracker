@@ -16,7 +16,13 @@ export default function HeatMapLegend() {
         backgroundColor: color
       }}
     >
-      <Typography justify="center" variant="caption">{HEATMAP_LABELS[i]}</Typography>
+      <Typography
+        justify="center"
+        variant="caption"
+        style={{ fontWeight: "bold" }}
+      >
+        {HEATMAP_LABELS[i]}
+      </Typography>
     </Paper>
   ));
 }
