@@ -31,9 +31,6 @@ export default function LoadingProgress(props) {
           <Typography className={classes.text} variant="overline">Initializing data...</Typography>
         </Grid>
         <Grid item>
-          <Typography className={classes.subText} variant="overline">Spinning server out of idle mode</Typography>
-        </Grid>
-        <Grid item>
           <Typography className={classes.subText} variant="overline">(May take up to 20 secs)</Typography>
         </Grid>
         <Grid item>
