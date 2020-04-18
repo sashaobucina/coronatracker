@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
-import { Search, InfoOutlined, TrendingUp, Public } from "@material-ui/icons";
+import { Search, InfoOutlined, DateRange, TrendingUp, Public } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
@@ -29,6 +29,7 @@ const useStyles = makeStyles({
 const paths = [
   "/",
   "/top-movers",
+  "/peak-data",
   "/heatmap",
   "/faqs"
 ]
@@ -38,7 +39,7 @@ export default function Header(props) {
   const classes = useStyles();
 
   const handleChange = (_, newValue) => {
-    updatePath(newValue);
+    updatePath(paths[newValue]);
   }
 
   return (
@@ -61,6 +62,13 @@ export default function Header(props) {
         icon={<TrendingUp />}
         component={Link}
         to="/top-movers"
+      />
+      <BottomNavigationAction
+        className={classes.navigationAction}
+        label="Days Since Peak"
+        icon={<DateRange />}
+        component={Link}
+        to="/peak-data"
       />
       <BottomNavigationAction
         className={classes.navigationAction}
