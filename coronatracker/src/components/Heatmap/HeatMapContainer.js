@@ -76,7 +76,7 @@ export default function HeatMapContainer() {
     <Grid container className={classes.root} direction="row" justify="center" alignItems="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
-          COVID-19 HeatMap
+          COVID-19 Heat Map
         </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1}/>
