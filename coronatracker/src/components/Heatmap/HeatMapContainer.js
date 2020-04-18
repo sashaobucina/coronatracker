@@ -114,8 +114,12 @@ export default function HeatMapContainer() {
         />
         <ReactTooltip>{content}</ReactTooltip>
       </Grid>
-      <Grid item md={1} lg={1} />
-      <HeatMapLegend />
+      {matches
+        ? (<Grid item md={1} lg={1}>
+            <HeatMapLegend />
+          </Grid>)
+        : (<HeatMapLegend />)
+      }
     </Grid>
   );
 };
