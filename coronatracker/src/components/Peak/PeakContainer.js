@@ -25,7 +25,7 @@ export default function PeakContainer(props) {
   const matches = useMediaQuery('(min-width:960px)');
 
   const [rows, setRows] = useState([]);
-  const [dense, setDense] = useState(!matches);
+  const [dense, setDense] = useState(false);
   const [query, setQuery] = useState("");
 
   useEffect(() => {

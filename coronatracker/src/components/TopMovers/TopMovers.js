@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core";
+import {
+  Grid,
+  FormControlLabel,
+  Tooltip,
+  Typography,
+  useMediaQuery
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import TableSearch from "./TableSearch";
 import TopMoversTable from "./TopMoversTable";
@@ -24,12 +27,17 @@ const formatRows = (topMovers) => {
 }
 
 export default function TopMovers(props) {
+  const matches = useMediaQuery('(min-width:960px)');
   const { topMovers } = props;
 
   useEffect(() => {
     const { match, updatePath } = props;
     updatePath(match.url);
   }, [props]);
+
+  useEffect(() => {
+    setDense(!matches)
+  }, [matches])
 
   const initialReport = "confirmed";
 
