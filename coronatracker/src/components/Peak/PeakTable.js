@@ -92,8 +92,6 @@ export default function PeakTable(props) {
     setOrderBy(property);
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   return (
     <Paper className={classes.paper}>
       <PeakToolbar title={title} />
@@ -147,11 +145,6 @@ export default function PeakTable(props) {
                   </TableCell>
                 </TableRow>
             ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <StyledTableCell colSpan={6} />
-                </TableRow>
-              )}
           </TableBody>
         </Table>
       </TableContainer>
