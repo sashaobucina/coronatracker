@@ -15,7 +15,6 @@ import { getCountry, FETCH_URL } from '../helpers/misc';
 export default function Home(props) {
   const [state, setState] = useState({
     countries: [],
-    idxValue: 0,
     data: [],
     tabIndex: 0,
     validated: true,
@@ -24,7 +23,6 @@ export default function Home(props) {
 
   const {
     countries,
-    idxValue,
     data,
     tabIndex,
     validated,
@@ -50,7 +48,6 @@ export default function Home(props) {
     if (maybeCountry) {
       setState(state => ({
         ...state,
-        idxValue: 0,
         tabIndex: countries.indexOf(maybeCountry)
       }));
       return;
@@ -71,7 +68,6 @@ export default function Home(props) {
           ...state,
           countries: [...currCountries, maybeCountry],
           data: [...currData, res.data],
-          idxValue: 0,
           tabIndex: currCountries.length,
           validated: true
         }));
@@ -82,7 +78,6 @@ export default function Home(props) {
     } else {
       setState(state => ({
         ...state,
-        idxValue: 0,
         validated: false
       }));
     }
@@ -103,9 +98,8 @@ export default function Home(props) {
   }
 
   function showTabs() {
-    return countries.length === 0
-      ? (<></>)
-      : (
+    return countries.length !== 0
+      ? (
         <TabsContainer
           countries={countries}
           clearState={clearState}
@@ -114,19 +108,17 @@ export default function Home(props) {
           removeTab={removeTab}
         />
       )
+      : null
   }
 
   function showGraphs() {
     const { labels, contributors } = fetchState["topContributors"];
     return data.length === 0
-      ? fetchState["fetched"] ? (<ContributorGraph labels={labels} data={contributors} />) : (<></>)
+      ? fetchState["fetched"] ? (<ContributorGraph labels={labels} data={contributors} />) : null
       : (
         <GraphBundle
           country={countries[tabIndex]}
           data={data[tabIndex]}
-          indexValue={idxValue}
-          onStepClick={onStepClick}
-          updateIndexState={updateIndexState}
         />
       )
   }
@@ -136,24 +128,9 @@ export default function Home(props) {
       ...state,
       countries: [],
       data: [],
-      idxValue: 0,
       tabIndex: 0,
       validated: validated
     }));
-  }
-
-  function onStepClick(n, increment) {
-    if (increment) {
-      setState(state => ({
-        ...state,
-        idxValue: idxValue < n ? idxValue + 1 : 0
-      }));
-    } else {
-      setState(state => ({
-        ...state,
-        idxValue: idxValue > 0 ? idxValue - 1 : n
-      }));
-    }
   }
 
   function handleTabChange(value) {
@@ -167,13 +144,6 @@ export default function Home(props) {
     setState(state => ({
       ...state,
       userInput: value
-    }));
-  }
-
-  function updateIndexState(idx) {
-    setState(state => ({
-      ...state,
-      idxValue: idx
     }));
   }
 

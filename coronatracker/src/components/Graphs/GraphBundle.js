@@ -19,10 +19,12 @@ const useStyles = makeStyles({
 })
 
 export default function GraphBundle(props) {
+  const [ indexValue, setIndexValue ] = useState(0);
   const [ speed, setSpeed ] = useState(1);
   const [ report, setReport ] = useState("confirmed")
   const [ scale, setScale ] = useState("log");
-  const { country, data, indexValue, onStepClick, updateIndexState } = props;
+  const { country, data } = props;
+
   const classes = useStyles();
 
   // collect data in proper format
@@ -30,6 +32,14 @@ export default function GraphBundle(props) {
   const weeklyData = convertDataToWeekly(overall);
   const dates = convertToDates(overall, weeklyData.length);
   const maxIndex = dates.length - 1;
+
+  function onStepClick(n, increment) {
+    if (increment) {
+      setIndexValue(indexValue < n ? indexValue + 1 : 0);
+    } else {
+      setIndexValue(indexValue > 0 ? indexValue - 1 : n);
+    }
+  }
 
   return (
     <Grid container direction="row" justify="center" alignItems="center">
@@ -75,7 +85,7 @@ export default function GraphBundle(props) {
         <ScaleButtonGroup scale={scale} updateScale={setScale} />
         <TrajectoryGraph data={weeklyData.slice(0, indexValue)} scale={scale} />
         <Typography align="center" fontStyle="oblique"style={{ marginTop: 20 }} variant="body2">← Tune slider to view changes over time →</Typography>
-        <DateSlider dates={dates} updateState={updateIndexState} value={indexValue} />
+        <DateSlider dates={dates} updateState={setIndexValue} value={indexValue} />
         <Grid container direction="column">
           <Grid item> 
             <SliderButtonGroup
@@ -84,7 +94,7 @@ export default function GraphBundle(props) {
               size={"medium"}
               speed={speed}
               onStepClick={onStepClick}
-              updateIndexState={updateIndexState}
+              updateIndexState={setIndexValue}
             />
           </Grid>
           <Grid item>
