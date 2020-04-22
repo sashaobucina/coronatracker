@@ -69,9 +69,9 @@ export default function Home(props) {
           tabIndex: currCountries.length
         }));
       }).catch(err => {
+        console.error(err);
         setAlert(SERVER_ALERT);
         clearState();
-        console.error(err);
       });
     } else {
       setAlert(COUNTRY_ALERT);
@@ -109,7 +109,9 @@ export default function Home(props) {
   function showGraphs() {
     const { labels, contributors } = fetchState["topContributors"];
     return data.length === 0
-      ? fetchState["fetched"] ? (<ContributorGraph labels={labels} data={contributors} />) : null
+      ? fetchState["fetched"]
+        ? (<ContributorGraph labels={labels} data={contributors} />)
+        : null
       : (
         <GraphBundle
           country={countries[tabIndex]}
