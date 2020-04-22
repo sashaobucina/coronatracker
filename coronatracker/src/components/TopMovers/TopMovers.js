@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Grid,
   FormControlLabel,
@@ -11,6 +12,7 @@ import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import TableSearch from "./TableSearch";
 import TopMoversTable from "./TopMoversTable";
 import { CustomSwitch } from "./CustomComponents"
+import { PREFETCH_URL } from "../../helpers/misc";
 
 const useStyles = makeStyles({
   grid: {
@@ -26,9 +28,18 @@ const formatRows = (topMovers) => {
   })
 }
 
+const initialReport = "confirmed";
+const emptyInfo = { "top_gainers": [], "top_losers": [] };
+const initialData = { "confirmed": emptyInfo, "deaths": emptyInfo };
+
 export default function TopMovers(props) {
+  const [ dense, setDense ] = useState(false);
+  const [ query, setQuery ] = useState("");
+  const [ report, setReport ] = useState(initialReport);
+  const [topMovers, setTopMovers] = useState(initialData);
+
   const matches = useMediaQuery('(min-width:960px)');
-  const { match, topMovers, updatePath } = props;
+  const { match, updatePath } = props;
 
   useEffect(() => {
     updatePath(match.url);
@@ -38,14 +49,20 @@ export default function TopMovers(props) {
     setDense(!matches)
   }, [matches])
 
-  const initialReport = "confirmed";
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = PREFETCH_URL + "top-movers";
+        const response = await axios.get(url);
+        setTopMovers(response.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, [])
 
-  const [ dense, setDense ] = useState(false);
-  const [ query, setQuery ] = useState("");
-  const [ data, setData ] = useState(topMovers[initialReport]);
-  const [ report, setReport ] = useState(initialReport);
-
-  const { top_gainers, top_losers } = data;
+  const { top_gainers, top_losers } = topMovers[report];
   const gainerRows = formatRows(top_gainers);
   const loserRows = formatRows(top_losers);
 
@@ -53,7 +70,6 @@ export default function TopMovers(props) {
 
   const handleReportChange = (report) => {
     setReport(report)
-    setData(topMovers[report]);
   }
 
   const handleChangeDense = (event) => {

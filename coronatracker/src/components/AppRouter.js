@@ -8,7 +8,6 @@ import PeakContainer from "./Peak/PeakContainer";
 import Main from "./Main"
 import FAQs from "./About/FAQs";
 import TopMovers from "./TopMovers/TopMovers";
-import NotLoaded from "./NotFound/NotLoaded";
 
 import { PREFETCH_URL } from "../helpers/misc";
 import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
@@ -20,41 +19,34 @@ export default function AppRouter() {
     fetched: false,
     loaded: false,
     topContributors: { contributors: [], labels: [] },
-    topMovers: undefined,
     validCountries: []
   });
 
   const preFetchData = () => {
     const request1 = axios.get(PREFETCH_URL + "valid-countries")
-    const request2 = axios.get(PREFETCH_URL + "top-movers")
-    const request3 = axios.get(PREFETCH_URL + "top-contributors")
+    const request2 = axios.get(PREFETCH_URL + "top-contributors")
 
-    axios.all([request1, request2, request3]).then(
+    axios.all([request1, request2]).then(
       axios.spread((...responses) => {
         const validCountries = responses[0].data;
-        const topMovers = responses[1].data;
-        const topContributors = responses[2].data;
+        const topContributors = responses[1].data;
         setState({
           fetched: true,
           loaded: true,
           topContributors: topContributors,
-          topMovers: topMovers,
           validCountries: validCountries
         });
         setAlert(SUCCESS_ALERT);
       })
     ).catch(err => {
+      console.error(err);
       setState({
         fetched: false,
         loaded: true,
         topContributors: { contributors: [], labels: [] },
-        topMovers: undefined,
         validCountries: []
       });
       setAlert(SERVER_ALERT);
-
-      // log the error
-      console.error(err);
     })
   }
 
@@ -62,7 +54,7 @@ export default function AppRouter() {
     preFetchData();
   }, []);
 
-  const { loaded, topMovers } = fetchState;
+  const { loaded } = fetchState;
 
   return (
     <Router hashType="noslash">
@@ -79,7 +71,7 @@ export default function AppRouter() {
             path="/"
             render={(props) => <Home {...props} setAlert={setAlert} fetchState={fetchState} updatePath={setPath} />}
           />
-          <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} updatePath={setPath} /> : <NotLoaded />} />
+          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} updatePath={setPath} />} />
           <Route exact path="/peak-data" render={(props) => <PeakContainer {...props} updatePath={setPath} />} />
           <Route exact path="/heatmap" render={(props) => <HeatMapContainer {...props} updatePath={setPath} />} />
           <Route exact path="/faqs" render={(props) => <FAQs {...props} updatePath={setPath} />} />
