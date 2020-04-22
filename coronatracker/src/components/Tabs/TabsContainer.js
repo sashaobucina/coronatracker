@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, ButtonGroup, Grid, IconButton, Tabs, Tooltip, Typography} from "@material-ui/core";
 import { ArrowBack, ArrowForward, Close, ClearAll } from "@material-ui/icons";
 import { makeStyles } from '@material-ui/styles';
+import CountryTab from './CountryTab';
 
 const useStyles = makeStyles({
   indicator: {
@@ -29,7 +30,17 @@ function ScrollableTabs(props) {
 };
 
 export default function TabsContainer(props) {
-  const { clearState, handleTabChange, tabs, tabIndex, removeTab } = props;
+  const { countries, clearState, handleTabChange, tabIndex, removeTab } = props;
+
+  const tabs = countries.map((country, i) => (
+    <CountryTab
+      country={country}
+      key={i}
+      index={i}
+      handleClose={removeTab}
+      handleChange={handleTabChange}
+    />
+  ));
 
   return (
     <Grid container direction="row" alignItems="center" style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }} spacing={1}>
@@ -52,7 +63,7 @@ export default function TabsContainer(props) {
               </IconButton>
             </Tooltip>
             <Tooltip title="Next tab" placement="top">
-              <IconButton onClick={() => handleTabChange(Math.min(tabIndex + 1, tabs.length - 1))}>
+              <IconButton onClick={() => handleTabChange(Math.min(tabIndex + 1, countries.length - 1))}>
                 <ArrowForward />
               </IconButton>
             </Tooltip>

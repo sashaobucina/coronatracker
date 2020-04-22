@@ -21,7 +21,8 @@ const useStyles = makeStyles({
 export default function GraphBundle(props) {
   const [ speed, setSpeed ] = useState(1);
   const [ report, setReport ] = useState("confirmed")
-  const { country, data, indexValue, scale, onStepClick, updateIndexState, updateScale } = props;
+  const [ scale, setScale ] = useState("log");
+  const { country, data, indexValue, onStepClick, updateIndexState } = props;
   const classes = useStyles();
 
   // collect data in proper format
@@ -71,7 +72,7 @@ export default function GraphBundle(props) {
       <Grid item xs={11} sm={11} md={11} lg={11} style={{ margin: 20 }}>
         <MoverButtonGroup report={report} setReport={setReport} />
         <Typography align="center" style={{ textTransform: "capitalize" }} variant="h5">COVID-19 Trajectory</Typography>
-        <ScaleButtonGroup scale={scale} updateScale={updateScale} />
+        <ScaleButtonGroup scale={scale} updateScale={setScale} />
         <TrajectoryGraph data={weeklyData.slice(0, indexValue)} scale={scale} />
         <Typography align="center" fontStyle="oblique"style={{ marginTop: 20 }} variant="body2">← Tune slider to view changes over time →</Typography>
         <DateSlider dates={dates} updateState={updateIndexState} value={indexValue} />

@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
 import AlertManager from "./Alerts/AlertManager"
-import CountryTab from './Tabs/CountryTab';
 import ContributorGraph from './Graphs/ContributorGraph';
 import Footer from './Footer/Footer';
 import GraphBundle from './Graphs/GraphBundle';
@@ -13,237 +12,205 @@ import TabsContainer from './Tabs/TabsContainer';
 
 import { getCountry, FETCH_URL } from '../helpers/misc';
 
-class App extends Component{
-  constructor(props) {
-    super(props)
-    this.state = {
-      countries: [],
-      idxValue: 0,
-      userInput: '',
-      datum: [],
-      scale: "log",
-      tabs: [],
-      tabIndex: 0,
-      validated: true
-    };
+export default function Home(props) {
+  const [state, setState] = useState({
+    countries: [],
+    idxValue: 0,
+    data: [],
+    tabIndex: 0,
+    validated: true,
+    userInput: ""
+  });
 
-    /* Bindings */
-    this.clearState = this.clearState.bind(this);
-    this.handleTabChange = this.handleTabChange.bind(this);
-    this.onStepClick = this.onStepClick.bind(this);
-    this.updateInputState = this.updateInputState.bind(this);
-    this.updateIndexState = this.updateIndexState.bind(this);
-    this.updateScale = this.updateScale.bind(this);
-    this.updateValidation = this.updateValidation.bind(this);
-  };
+  const {
+    countries,
+    idxValue,
+    data,
+    tabIndex,
+    validated,
+    userInput
+  } = state;
+  const { match, fetchState, setFetchState, updatePath } = props;
+  const { fetched, validCountries } = fetchState;
 
-  fetchData = () => {
-    const { countries, datum, tabs, userInput } = this.state;
-    const { fetchState } = this.props;
-    const { fetched, validCountries } = fetchState;
+  // update the current path on component render
+  useEffect(() => {
+    updatePath(match.url);
+  }, [match, updatePath]);
+
+  function fetchData() {
     let maybeCountry;
 
     if (!fetched || userInput === "") {
       return;
     }
 
+    // try getting country from previous tab
     maybeCountry = getCountry(userInput, countries);
     if (maybeCountry) {
-      this.setState({
+      setState(state => ({
+        ...state,
         idxValue: 0,
         tabIndex: countries.indexOf(maybeCountry)
-      });
+      }));
       return;
     }
 
+    // otherwise need to perform fetch if valid country
     maybeCountry = getCountry(userInput, validCountries);
     if (maybeCountry) {
       // prepare the data; limit tabs to 8
       const n = countries.length
       const MAX_TABS = 8;
       const currCountries = n < MAX_TABS ? countries: countries.slice(0, -1);
-      const currDatum = n < MAX_TABS ? datum : datum.slice(0, -1);
-      const currTabs = n < MAX_TABS ? tabs : tabs.slice(0, -1)
+      const currData = n < MAX_TABS ? data : data.slice(0, -1);
 
       const url = `${FETCH_URL}/${maybeCountry}`
       axios.get(url).then(res => {
-        this.setState({
+        setState(state => ({
+          ...state,
           countries: [...currCountries, maybeCountry],
-          datum: [...currDatum, res.data],
+          data: [...currData, res.data],
           idxValue: 0,
-          tabs: [...currTabs, this.newTab(maybeCountry, currTabs.length)],
-          tabIndex: currTabs.length,
+          tabIndex: currCountries.length,
           validated: true
-        });
+        }));
       }).catch(err => {
-        this.clearState(true);
+        clearState(true);
         console.error(err);
       });
     } else {
-      this.setState({
+      setState(state => ({
+        ...state,
         idxValue: 0,
         validated: false
-      });
+      }));
     }
   }
 
-  newTab = (country, index) => {
-    return (
-      <CountryTab
-        country={country}
-        key={index}
-        index={index}
-        handleClose={this.removeTab}
-        handleChange={this.handleTabChange}
-      />
-    )
-  }
-
-  removeTab = (e, index) => {
+  function removeTab(e, index) {
     e.stopPropagation();
 
-    const { countries, datum, tabs, tabIndex } = this.state;
     const fn = (_, i) => i !== index;
     const newTabIndex = index > tabIndex ? tabIndex : Math.max(0, tabIndex - 1);
-    const newTabs = tabs.map((tab, i) => {
-      return i > index ? this.newTab(countries[i], i - 1) : tab;
-    });
 
-    this.setState({
+    setState(state => ({
+      ...state,
       countries: countries.filter(fn),
-      datum: datum.filter(fn),
-      tabs: newTabs.filter(fn),
+      data: data.filter(fn),
       tabIndex: newTabIndex
-    });
+    }));
   }
 
-  showTabs = () => {
-    const { tabs, tabIndex } = this.state;
-    return tabs.length === 0
+  function showTabs() {
+    return countries.length === 0
       ? (<></>)
       : (
         <TabsContainer
-          clearState={this.clearState}
-          handleTabChange={this.handleTabChange}
-          tabs={tabs}
+          countries={countries}
+          clearState={clearState}
+          handleTabChange={handleTabChange}
           tabIndex={tabIndex}
-          removeTab={this.removeTab}
+          removeTab={removeTab}
         />
       )
   }
 
-  showGraphs = () => {
-    const { countries, datum, idxValue, scale, tabIndex } = this.state;
-    const { fetchState } = this.props;
+  function showGraphs() {
     const { labels, contributors } = fetchState["topContributors"];
-    return datum.length === 0
+    return data.length === 0
       ? fetchState["fetched"] ? (<ContributorGraph labels={labels} data={contributors} />) : (<></>)
       : (
         <GraphBundle
           country={countries[tabIndex]}
-          data={datum[tabIndex]}
+          data={data[tabIndex]}
           indexValue={idxValue}
-          scale={scale}
-          onStepClick={this.onStepClick}
-          updateIndexState={this.updateIndexState}
-          updateScale={this.updateScale}
+          onStepClick={onStepClick}
+          updateIndexState={updateIndexState}
         />
       )
   }
 
-  clearState = (validated) => {
-    this.setState({
+  function clearState(validated) {
+    setState(state => ({
+      ...state,
       countries: [],
-      datum: [],
-      tabs: [],
+      data: [],
       idxValue: 0,
       tabIndex: 0,
       validated: validated
-    });
+    }));
   }
 
-  onStepClick = (n, increment) => {
-    const { idxValue } = this.state;
+  function onStepClick(n, increment) {
     if (increment) {
-      this.setState({
+      setState(state => ({
+        ...state,
         idxValue: idxValue < n ? idxValue + 1 : 0
-      });
+      }));
     } else {
-      this.setState({
+      setState(state => ({
+        ...state,
         idxValue: idxValue > 0 ? idxValue - 1 : n
-      });
+      }));
     }
   }
 
-  handleTabChange = (value) => {
-    this.setState({
+  function handleTabChange(value) {
+    setState(state => ({
+      ...state,
       tabIndex: value
-    });
+    }));
   }
 
-  updateInputState = (value) => {
-    this.setState({
+  function updateInputState(value) {
+    setState(state => ({
+      ...state,
       userInput: value
-    });
+    }));
   }
 
-  updateIndexState = (idx) => {
-    this.setState({
+  function updateIndexState(idx) {
+    setState(state => ({
+      ...state,
       idxValue: idx
-    });
+    }));
   }
 
-  updateScale = (scale) => {
-    this.setState({
-      scale: scale
-    });
-  }
-
-  updateValidation = (validated) => {
-    this.setState({
+  function setValidation(validated) {
+    setState(state => ({
+      ...state,
       validated: validated
-    });
+    }));
   }
 
-  componentDidMount() {
-    const { match, updatePath } = this.props;
-    updatePath(match.url);
-  }
-
-  render() {
-    const { validated, userInput } = this.state;
-    const { fetchState, setFetchState } = this.props;
-
-    return (
-      <div id="root-app" style={{ marginTop: "50px" }}>
-        <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={this.updateValidation}/>
-        <Grid container direction="row" justify="center" alignItems="center">
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
-              Tracking COVID-19 movements and trends - search "<b>Global</b>" to get world view
-            </Typography>
-          </Grid>
-          <Grid item sm={2} xs={2} md={3} lg={3} />
-          <Grid item xs={5} sm={5} md={4} lg={4}>
-            <SearchBar
-              suggestions={fetchState["validCountries"]}
-              fetchData={this.fetchData}
-              updateState={this.updateInputState}
-              value={userInput}
-              style={{ paddingLeft: 10 }}
-            />
-          </Grid>
-          <Grid item sm={3} xs={3} md={2} lg={2}>
-            <SearchButton fetchData={this.fetchData} />
-          </Grid>
-          <Grid item xs={2} sm={2} md={3} lg={3} />
+  return (
+    <div id="root-app" style={{ marginTop: "50px" }}>
+      <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={setValidation}/>
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
+            Tracking COVID-19 movements and trends - search "<b>Global</b>" to get world view
+          </Typography>
         </Grid>
-        { this.showTabs() }
-        { this.showGraphs() }
-        <Footer />
-      </div>
-    )
-  };
+        <Grid item sm={2} xs={2} md={3} lg={3} />
+        <Grid item xs={5} sm={5} md={4} lg={4}>
+          <SearchBar
+            suggestions={fetchState["validCountries"]}
+            fetchData={fetchData}
+            updateState={updateInputState}
+            value={userInput}
+            style={{ paddingLeft: 10 }}
+          />
+        </Grid>
+        <Grid item sm={3} xs={3} md={2} lg={2}>
+          <SearchButton fetchData={fetchData} />
+        </Grid>
+        <Grid item xs={2} sm={2} md={3} lg={3} />
+      </Grid>
+      {showTabs()}
+      {showGraphs()}
+      <Footer />
+    </div>
+  );
 }
-
-export default App;

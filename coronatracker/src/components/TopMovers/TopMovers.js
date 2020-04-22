@@ -28,12 +28,11 @@ const formatRows = (topMovers) => {
 
 export default function TopMovers(props) {
   const matches = useMediaQuery('(min-width:960px)');
-  const { topMovers } = props;
+  const { match, topMovers, updatePath } = props;
 
   useEffect(() => {
-    const { match, updatePath } = props;
     updatePath(match.url);
-  }, [props]);
+  }, [match, updatePath]);
 
   useEffect(() => {
     setDense(!matches)
