@@ -13,6 +13,7 @@ import HeatMapButtons from "./HeatMapButtons";
 import HeatMapLegend from "./HeatMapLegend";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
 import { FETCH_URL } from "../../helpers/misc";
+import { SERVER_ALERT } from "../../helpers/alerts";
 
 const useStyle = makeStyles({
   root: {
@@ -28,22 +29,28 @@ export default function HeatMapContainer(props) {
   const [maxIndex, setMaxIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
+  const { match, setAlert, updatePath } = props;
   const classes = useStyle();
   const matches = useMediaQuery('(min-width:960px)');
 
   useEffect(() => {
-    axios.get(FETCH_URL).then(res => {
-      const len = res.data.length;
-      setFullData(res.data);
-      setIndex(len - 1);
-      setMaxIndex(len - 1);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(FETCH_URL);
+        setFullData(data);
+        setIndex(data.length - 1);
+        setMaxIndex(data.length - 1)
+      } catch (e) {
+        console.error(e);
+        setAlert(SERVER_ALERT);
+      }
+    }
+    fetchData();
+  }, [setAlert]);
 
   useEffect(() => {
-    const { match, updatePath } = props;
     updatePath(match.url);
-  }, [props]);
+  }, [match, updatePath]);
 
   function handleZoomIn() {
     if (position.zoom >= 5) return;

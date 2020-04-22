@@ -80,9 +80,9 @@ export default function AppRouter() {
               />
             }
           />
-          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} updatePath={setPath} />} />
-          <Route exact path="/peak-data" render={(props) => <Peak {...props} updatePath={setPath} />} />
-          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} updatePath={setPath} />} />
+          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} setAlert={setAlert} updatePath={setPath} />} />
+          <Route exact path="/peak-data" render={(props) => <Peak {...props} setAlert={setAlert} updatePath={setPath} />} />
+          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} setAlert={setAlert} updatePath={setPath} />} />
           <Route exact path="/faqs" render={(props) => <FAQs {...props} updatePath={setPath} />} />
         </Switch>
       </Main>

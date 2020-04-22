@@ -12,6 +12,7 @@ import { CustomSwitch } from "../TopMovers/CustomComponents";
 import PeakTable from "./PeakTable";
 import TableSearch from "../TopMovers/TableSearch";
 import { PREFETCH_URL } from "../../helpers/misc";
+import { SERVER_ALERT } from "../../helpers/alerts";
 
 
 const useStyles = makeStyles({
@@ -27,22 +28,29 @@ export default function PeakContainer(props) {
   const [rows, setRows] = useState([]);
   const [dense, setDense] = useState(false);
   const [query, setQuery] = useState("");
+  const { match, setAlert, updatePath } = props;
 
   useEffect(() => {
-    const url = PREFETCH_URL + "peak-data";
-    axios.get(url).then(res => {
-      setRows(res.data);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const url = PREFETCH_URL + "peak-data";
+        const { data } = await axios.get(url);
+        setRows(data);
+      } catch (e) {
+        console.error(e);
+        setAlert(SERVER_ALERT);
+      }
+    }
+    fetchData();
+  }, [setAlert]);
 
   useEffect(() => {
     setDense(!matches)
   }, [matches])
 
   useEffect(() => {
-    const { match, updatePath } = props;
     updatePath(match.url);
-  }, [props]);
+  }, [match, updatePath]);
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);

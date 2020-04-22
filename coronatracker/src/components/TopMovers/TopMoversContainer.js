@@ -13,6 +13,7 @@ import TableSearch from "./TableSearch";
 import TopMoversTable from "./TopMoversTable";
 import { CustomSwitch } from "./CustomComponents"
 import { PREFETCH_URL } from "../../helpers/misc";
+import { SERVER_ALERT } from "../../helpers/alerts"
 
 const useStyles = makeStyles({
   grid: {
@@ -39,7 +40,7 @@ export default function TopMoversContainer(props) {
   const [topMovers, setTopMovers] = useState(initialData);
 
   const matches = useMediaQuery('(min-width:960px)');
-  const { match, updatePath } = props;
+  const { match, setAlert, updatePath } = props;
 
   useEffect(() => {
     updatePath(match.url);
@@ -57,10 +58,11 @@ export default function TopMoversContainer(props) {
         setTopMovers(response.data);
       } catch (e) {
         console.error(e);
+        setAlert(SERVER_ALERT);
       }
     };
     fetchData();
-  }, [])
+  }, [setAlert])
 
   const { top_gainers, top_losers } = topMovers[report];
   const gainerRows = formatRows(top_gainers);
