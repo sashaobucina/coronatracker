@@ -54,7 +54,7 @@ export default function AppRouter() {
     preFetchData();
   }, []);
 
-  const { loaded } = fetchState;
+  const { fetched, loaded, topContributors, validCountries } = fetchState;
 
   return (
     <Router hashType="noslash">
@@ -69,7 +69,16 @@ export default function AppRouter() {
           <Route
             exact
             path="/"
-            render={(props) => <Home {...props} setAlert={setAlert} fetchState={fetchState} updatePath={setPath} />}
+            render={(props) => 
+              <Home
+                {...props}
+                fetched={fetched}
+                setAlert={setAlert}
+                topContributors={topContributors}
+                updatePath={setPath}
+                validCountries={validCountries}
+              />
+            }
           />
           <Route exact path="/top-movers" render={(props) => <TopMovers {...props} updatePath={setPath} />} />
           <Route exact path="/peak-data" render={(props) => <PeakContainer {...props} updatePath={setPath} />} />

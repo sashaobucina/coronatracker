@@ -26,8 +26,14 @@ export default function Home(props) {
     tabIndex,
     userInput
   } = state;
-  const { match, fetchState, setAlert, updatePath } = props;
-  const { fetched, validCountries } = fetchState;
+  const {
+    fetched,
+    match,
+    setAlert,
+    topContributors,
+    updatePath,
+    validCountries
+  } = props;
 
   // update the current path on component render
   useEffect(() => {
@@ -107,9 +113,9 @@ export default function Home(props) {
   }
 
   function showGraphs() {
-    const { labels, contributors } = fetchState["topContributors"];
+    const { contributors, labels } = topContributors;
     return data.length === 0
-      ? fetchState["fetched"]
+      ? fetched
         ? (<ContributorGraph labels={labels} data={contributors} />)
         : null
       : (
@@ -154,7 +160,7 @@ export default function Home(props) {
         <Grid item sm={2} xs={2} md={3} lg={3} />
         <Grid item xs={5} sm={5} md={4} lg={4}>
           <SearchBar
-            suggestions={fetchState["validCountries"]}
+            suggestions={validCountries}
             fetchData={fetchData}
             updateState={updateInputState}
             value={userInput}
