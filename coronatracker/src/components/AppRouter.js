@@ -3,11 +3,11 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 import Home from "./Home";
-import HeatMapContainer from './Heatmap/HeatMapContainer';
-import PeakContainer from "./Peak/PeakContainer";
+import HeatMap from './Heatmap/HeatMapContainer';
+import Peak from "./Peak/PeakContainer";
 import Main from "./Main"
 import FAQs from "./About/FAQs";
-import TopMovers from "./TopMovers/TopMovers";
+import TopMovers from "./TopMovers/TopMoversContainer";
 
 import { PREFETCH_URL } from "../helpers/misc";
 import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
@@ -81,8 +81,8 @@ export default function AppRouter() {
             }
           />
           <Route exact path="/top-movers" render={(props) => <TopMovers {...props} updatePath={setPath} />} />
-          <Route exact path="/peak-data" render={(props) => <PeakContainer {...props} updatePath={setPath} />} />
-          <Route exact path="/heatmap" render={(props) => <HeatMapContainer {...props} updatePath={setPath} />} />
+          <Route exact path="/peak-data" render={(props) => <Peak {...props} updatePath={setPath} />} />
+          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} updatePath={setPath} />} />
           <Route exact path="/faqs" render={(props) => <FAQs {...props} updatePath={setPath} />} />
         </Switch>
       </Main>

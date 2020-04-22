@@ -32,7 +32,7 @@ const initialReport = "confirmed";
 const emptyInfo = { "top_gainers": [], "top_losers": [] };
 const initialData = { "confirmed": emptyInfo, "deaths": emptyInfo };
 
-export default function TopMovers(props) {
+export default function TopMoversContainer(props) {
   const [ dense, setDense ] = useState(false);
   const [ query, setQuery ] = useState("");
   const [ report, setReport ] = useState(initialReport);
