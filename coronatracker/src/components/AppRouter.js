@@ -11,11 +11,12 @@ import TopMovers from "./TopMovers/TopMovers";
 import NotLoaded from "./NotFound/NotLoaded";
 
 import { PREFETCH_URL } from "../helpers/misc";
+import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
 
 export default function AppRouter() {
+  const [alert, setAlert] = useState(NO_ALERT);
   const [path, setPath] = useState("/");
-  const [ fetchState, setState] = useState({
-    alerts: { errAlert: false, successAlert: false },
+  const [fetchState, setState] = useState({
     fetched: false,
     loaded: false,
     topContributors: { contributors: [], labels: [] },
@@ -34,23 +35,25 @@ export default function AppRouter() {
         const topMovers = responses[1].data;
         const topContributors = responses[2].data;
         setState({
-          alerts: { errAlert: false, successAlert: true },
           fetched: true,
           loaded: true,
           topContributors: topContributors,
           topMovers: topMovers,
           validCountries: validCountries
-        })
+        });
+        setAlert(SUCCESS_ALERT);
       })
     ).catch(err => {
       setState({
-        alerts: { errAlert: true, successAlert: false },
         fetched: false,
         loaded: true,
         topContributors: { contributors: [], labels: [] },
         topMovers: undefined,
         validCountries: []
-      })
+      });
+      setAlert(SERVER_ALERT);
+
+      // log the error
       console.error(err);
     })
   }
@@ -59,16 +62,22 @@ export default function AppRouter() {
     preFetchData();
   }, []);
 
-  const { topMovers } = fetchState;
+  const { loaded, topMovers } = fetchState;
 
   return (
     <Router hashType="noslash">
-      <Main loaded={fetchState.loaded} path={path} updatePath={setPath}>
+      <Main
+        alert={alert}
+        loaded={loaded}
+        path={path}
+        setAlert={setAlert}
+        updatePath={setPath}
+      >
         <Switch>
           <Route
             exact
             path="/"
-            render={(props) => <Home {...props} fetchState={fetchState} setFetchState={setState} updatePath={setPath} />}
+            render={(props) => <Home {...props} setAlert={setAlert} fetchState={fetchState} updatePath={setPath} />}
           />
           <Route exact path="/top-movers" render={(props) => topMovers !== undefined ? <TopMovers {...props} topMovers={topMovers} updatePath={setPath} /> : <NotLoaded />} />
           <Route exact path="/peak-data" render={(props) => <PeakContainer {...props} updatePath={setPath} />} />

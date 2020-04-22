@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
-import AlertManager from "./Alerts/AlertManager"
 import ContributorGraph from './Graphs/ContributorGraph';
 import Footer from './Footer/Footer';
 import GraphBundle from './Graphs/GraphBundle';
@@ -11,13 +10,13 @@ import SearchButton from "./Buttons/SearchButton";
 import TabsContainer from './Tabs/TabsContainer';
 
 import { getCountry, FETCH_URL } from '../helpers/misc';
+import { COUNTRY_ALERT, SERVER_ALERT } from '../helpers/alerts';
 
 export default function Home(props) {
   const [state, setState] = useState({
     countries: [],
     data: [],
     tabIndex: 0,
-    validated: true,
     userInput: ""
   });
 
@@ -25,10 +24,9 @@ export default function Home(props) {
     countries,
     data,
     tabIndex,
-    validated,
     userInput
   } = state;
-  const { match, fetchState, setFetchState, updatePath } = props;
+  const { match, fetchState, setAlert, updatePath } = props;
   const { fetched, validCountries } = fetchState;
 
   // update the current path on component render
@@ -68,18 +66,15 @@ export default function Home(props) {
           ...state,
           countries: [...currCountries, maybeCountry],
           data: [...currData, res.data],
-          tabIndex: currCountries.length,
-          validated: true
+          tabIndex: currCountries.length
         }));
       }).catch(err => {
-        clearState(true);
+        setAlert(SERVER_ALERT);
+        clearState();
         console.error(err);
       });
     } else {
-      setState(state => ({
-        ...state,
-        validated: false
-      }));
+      setAlert(COUNTRY_ALERT);
     }
   }
 
@@ -123,13 +118,12 @@ export default function Home(props) {
       )
   }
 
-  function clearState(validated) {
+  function clearState() {
     setState(state => ({
       ...state,
       countries: [],
       data: [],
-      tabIndex: 0,
-      validated: validated
+      tabIndex: 0
     }));
   }
 
@@ -147,16 +141,8 @@ export default function Home(props) {
     }));
   }
 
-  function setValidation(validated) {
-    setState(state => ({
-      ...state,
-      validated: validated
-    }));
-  }
-
   return (
     <div id="root-app" style={{ marginTop: "50px" }}>
-      <AlertManager fetchState={fetchState} setFetchState={setFetchState} validated={validated} updateValidation={setValidation}/>
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
