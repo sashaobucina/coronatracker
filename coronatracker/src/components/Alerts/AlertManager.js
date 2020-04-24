@@ -21,7 +21,7 @@ export default function AlertManager(props) {
   const success = alertStrings[SUCCESS_ALERT];
   const server_err = alertStrings[SERVER_ALERT];
   const country_err = alertStrings[COUNTRY_ALERT];
-  const warning = alertStrings[DUPLICATE_ALERT];
+  const info = alertStrings[DUPLICATE_ALERT];
 
   return (
     <>
@@ -49,9 +49,9 @@ export default function AlertManager(props) {
       <MyAlert
         action={null}
         open={alert === DUPLICATE_ALERT}
-        message={warning}
+        message={info}
         handleClose={resetAlert}
-        severity="warning"
+        severity="info"
       />
     </>
   );
