@@ -14,21 +14,21 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 
 ### Country Search
 
-![demo](assets/demo.gif)
+![demo](assets/demo-final.gif)
 
 *Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
 
 ### Top Movers
 
-![demo](assets/top-movers.gif)
+![demo](assets/top-movers-final.gif)
 
 ### Heat Map
 
-![demo](assets/heatmap.gif)
+![demo](assets/heatmap-final.gif)
 
 ### Peak Table
 
-![demo](assets/peak.gif)
+![demo](assets/peak-final.gif)
 
 ## Usage Locally
 
