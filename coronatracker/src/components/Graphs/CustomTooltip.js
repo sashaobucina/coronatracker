@@ -1,4 +1,5 @@
 import React from "react";
+import { formatNumber } from "../../helpers/conversions"
 
 const comparator = (a, b) => {
   if (a.value < b.value) {
@@ -19,9 +20,9 @@ export default function CustomTooltip (props) {
     // accumulate the labels
     const labels = payload.map((entry, i) => {
       if (withIndex) {
-        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${i+1}) ${entry.dataKey} : ${entry.value}`}</p>);
+        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${i+1}) ${entry.dataKey} : ${formatNumber(entry.value)}`}</p>);
       } else {
-        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${entry.dataKey} : ${entry.value}`}</p>);
+        return (<p className="label" key={i} style={{ color: entry.stroke }}>{`${entry.dataKey} : ${formatNumber(entry.value)}`}</p>);
       }
     });
 

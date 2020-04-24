@@ -16,6 +16,7 @@ import { withStyles, makeStyles } from "@material-ui/styles";
 import { daysSinceScale, percentBelowScale } from "./scales";
 import { StyledTableSortLabel } from "../TopMovers/CustomComponents";
 import { getComparator, stableSort} from "../../helpers/sorting";
+import { formatNumber } from "../../helpers/conversions";
 
 const useStyle = makeStyles({
   paper: {
@@ -128,8 +129,8 @@ export default function PeakTable(props) {
               .map((row) => (
                 <TableRow key={row.country}>
                   <StyledTableCell>{row.country}</StyledTableCell>
-                  <StyledTableCell align="right">{row.newCases}</StyledTableCell>
-                  <StyledTableCell align="right">{row.peak}</StyledTableCell>
+                  <StyledTableCell align="right">{formatNumber(row.newCases)}</StyledTableCell>
+                  <StyledTableCell align="right">{formatNumber(row.peak)}</StyledTableCell>
                   <TableCell
                     align="right"
                     style={generateStyle(row.daysSince, daysSinceScale)}

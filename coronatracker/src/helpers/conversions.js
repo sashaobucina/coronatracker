@@ -19,10 +19,16 @@ export function convertToDates(overall, offset) {
 
 export function getSummary(data, key) {
   const n = data.length;
-  return n <= 1 ? "0" : (data[n - 1][key] - data[n - 2][key]).toString();
+  return n <= 1 ? "0" : formatNumber((data[n - 1][key] - data[n - 2][key]));
 }
 
 export function getDate(data, ind) {
   const date = new Date(data[ind]["date"].toString());
   return date.toDateString();
+}
+
+export function formatNumber(num) {
+  let numParts = num.toString().split('.');
+  numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return numParts.join('.');
 }

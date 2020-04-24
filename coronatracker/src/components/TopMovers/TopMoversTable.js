@@ -7,6 +7,7 @@ import {
   getComparator,
   stableSort
 } from "../../helpers/sorting";
+import { formatNumber } from "../../helpers/conversions";
 
 const useStyles = makeStyles({
   paper: {
@@ -22,8 +23,9 @@ function createRows(rows) {
   return rows.map((row, index) => {
     let { country, change, percent, total } = row;
     index += 1;
-    change = `+${change}`;
+    change = `+${formatNumber(change)}`;
     percent = `${percent.toFixed(3)}%`;
+    total = formatNumber(total);
     return { index, country, change, percent, total };
   })
 }
