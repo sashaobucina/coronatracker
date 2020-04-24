@@ -106,7 +106,7 @@ export default function SummaryContainer(props) {
       spacing={3}
     >
       <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
-      <Grid item xs={11} sm={11} md={11} lg={11} xl={11}>
+      <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
         <Typography align="left" color="inherit" variant="h4">
           Quick Summary
         </Typography>
@@ -114,6 +114,7 @@ export default function SummaryContainer(props) {
           (Select/deselect countries of interest to show/hide summarized info)
         </Typography>
       </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
       <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
       <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
         <ButtonGroup
