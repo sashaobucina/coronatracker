@@ -22,7 +22,7 @@ GET /valid-countries
 Return Type:
 
 ```yaml
-  [String...]
+[String...]
 ```
 
 ### Top Movers
