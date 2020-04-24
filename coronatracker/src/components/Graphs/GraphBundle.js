@@ -45,11 +45,12 @@ export default function GraphBundle(props) {
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 50, marginBottom: 20 }}>
         <Grid item xs={1} sm={1} md={1} lg={1} />
-        <Grid item xs={11} sm={11} md={11} lg={11}>
+        <Grid item xs={10} sm={10} md={10} lg={10}>
           <Typography color="inherit" variant="h5" align="center">
             Daily Report for {country} - {getDate(overall, overall.length - 1)}
           </Typography>
         </Grid>
+        <Grid item xs={1} sm={1} md={1} lg={1} />
       </Grid>
       <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 50 }}>
         <Grid item xs={3} sm={3} md={3} lg={3} />
