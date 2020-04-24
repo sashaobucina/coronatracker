@@ -31,9 +31,9 @@ const headCells = [
   { id: "country", align: false, label: "Country", sort: false },
   { id: "newCases", align: true, label: "New Cases", sort: true },
   { id: "peak", align: true, label: "Peak", sort: true },
-  { id: "peakDate", align: true, label: "Date of Peak", sort: false },
   { id: "daysSince", align: true, label: "Days Since", sort: true },
-  { id: "percentBelow", align: true, label: "% Below Peak", sort: true }
+  { id: "percentBelow", align: true, label: "% Below Peak", sort: true },
+  { id: "peakDate", align: true, label: "Date of Peak", sort: false }
 ];
 
 function PeakToolbar(props) {
@@ -130,7 +130,6 @@ export default function PeakTable(props) {
                   <StyledTableCell>{row.country}</StyledTableCell>
                   <StyledTableCell align="right">{row.newCases}</StyledTableCell>
                   <StyledTableCell align="right">{row.peak}</StyledTableCell>
-                  <StyledTableCell align="right">{row.peakDate}</StyledTableCell>
                   <TableCell
                     align="right"
                     style={generateStyle(row.daysSince, daysSinceScale)}
@@ -143,6 +142,7 @@ export default function PeakTable(props) {
                   >
                     {`${row.percentBelow}%`}
                   </TableCell>
+                  <StyledTableCell align="right">{row.peakDate}</StyledTableCell>
                 </TableRow>
             ))}
           </TableBody>
