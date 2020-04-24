@@ -37,7 +37,7 @@ const MyCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 export default function SummaryContainer(props) {
-  const [checkList, setCheckboxList] = useState(range(10).map(() => false));
+  const [checkList, setCheckboxList] = useState(range(10).map(() => true));
   const { data, fetchFn } = props;
   const { confirmed, deaths } = data
 
