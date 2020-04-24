@@ -7,6 +7,7 @@ import Footer from './Footer/Footer';
 import GraphBundle from './Graphs/GraphBundle';
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
+import SummaryContainer from './Summary/SummaryContainer';
 import TabsContainer from './Tabs/TabsContainer';
 
 import { getCountry, FETCH_URL } from '../helpers/misc';
@@ -41,7 +42,7 @@ export default function Home(props) {
     updatePath(match.url);
   }, [match, updatePath]);
 
-  function fetchData() {
+  function fetchOnInput() {
     let maybeCountry;
 
     if (!fetched || userInput === "") {
@@ -66,30 +67,7 @@ export default function Home(props) {
     // otherwise need to perform fetch if valid country
     maybeCountry = getCountry(userInput, validCountries);
     if (maybeCountry) {
-      // prepare the data; limit tabs to 8
-      const n = countries.length
-      const MAX_TABS = 8;
-      const currCountries = n < MAX_TABS ? countries: countries.slice(0, -1);
-      const currData = n < MAX_TABS ? data : data.slice(0, -1);
-
-      // set boolean flag to indicate loading new data 
-      setLoading(true);
-
-      const url = `${FETCH_URL}/${maybeCountry}`
-      axios.get(url).then(res => {
-        setState(state => ({
-          ...state,
-          countries: [...currCountries, maybeCountry],
-          data: [...currData, res.data],
-          tabIndex: currCountries.length
-        }));
-        setAlert(NO_ALERT);
-      }).catch(err => {
-        console.error(err);
-        setAlert(SERVER_ALERT);
-      }).finally(() => {
-        setLoading(false);
-      });
+      fetchData(maybeCountry);
     } else {
       setAlert(COUNTRY_ALERT);
     }
@@ -109,6 +87,33 @@ export default function Home(props) {
     }));
   }
 
+  function fetchData(country) {
+    // prepare the data; limit tabs to 8
+    const n = countries.length
+    const MAX_TABS = 8;
+    const currCountries = n < MAX_TABS ? countries: countries.slice(0, -1);
+    const currData = n < MAX_TABS ? data : data.slice(0, -1);
+
+    // set boolean flag to indicate loading new data
+    setLoading(true);
+
+    const url = `${FETCH_URL}/${country}`
+    axios.get(url).then(res => {
+      setState(state => ({
+        ...state,
+        countries: [...currCountries, country],
+        data: [...currData, res.data],
+        tabIndex: currCountries.length
+      }));
+      setAlert(NO_ALERT);
+    }).catch(err => {
+      console.error(err);
+      setAlert(SERVER_ALERT);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }
+
   function showTabs() {
     return countries.length !== 0
       ? (
@@ -124,10 +129,14 @@ export default function Home(props) {
   }
 
   function showGraphs() {
-    const { contributors, labels } = topContributors;
+    const { graph } = topContributors;
+    const { contributors, labels } = graph;
     return data.length === 0
       ? fetched
-        ? (<ContributorGraph labels={labels} data={contributors} />)
+        ? (<>
+            <ContributorGraph labels={labels} data={contributors} />
+            <SummaryContainer data={topContributors.summary} fetchFn={fetchData} />
+          </>)
         : null
       : (
         <GraphBundle
@@ -172,14 +181,13 @@ export default function Home(props) {
         <Grid item xs={5} sm={5} md={4} lg={4}>
           <SearchBar
             suggestions={validCountries}
-            fetchData={fetchData}
+            fetchData={fetchOnInput}
             updateState={updateInputState}
-            value={userInput}
             style={{ paddingLeft: 10 }}
           />
         </Grid>
         <Grid item sm={3} xs={3} md={2} lg={2}>
-          <SearchButton fetchData={fetchData} loading={loading} />
+          <SearchButton fetchData={fetchOnInput} loading={loading} />
         </Grid>
         <Grid item xs={2} sm={2} md={3} lg={3} />
       </Grid>

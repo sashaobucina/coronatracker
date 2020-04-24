@@ -12,13 +12,24 @@ import TopMovers from "./TopMovers/TopMoversContainer";
 import { PREFETCH_URL } from "../helpers/misc";
 import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
 
+const initialTopContributors = {
+  summary: {
+    confirmed: [],
+    deaths: []
+  },
+  graph: {
+    labels: [],
+    contributors: []
+  }
+}
+
 export default function AppRouter() {
   const [alert, setAlert] = useState(NO_ALERT);
   const [path, setPath] = useState("/");
   const [fetchState, setState] = useState({
     fetched: false,
     loaded: false,
-    topContributors: { contributors: [], labels: [] },
+    topContributors: initialTopContributors,
     validCountries: []
   });
 
@@ -40,12 +51,10 @@ export default function AppRouter() {
       })
     ).catch(err => {
       console.error(err);
-      setState({
-        fetched: false,
-        loaded: true,
-        topContributors: { contributors: [], labels: [] },
-        validCountries: []
-      });
+      setState((prevState) => ({
+        ...prevState,
+        loaded: true
+      }));
       setAlert(SERVER_ALERT);
     })
   }

@@ -35,12 +35,12 @@ const useStyles = makeStyles({
 
 export default function SearchBar(props) {
   const [ opened, setOpened ] = useState(false);
-  const { fetchData, suggestions, updateState, value } = props;
+  const { fetchData, suggestions, updateState } = props;
   const classes = useStyles();
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      opened ? setOpened(false) : fetchData(value)
+      opened ? setOpened(false) : fetchData();
     }
   }
 
