@@ -59,12 +59,18 @@ def get_top_movers():
 @app.route('/top-contributors')
 def get_top_contributors():
   labels, data = generator.top_contributors()
+  summary = generator.get_summary()
+
+  # graph data
   labels += ["date"]
   data += [generator.get_dates()]
 
   response = {
-    "labels": labels,
-    "contributors": util.json_like(labels, data)
+    "summary": summary,
+    "graph": {
+      "labels": labels,
+      "contributors": util.json_like(labels, data)
+    }
   }
   return jsonify(response)
 
@@ -109,4 +115,4 @@ def country_data(country):
 atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=PORT)
+  app.run(host="0.0.0.0", port=PORT, debug=True)

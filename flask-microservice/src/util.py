@@ -15,7 +15,7 @@ def json_like(labels, data):
   >>> json_like(labels, [dates, cases])
   [{'date': '1/1/20', 'num_cases': 100}, {'date': '1/2/20', 'num_cases': 200}, {'date': '1/3/20', 'num_cases': 300}]
   """
-  data = [_ndarray_to_list(datum) for datum in data]
+  data = [ndarray_to_list(datum) for datum in data]
   zipped_data = zip(*data)
   return [dict(zip(labels, row)) for row in zipped_data]
 
@@ -37,8 +37,20 @@ def _is_numpy(obj):
   """
   return type(obj).__module__ == np.__name__
 
-def _ndarray_to_list(arr):
+def ndarray_to_list(arr):
   """
   Convert NumPy array to a Python list if applicable.
   """
   return arr.tolist() if _is_numpy(arr) else arr
+
+def get_percent_below(value1, value2):
+  """
+  Return how much percent value1 is lower than value2.
+  """
+  return round((1 - div(value1, value2)) * 100, 1)
+
+def get_percent_change(value1, value2):
+  """
+  Return the percent change from value2 to value1.
+  """
+  return round(div((value1 - value2), value2) * 100, 2)

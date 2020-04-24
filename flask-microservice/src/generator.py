@@ -1,5 +1,5 @@
 import numpy as np
-from util import div, numpy_to_native, CONFIRMED, DEATHS
+from util import div, numpy_to_native, get_percent_below, get_percent_change, CONFIRMED, DEATHS
 
 class DataGenerator:
   """
@@ -87,7 +87,7 @@ class DataGenerator:
         if value1 < threshold or diff <= 0:
           continue
 
-        percentage_diff = div((value1 - value2), value2) * 100
+        percentage_diff = get_percent_change(value1, value2)
         movers[country] = (percentage_diff, diff, value1)
 
       # sort all movers
@@ -105,16 +105,42 @@ class DataGenerator:
 
     Only aggregate the top 10 contributors
     """
-    confirmed = self.reports[CONFIRMED]
-    contributions = [(country, confirmed[country][-1]) for country in self.valid_countries]
-    top10 = sorted(contributions, key=lambda x: x[1], reverse=True)[:10]
+    top10 = self._get_top10(self.reports[CONFIRMED])
 
     countries, top10_data = [], []
-    for country, _ in top10:
+    for country in top10:
       countries.append(country)
       top10_data.append(self.get_country_data(country, report_type=CONFIRMED))
 
     return countries, top10_data
+
+  def get_summary(self):
+    summary = {
+      CONFIRMED: [],
+      DEATHS: []
+    }
+
+    for report_type, report in self.reports.items():
+      top10 = self._get_top10(report)
+      for i, country in enumerate(top10):
+        country_data = self.get_country_data(country, report_type)
+        changes = np.diff(country_data)
+        new_cases, old_cases = changes[-1], changes[-2]
+        idx, peak = self._get_peak(changes)
+        days_since = (len(self.dates) - 1) - (idx + 1)
+
+        summary[report_type].append({
+          "country": country,
+          "index": i + 1,
+          "total": numpy_to_native(country_data[-1]),
+          "newCases": numpy_to_native(new_cases),
+          "maxCases": numpy_to_native(peak),
+          "percentBelow": numpy_to_native(get_percent_below(new_cases, peak)),
+          "daysSince": numpy_to_native(days_since),
+          "percentChange": numpy_to_native(get_percent_change(new_cases, old_cases))
+        })
+
+    return summary
 
   def get_peak_data(self, report_type="confirmed"):
     peak_data = []
@@ -137,12 +163,11 @@ class DataGenerator:
       #   continue
 
       # get peak
-      idx = changes.argmax(axis=0)
-      peak = changes[idx]
+      idx, peak = self._get_peak(changes)
       peak_date = self.dates[idx + 1]
 
       # percent diff between recent and peak
-      percent_below = round((1 - div(recent, peak)) * 100, 1)
+      percent_below = get_percent_below(recent, peak)
 
       # days since recent and peak
       days_since = (len(self.dates) - 1) - (idx + 1)
@@ -161,3 +186,14 @@ class DataGenerator:
 
     peak_data = sorted(peak_data, key=lambda d: d["daysSince"], reverse=True)
     return peak_data
+
+  def _get_top10(self, report):
+    contributions = [(country, report[country][-1]) for country in self.valid_countries]
+    top10 = sorted(contributions, key=lambda x: x[1], reverse=True)[:10]
+
+    # only return the countries
+    return [x[0] for x in top10]
+
+  def _get_peak(self, changes):
+    idx = changes.argmax(axis=0)
+    return idx, changes[idx]
