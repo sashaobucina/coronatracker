@@ -24,7 +24,7 @@ function createRows(rows) {
     let { country, change, percent, total } = row;
     index += 1;
     change = `+${formatNumber(change)}`;
-    percent = `${percent.toFixed(3)}%`;
+    percent = `${percent}%`;
     total = formatNumber(total);
     return { index, country, change, percent, total };
   })

@@ -51,12 +51,14 @@ function PeakToolbar(props) {
 export const StyledTableCell = withStyles(() => ({
   head: {
     background: '#373b52',
+    borderBottom: "2px solid #3BBA9C",
     color: '#3BBA9C',
     fontSize: 16,
     fontWeight: "bolder"
   },
   body: {
     background: '#3C3F58',
+    borderBottom: "1px solid #3BBA9C",
     color: '#3BBA9C',
     fontSize: 15
   }
@@ -65,6 +67,7 @@ export const StyledTableCell = withStyles(() => ({
 
 const generateStyle = (value, scale) => ({
   backgroundColor: "#3C3F58",
+  borderBottom: "1px solid #3BBA9C",
   color: scale(value),
   fontSize: 15
 });
