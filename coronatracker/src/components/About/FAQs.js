@@ -26,6 +26,9 @@ const useStyles = makeStyles({
       background: '#3C3F58',
       opacity: 0.8
     }
+  },
+  icon: {
+    color: "#3BBA9C"
   }
 });
 
@@ -50,7 +53,10 @@ export default function FAQs(props) {
           </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
-              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
                 <Typography>
                   Q: What is the COVID-19 Tracker?
                 </Typography>
@@ -72,7 +78,10 @@ export default function FAQs(props) {
           </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
-              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
                 <Typography>
                   Q: What are key indicators that the virus is no longer exponentially growing or that we are "flattening the curve"?
                 </Typography>
@@ -94,7 +103,10 @@ export default function FAQs(props) {
           </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
-              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
                 <Typography align="center">
                   Q: How should the derivative plots be interpreted for rate of change and acceleration?
                 </Typography>
@@ -110,7 +122,10 @@ export default function FAQs(props) {
           </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
-              <ExpansionPanelSummary expandIcon={<ExpandMore color="primary" />}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
                 <Typography align="center">
                   Q: How should the trajectory plot be interpreted?
                 </Typography>
