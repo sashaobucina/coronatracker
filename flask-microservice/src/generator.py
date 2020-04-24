@@ -137,7 +137,7 @@ class DataGenerator:
           "maxCases": numpy_to_native(peak),
           "percentBelow": numpy_to_native(get_percent_below(new_cases, peak)),
           "daysSince": numpy_to_native(days_since),
-          "percentChange": numpy_to_native(get_percent_change(new_cases, old_cases))
+          "percentChange": numpy_to_native(get_percent_change(country_data[-1], country_data[-2]))
         })
 
     return summary
