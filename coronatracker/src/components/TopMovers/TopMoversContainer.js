@@ -13,7 +13,7 @@ import TableSearch from "./TableSearch";
 import TopMoversTable from "./TopMoversTable";
 import { CustomSwitch } from "./CustomComponents"
 import { PREFETCH_URL } from "../../helpers/misc";
-import { SERVER_ALERT } from "../../helpers/alerts"
+import { SERVER_ALERT } from "../../helpers/alerts";
 
 const useStyles = makeStyles({
   grid: {
