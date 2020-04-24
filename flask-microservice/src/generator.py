@@ -132,6 +132,10 @@ class DataGenerator:
       changes = np.diff(country_data)
       recent = changes[-1]
 
+      # ignore countries w/ negative change; usually result of changing data source for tracking cases
+      # if recent < 0:
+      #   continue
+
       # get peak
       idx = changes.argmax(axis=0)
       peak = changes[idx]
