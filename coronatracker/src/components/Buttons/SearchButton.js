@@ -17,13 +17,14 @@ const useStyles = makeStyles({
 })
 
 export default function SearchButton(props) {
-  const { fetchData } = props;
+  const { fetchData, loading } = props;
   const classes = useStyles();
   return (
     <Tooltip title="Search">
       <Button
         className={classes.root}
         color="inherit"
+        disabled={loading}
         fullWidth
         variant="contained"
         onClick={fetchData}
