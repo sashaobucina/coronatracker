@@ -33,7 +33,7 @@ export default function AlertManager(props) {
         severity="error"
       />
       <MyAlert
-        action={<ReportIssueButton />}
+        action={null}
         open={alert === COUNTRY_ALERT}
         message={country_err}
         handleClose={resetAlert}
