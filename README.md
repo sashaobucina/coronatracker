@@ -26,6 +26,10 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 
 ![demo](assets/heatmap.gif)
 
+### Peak Table
+
+![demo](assets/peak.gif)
+
 ## Usage Locally
 
 This project runs on a React frontend managed by [npm](https://www.npmjs.com/get-npm) and a [Python3](https://www.python.org/downloads/release/python-362/) backend routed by Flask. Alternatively, you can use a [Docker](https://www.docker.com/) container to encapsulate the project.
