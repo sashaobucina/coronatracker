@@ -10,7 +10,7 @@ import SearchButton from "./Buttons/SearchButton";
 import TabsContainer from './Tabs/TabsContainer';
 
 import { getCountry, FETCH_URL } from '../helpers/misc';
-import { COUNTRY_ALERT, SERVER_ALERT } from '../helpers/alerts';
+import { COUNTRY_ALERT, SERVER_ALERT, NO_ALERT, DUPLICATE_ALERT } from '../helpers/alerts';
 
 export default function Home(props) {
   const [state, setState] = useState({
@@ -19,6 +19,7 @@ export default function Home(props) {
     tabIndex: 0,
     userInput: ""
   });
+  const [loading, setLoading] = useState(false);
 
   const {
     countries,
@@ -50,6 +51,11 @@ export default function Home(props) {
     // try getting country from previous tab
     maybeCountry = getCountry(userInput, countries);
     if (maybeCountry) {
+      // set alert that country is already being shown if redundant query
+      if (maybeCountry === countries[tabIndex]) {
+        setAlert(DUPLICATE_ALERT);
+      }
+
       setState(state => ({
         ...state,
         tabIndex: countries.indexOf(maybeCountry)
@@ -66,6 +72,9 @@ export default function Home(props) {
       const currCountries = n < MAX_TABS ? countries: countries.slice(0, -1);
       const currData = n < MAX_TABS ? data : data.slice(0, -1);
 
+      // set boolean flag to indicate loading new data 
+      setLoading(true);
+
       const url = `${FETCH_URL}/${maybeCountry}`
       axios.get(url).then(res => {
         setState(state => ({
@@ -74,10 +83,12 @@ export default function Home(props) {
           data: [...currData, res.data],
           tabIndex: currCountries.length
         }));
+        setAlert(NO_ALERT);
       }).catch(err => {
         console.error(err);
         setAlert(SERVER_ALERT);
-        clearState();
+      }).finally(() => {
+        setLoading(false);
       });
     } else {
       setAlert(COUNTRY_ALERT);
@@ -168,7 +179,7 @@ export default function Home(props) {
           />
         </Grid>
         <Grid item sm={3} xs={3} md={2} lg={2}>
-          <SearchButton fetchData={fetchData} />
+          <SearchButton fetchData={fetchData} loading={loading} />
         </Grid>
         <Grid item xs={2} sm={2} md={3} lg={3} />
       </Grid>
