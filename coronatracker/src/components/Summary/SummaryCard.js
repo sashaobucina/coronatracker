@@ -38,7 +38,9 @@ export default function SummaryCard(props) {
 
   const getRow = (title, key, formatFn) => (
     <TableRow>
-      <StyledTableCell style={{ fontWeight: "bold" }}>{title}</StyledTableCell>
+      <StyledTableCell style={{ fontWeight: "bold" }}>
+        {title}
+      </StyledTableCell>
       <StyledTableCell>
         {formatFn(confirmed[key])}
       </StyledTableCell>
