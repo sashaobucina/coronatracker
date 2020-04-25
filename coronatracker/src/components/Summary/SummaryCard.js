@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,8 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableBody,
-  Tooltip
+  TableBody
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { StyledTableCell } from "../Shared/CustomComponents";
@@ -21,17 +19,6 @@ const useStyle = makeStyles({
     background: "#373B52",
     color: "#3BBA9C"
   },
-  button: {
-    background: '#3C3F58',
-    color: '#3BBA9C',
-    height: 48,
-    marginLeft: 8,
-    border: "1px solid #3BBA9C",
-    "&:hover": {
-      background: '#3C3F58',
-      opacity: 0.8
-    }
-  },
   header: {
     backgroundImage: `url(${require("../../static/coronavirus.jpg")})`,
     color: "#2E3047"
@@ -39,9 +26,9 @@ const useStyle = makeStyles({
 });
 
 export default function SummaryCard(props) {
-  const { data, fetchFn, size } = props;
+  const { buttonComponent, data, size, subheader } = props;
   const { confirmed, deaths } = data;
-  const { country, index } = confirmed;
+  const { country } = confirmed;
 
   const classes = useStyle();
 
@@ -62,7 +49,7 @@ export default function SummaryCard(props) {
       <CardHeader
         className={classes.header}
         title={country}
-        subheader={`#${index} in Confirmed Cases`}
+        subheader={subheader}
       />
       <CardContent>
         <TableContainer>
@@ -96,16 +83,7 @@ export default function SummaryCard(props) {
         </TableContainer>
       </CardContent>
       <CardActions>
-        <Tooltip title={`Search for ${country}`} placement="right">
-          <Button
-            className={classes.button}
-            size="small"
-            variant="outlined"
-            onClick={() => fetchFn(country)}
-          >
-            MORE DETAILS
-          </Button>
-        </Tooltip>
+        {buttonComponent ? buttonComponent : null }
       </CardActions>
     </Card>
   );

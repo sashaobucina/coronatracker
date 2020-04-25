@@ -7,6 +7,7 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
+  Tooltip,
   Typography,
   useMediaQuery
 } from "@material-ui/core";
@@ -17,6 +18,17 @@ const useStyle = makeStyles({
   root: {
     marginTop: 30,
     marginBottom: 50
+  },
+  button: {
+    background: '#3C3F58',
+    color: '#3BBA9C',
+    height: 48,
+    marginLeft: 8,
+    border: "1px solid #3BBA9C",
+    "&:hover": {
+      background: '#3C3F58',
+      opacity: 0.8
+    }
   },
   labelSmall: {
     fontSize: 13
@@ -63,7 +75,24 @@ export default function SummaryContainer(props) {
         acc.push((
           <React.Fragment key={idx}>
             <Grid item xs={10} sm={10} md={5} lg={5} xl={5}>
-              <SummaryCard data={getCardData(idx)} fetchFn={fetchFn} size={size} />
+              <SummaryCard 
+                data={getCardData(idx)}
+                buttonComponent={(
+                  <Tooltip title={`Search for ${getCountry(idx)}`} placement="right">
+                    <Button
+                      className={classes.button}
+                      size="small"
+                      variant="outlined"
+                      onClick={() => fetchFn(getCountry(idx))}
+                    >
+                      More Details
+                    </Button>
+                  </Tooltip>
+                )}
+                index={idx+1}
+                subheader={`#${idx+1} in Confirmed Cases`}
+                size={size}
+              />
             </Grid>
           </React.Fragment>
         ));

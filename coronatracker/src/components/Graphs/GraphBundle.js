@@ -9,6 +9,7 @@ import TrajectoryGraph from "./TrajectoryGraph";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
+import SummaryCard from "../Summary/SummaryCard";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
 import { convertDataToWeekly, convertToDates, getSummary, getDate } from "../../helpers/conversions";
 
@@ -28,7 +29,7 @@ export default function GraphBundle(props) {
   const classes = useStyles();
 
   // collect data in proper format
-  const { overall, first_derivative_data, second_derivative_data } = data;
+  const { overall, first_derivative_data, second_derivative_data, summary } = data;
   const weeklyData = convertDataToWeekly(overall);
   const dates = convertToDates(overall, weeklyData.length);
   const maxIndex = dates.length - 1;
@@ -52,19 +53,12 @@ export default function GraphBundle(props) {
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} />
       </Grid>
-      <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 50 }}>
-        <Grid item xs={3} sm={3} md={3} lg={3} />
-        <Grid item xs={3} sm={3} md={3} lg={3}>
-          <Typography className={classes.root} variant="h5" align="center">
-            +{getSummary(overall, "confirmed")} Cases
-          </Typography>
-        </Grid>
-        <Grid item xs={3} sm={3} md={3} lg={3}>
-          <Typography variant="h5" color="error" align="center">
-            +{getSummary(overall, "deaths")} Deaths
-          </Typography>
-        </Grid>
-        <Grid item xs={2} sm={2} md={2} lg={2} />
+      <Grid item xs={10} sm={10} md={6} lg={6} style={{ marginBottom: 40 }}>
+        <SummaryCard
+          data={summary}
+          size="medium"
+          subheader=""
+        />
       </Grid>
       <Grid item xs={12} sm={12}>
         <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
