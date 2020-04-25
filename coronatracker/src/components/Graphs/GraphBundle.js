@@ -75,6 +75,7 @@ export default function GraphBundle(props) {
         <Grid container direction="column">
           <Grid item> 
             <SliderButtonGroup
+              disabled={false}
               indexValue={indexValue}
               maxIndex={maxIndex}
               size={"medium"}

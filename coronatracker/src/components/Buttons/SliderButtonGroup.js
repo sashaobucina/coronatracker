@@ -4,7 +4,7 @@ import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore, SkipNext } from "@m
 
 export default function SliderButtonGroup(props) {
   const [ playing, setPlaying ] = useState(true);
-  const { indexValue, maxIndex, onStepClick, size, speed, updateIndexState } = props;
+  const { disabled, indexValue, maxIndex, onStepClick, size, speed, updateIndexState } = props;
 
   useEffect(() => {
     if (playing) {
@@ -28,41 +28,63 @@ export default function SliderButtonGroup(props) {
   const playButton = playing
     ? (
       <Tooltip title="Pause animation" placement="top">
-        <IconButton size={size} onClick={() => setPlaying(false)}>
-          <Pause />
-        </IconButton>
+        <span>
+          <IconButton
+            color="inherit"
+            size={size}
+            disabled={disabled}
+            onClick={() => setPlaying(false)}
+          >
+            <Pause />
+          </IconButton>
+        </span>
       </Tooltip>
     )
     : (
       <Tooltip title="Play" placement="top">
-        <IconButton size={size} onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}>
-          <PlayArrow />
-        </IconButton>
+        <span>
+          <IconButton
+            color="inherit"
+            size={size}
+            disabled={disabled}
+            onClick={() => indexValue < maxIndex ? setPlaying(true) : {}}
+            >
+            <PlayArrow />
+          </IconButton>
+        </span>
       </Tooltip>
     );
 
   return (
-    <ButtonGroup color="inherit" size={size}>
+    <ButtonGroup size={size}>
       {playButton}
       <Tooltip title="Skip animation" placement="top">
-        <IconButton onClick={() => updateIndexState(maxIndex)}>
-          <SkipNext />
-        </IconButton>
+        <span>
+          <IconButton color="inherit" disabled={disabled} onClick={() => updateIndexState(maxIndex)}>
+            <SkipNext />
+          </IconButton>
+        </span>
       </Tooltip>
       <Tooltip title="Reset" placement="top">
-        <IconButton onClick={restore}>
-          <Restore />
-        </IconButton>
+        <span>
+          <IconButton color="inherit" disabled={disabled} onClick={restore}>
+            <Restore />
+          </IconButton>
+        </span>
       </Tooltip>
       <Tooltip title="Decrement" placement="top">
-        <IconButton onClick={(_) => onStepClick(maxIndex, false)}>
-          <ArrowBack />
-        </IconButton>
+        <span>
+          <IconButton color="inherit" disabled={disabled} onClick={(_) => onStepClick(maxIndex, false)}>
+            <ArrowBack />
+          </IconButton>
+        </span>
       </Tooltip>
       <Tooltip title="Increment" placement="top">
-        <IconButton onClick={(_) => onStepClick(maxIndex, true)}>
-          <ArrowForward />
-        </IconButton>
+        <span>
+          <IconButton color="inherit" disabled={disabled} onClick={(_) => onStepClick(maxIndex, true)}>
+            <ArrowForward />
+          </IconButton>
+        </span>
       </Tooltip>
     </ButtonGroup>
   );
