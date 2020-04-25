@@ -114,6 +114,23 @@ class DataGenerator:
 
     return countries, top10_data
 
+  def get_country_summary(self, country, report_type=CONFIRMED):
+    country_data = self.get_country_data(country, report_type)
+    changes = np.diff(country_data)
+    new_cases, old_cases = changes[-1], changes[-2]
+    idx, peak = self._get_peak(changes)
+    days_since = (len(self.dates) - 1) - (idx + 1)
+
+    return {
+      "country": country,
+      "total": numpy_to_native(country_data[-1]),
+      "newCases": numpy_to_native(new_cases),
+      "maxCases": numpy_to_native(peak),
+      "percentBelow": numpy_to_native(get_percent_below(new_cases, peak)),
+      "daysSince": numpy_to_native(days_since),
+      "percentChange": numpy_to_native(get_percent_change(country_data[-1], country_data[-2]))
+    }
+
   def get_summary(self):
     summary = {
       CONFIRMED: [],
@@ -123,22 +140,7 @@ class DataGenerator:
     for report_type, report in self.reports.items():
       top10 = self._get_top10(report)
       for i, country in enumerate(top10):
-        country_data = self.get_country_data(country, report_type)
-        changes = np.diff(country_data)
-        new_cases, old_cases = changes[-1], changes[-2]
-        idx, peak = self._get_peak(changes)
-        days_since = (len(self.dates) - 1) - (idx + 1)
-
-        summary[report_type].append({
-          "country": country,
-          "index": i + 1,
-          "total": numpy_to_native(country_data[-1]),
-          "newCases": numpy_to_native(new_cases),
-          "maxCases": numpy_to_native(peak),
-          "percentBelow": numpy_to_native(get_percent_below(new_cases, peak)),
-          "daysSince": numpy_to_native(days_since),
-          "percentChange": numpy_to_native(get_percent_change(country_data[-1], country_data[-2]))
-        })
+        summary[report_type].append(self.get_country_summary(country, report_type))
 
     return summary
 

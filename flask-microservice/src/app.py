@@ -99,10 +99,16 @@ def country_data(country):
     first_derivative = util.json_like(labels, [dates, drv1_confirmed, drv1_deaths])
     second_derivative = util.json_like(labels, [dates, drv2_confirmed, drv2_deaths])
 
+    summary = {
+      util.CONFIRMED: generator.get_country_summary(country, util.CONFIRMED),
+      util.DEATHS: generator.get_country_summary(country, util.DEATHS)
+    }
+
     response = {
       "overall": overall,
       "first_derivative_data": first_derivative,
-      "second_derivative_data": second_derivative
+      "second_derivative_data": second_derivative,
+      "summary": summary
     }
 
     return jsonify(response)
