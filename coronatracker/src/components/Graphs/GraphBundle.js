@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 
 import DateSlider from "../Slider/DateSlider"
 import DerivativeGraph from "./DerivativeGraph"
@@ -11,13 +10,7 @@ import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
 import SummaryCard from "../Summary/SummaryCard";
 import SpeedButtonGroup from "../Buttons/SpeedButtonGroup";
-import { convertDataToWeekly, convertToDates, getSummary, getDate } from "../../helpers/conversions";
-
-const useStyles = makeStyles({
-  root: {
-    color: "#DB7C00"
-  }
-})
+import { convertDataToWeekly, convertToDates, getDate } from "../../helpers/conversions";
 
 export default function GraphBundle(props) {
   const [ indexValue, setIndexValue ] = useState(0);
@@ -25,8 +18,6 @@ export default function GraphBundle(props) {
   const [ report, setReport ] = useState("confirmed")
   const [ scale, setScale ] = useState("log");
   const { country, data } = props;
-
-  const classes = useStyles();
 
   // collect data in proper format
   const { overall, first_derivative_data, second_derivative_data, summary } = data;
