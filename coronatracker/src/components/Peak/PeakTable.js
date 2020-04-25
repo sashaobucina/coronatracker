@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import values from "lodash/values";
 import {
   Paper,
   Table,
@@ -8,14 +9,14 @@ import {
   TableRow,
   TableContainer,
   TablePagination,
-  Toolbar,
-  Tooltip,
-  Typography
+  Tooltip
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/styles";
+import TableToolbar from "../Shared/TableToolbar";
+import { StyledTableSortLabel } from "../Shared/CustomComponents";
 import { daysSinceScale, percentBelowScale } from "./scales";
-import { StyledTableSortLabel } from "../TopMovers/CustomComponents";
-import { getComparator, stableSort} from "../../helpers/sorting";
+import { getComparator, stableSort } from "../../helpers/sorting";
+import { today } from "../../helpers/misc";
 import { formatNumber } from "../../helpers/conversions";
 
 const useStyle = makeStyles({
@@ -36,17 +37,6 @@ const headCells = [
   { id: "percentBelow", align: true, label: "% Below Peak", sort: true },
   { id: "peakDate", align: true, label: "Date of Peak", sort: false }
 ];
-
-function PeakToolbar(props) {
-  const { title } = props;
-  return (
-    <Toolbar>
-      <Typography color="inherit" align="left" variant="h5" style={{ marginRight: 5 }}>
-        {title}
-      </Typography>
-    </Toolbar>
-  );
-};
 
 export const StyledTableCell = withStyles(() => ({
   head: {
@@ -98,7 +88,12 @@ export default function PeakTable(props) {
 
   return (
     <Paper className={classes.paper}>
-      <PeakToolbar title={title} />
+      <TableToolbar
+        columns={headCells.map(({ label }) => label)}
+        filename={`peak_data_${today()}.csv`}
+        rows={rows.map(row => values(row))}
+        title={title}
+      />
       <TableContainer>
         <Table size={dense ? "small" : "medium"}>
           <TableHead>

@@ -8,10 +8,10 @@ import {
   useMediaQuery
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { CustomSwitch } from "../TopMovers/CustomComponents";
+import { CustomSwitch } from "../Shared/CustomComponents";
 import PeakTable from "./PeakTable";
-import TableSearch from "../TopMovers/TableSearch";
-import { PREFETCH_URL } from "../../helpers/misc";
+import TableSearch from "../Shared/TableSearch";
+import { PREFETCH_URL, today } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
 
 
@@ -58,10 +58,6 @@ export default function PeakContainer(props) {
 
   const classes = useStyles();
 
-  // get today's date
-  const today = new Date();
-  const currDate = `${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
-
   return (
     <Grid
       className={classes.grid}
@@ -86,7 +82,7 @@ export default function PeakContainer(props) {
         <PeakTable
           dense={dense}
           rows={ query ? rows.filter(x => x["country"].toLowerCase().includes(query)) : rows }
-          title={`Days Since Peak New Cases (as of ${currDate})`}
+          title={`Days Since Peak New Cases (as of ${today()})`}
         />
       </Grid>
       <Grid item md={1} lg={1} />

@@ -10,6 +10,11 @@ export function getCountry(country, countries) {
   }, null)
 }
 
+export function today() {
+  const today = new Date();
+  return `${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
+}
+
 export const COLOURS = [
   "#55f1c2",
   "#684f9e",

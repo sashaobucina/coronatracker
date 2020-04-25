@@ -13,7 +13,7 @@ import {
   Tooltip
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { StyledTableCell } from "../TopMovers/CustomComponents";
+import { StyledTableCell } from "../Shared/CustomComponents";
 import { formatNumber } from "../../helpers/conversions";
 
 const useStyle = makeStyles({

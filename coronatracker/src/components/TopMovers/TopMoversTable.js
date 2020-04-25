@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import union from "lodash/union";
+import values from "lodash/values";
 import { Paper, Table, TableHead, TableBody, TableRow, TableContainer, TablePagination, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { StyledTableCell, StyledTableSortLabel } from "./CustomComponents";
-import TableToolbar from "./TableToolbar";
+import { StyledTableCell, StyledTableSortLabel } from "../Shared/CustomComponents";
+import TableToolbar from "../Shared/TableToolbar";
 import {
   getComparator,
   stableSort
 } from "../../helpers/sorting";
 import { formatNumber } from "../../helpers/conversions";
+import { today } from "../../helpers/misc";
 
 const useStyles = makeStyles({
   paper: {
@@ -42,7 +45,7 @@ export default function TopMoversTable(props) {
   const [ orderBy, setOrderBy ] = useState('percent');
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
-  const { dense, order, rows, report, title, up } = props;
+  const { dense, order, rows, report, title } = props;
 
   const classes = useStyles();
 
@@ -63,7 +66,12 @@ export default function TopMoversTable(props) {
 
   return (
     <Paper className={classes.paper}>
-      <TableToolbar title={title} report={report} up={up} />
+      <TableToolbar
+        columns={headCells.map(({ label }) => label)}
+        filename={`top_movers_${report}_${today()}.csv`}
+        rows={rows.map((row, i) => union([i+1], values(row)))}
+        title={`${title} (# of ${report})`}
+      />
       <TableContainer>
         <Table size={dense ? "small" : "medium"}>
           <TableHead>
