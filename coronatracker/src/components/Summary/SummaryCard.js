@@ -36,15 +36,15 @@ export default function SummaryCard(props) {
   const percentFn = (x) => `${formatNumber(x)}%`;
   const indicatorFn = (x) => `+${formatNumber(x)}`;
 
-  const getRow = (title, key, formatFn) => (
+  const getRow = (title, key, formatFn, withStyle) => (
     <TableRow>
       <StyledTableCell style={{ fontWeight: "bold" }}>
         {title}
       </StyledTableCell>
-      <StyledTableCell>
+      <StyledTableCell style={withStyle ? { color: "#DB7C00" } : {}}>
         {formatFn(confirmed[key])}
       </StyledTableCell>
-      <StyledTableCell>
+      <StyledTableCell style={withStyle ? { color: "#F44336" } : {} }>
         {formatFn(deaths[key])}
       </StyledTableCell>
     </TableRow>
@@ -79,7 +79,7 @@ export default function SummaryCard(props) {
             </TableHead>
             <TableBody>
               {getRow("Total Cases", "total", indicatorFn)}
-              {getRow("New Cases", "newCases", indicatorFn)}
+              {getRow("New Cases", "newCases", indicatorFn, true)}
               {getRow("Percent Change", "percentChange", percentFn)}
               {getRow("Max # of Cases", "maxCases", idFn)}
               {getRow("Days Since Peak", "daysSince", idFn)}
