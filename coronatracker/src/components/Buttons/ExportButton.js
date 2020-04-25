@@ -7,7 +7,7 @@ export default function ExportButton(props) {
   const { columns, filename, rows } = props;
 
   const exportToCSV = () => {
-    const builder = new CsvBuilder(filename)
+    const builder = new CsvBuilder(filename);
     builder
       .setDelimeter(",")
       .setColumns(columns)
