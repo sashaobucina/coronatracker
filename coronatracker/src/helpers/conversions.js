@@ -40,7 +40,7 @@ export function rounded(num) {
   else if (num >= 1000000) {
     return Math.round(num / 100000) / 10 + "M";
   }
-  else if (num > 1000) {
+  else if (num >= 1000) {
     return Math.round(num / 100) / 10 + "K";
   } else {
     return num
