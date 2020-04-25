@@ -8,15 +8,8 @@ import {
   ZoomableGroup
 } from "react-simple-maps";
 import { HEATMAP_COLORS, HEATMAP_VALUES } from "../../helpers/misc";
+import { rounded } from "../../helpers/conversions";
 import worldMap from "../../static/world-110m.json";
-
-const rounded = num => {
-  if (num > 1000) {
-    return Math.round(num / 100) / 10 + "K";
-  } else {
-    return num
-  }
-};
 
 const colorScale = scaleThreshold()
   .domain(HEATMAP_VALUES)

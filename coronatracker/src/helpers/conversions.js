@@ -32,3 +32,17 @@ export function formatNumber(num) {
   numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return numParts.join('.');
 }
+
+export function rounded(num) {
+  if (num >= 1000000000) {
+    return Math.round(num / 100000000) / 10 + "B";
+  }
+  else if (num >= 1000000) {
+    return Math.round(num / 100000) / 10 + "M";
+  }
+  else if (num > 1000) {
+    return Math.round(num / 100) / 10 + "K";
+  } else {
+    return num
+  }
+};

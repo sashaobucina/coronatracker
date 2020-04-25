@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import { Brush, ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tooltip } from "recharts";
 
 import CustomTooltip from "./CustomTooltip";
+import { rounded } from "../../helpers/conversions";
 import { useWindowDimensions } from "../../helpers/windowProvider";
 import { COLOURS } from "../../helpers/misc";
 
@@ -19,6 +20,8 @@ export default function ContributorGraph(props) {
   const { labels, data } = props;
   const { height } = useWindowDimensions();
   const classes = useStyles();
+
+  const formatAxis = (num) => rounded(num);
 
   const lines = labels
     .filter(label => label !== "date")
@@ -48,7 +51,7 @@ export default function ContributorGraph(props) {
               dataKey="date"
               stroke="#3BBA9C"
             />
-            <YAxis stroke="#3BBA9C"/>
+            <YAxis stroke="#3BBA9C" tickFormatter={formatAxis} />
             { lines }
             <Tooltip
               content={<CustomTooltip title="Date" withIndex={true} />}
