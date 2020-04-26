@@ -50,29 +50,35 @@ def index():
 
 @app.route('/valid-countries')
 def get_countries():
-  return jsonify(generator.get_valid_countries())
+  response = generator.get_valid_countries()
+  return jsonify(response)
 
 @app.route('/top-movers')
 def get_top_movers():
-  return jsonify(generator.top_movers())
+  response = generator.top_movers()
+  return jsonify(response)
 
 @app.route('/top-contributors')
 def get_top_contributors():
-  labels, data = generator.top_contributors()
-  summary = generator.get_summary()
+  try:
+    labels, data = generator.top_contributors()
+    summary = generator.get_summary()
 
-  # graph data
-  labels += ["date"]
-  data += [generator.get_dates()]
+    # graph data
+    labels += ["date"]
+    data += [generator.get_dates()]
 
-  response = {
-    "summary": summary,
-    "graph": {
-      "labels": labels,
-      "contributors": util.json_like(labels, data)
+    response = {
+      "summary": summary,
+      "graph": {
+        "labels": labels,
+        "contributors": util.json_like(labels, data)
+      }
     }
-  }
-  return jsonify(response)
+    return jsonify(response)
+  except Exception as e:
+    logger.error(str(e))
+    abort(404)
 
 @app.route('/peak-data')
 def peak_data():
@@ -110,7 +116,6 @@ def country_data(country):
       "second_derivative_data": second_derivative,
       "summary": summary
     }
-
     return jsonify(response)
 
   except Exception as e:
