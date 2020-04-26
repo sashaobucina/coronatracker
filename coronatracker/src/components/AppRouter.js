@@ -75,11 +75,8 @@ export default function AppRouter() {
         updatePath={setPath}
       >
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) => 
-              <Home
+          <Route exact path="/" render={(props) =>
+            <Home
                 {...props}
                 fetched={fetched}
                 setAlert={setAlert}

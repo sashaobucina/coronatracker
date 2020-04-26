@@ -6,7 +6,12 @@ export default function SuccessAlert(props) {
   const { action, open, message, handleClose, severity } = props;
 
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{  horizontal: "left", vertical: "bottom"}}>
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+      onClose={handleClose}
+    >
       <Alert
         action={action}
         severity={severity}

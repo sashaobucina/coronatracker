@@ -39,7 +39,7 @@ class CoronaScraper():
       # save to tempfile and process it with pandas; close after done processing
       fd, path = tempfile.mkstemp()
       try:
-        with os.fdopen(fd, 'w')as tmp:
+        with os.fdopen(fd, 'w') as tmp:
           tmp.write(req_str)
           df = pd.read_csv(path, sep=",")
           reports[report_type] = df
