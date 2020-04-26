@@ -1,5 +1,7 @@
 This directory contains the RESTful microservice supporting the client-side component of the web application.
 
+Hosted on [Dockerhub](https://hub.docker.com/r/sashaobucina/coronatracker)
+
 ## Table Of Contents
 
   - [Valid Countries](#valid-countries)
