@@ -152,7 +152,13 @@ export default function FAQs(props) {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
+          <Grid item>
+            <Typography variant="body2">
+              NOTE: This project is maintained by a one-man team, responses to any issues may be delayed
+            </Typography>
+          </Grid>
         </Grid>
+      <Grid item xs={1} sm={2} md={2} lg={2} />
       </Grid>
     </Grid>
   );
