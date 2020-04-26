@@ -1,6 +1,6 @@
 # CoronaTracker
 
-Tracking the movement and trends of the COVID-19 virus. Visit the site [here](https://sashaobucina.github.io/coronatracker/).
+Tracking the trends and movements of the COVID-19 virus. Visit the site [here](https://sashaobucina.github.io/coronatracker/).
 
 The trends of the virus are visualized through interactive graphs and tables that show the movement on a per-country or global basis. These visualizations show:
 - The total number of cases (confirmed & deaths)
