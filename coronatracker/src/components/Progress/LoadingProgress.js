@@ -31,7 +31,7 @@ export default function LoadingProgress(props) {
           <Typography className={classes.text} variant="overline">Initializing data...</Typography>
         </Grid>
         <Grid item>
-          <Typography className={classes.subText} variant="overline">(May take up to 30 secs)</Typography>
+          <Typography className={classes.subText} variant="overline">(May take up to 15 secs)</Typography>
         </Grid>
         <Grid item>
           <CircularProgress className={classes.progress} size={60} thickness={3} />
