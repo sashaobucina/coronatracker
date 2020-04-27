@@ -1,13 +1,14 @@
 import React from "react";
+import find from "lodash/find";
 
 function isDev() {
   return '_self' in React.createElement('div');
 }
 
 export function getCountry(country, countries) {
-  return countries.reduce((acc, curr) => {
-    return curr.toLowerCase() === country.toLowerCase() ? curr : acc
-  }, null)
+  return find(countries, (maybeCountry) => (
+    maybeCountry.toLowerCase() === country.toLowerCase()
+  ));
 }
 
 export function today() {

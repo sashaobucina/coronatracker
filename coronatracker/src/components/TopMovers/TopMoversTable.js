@@ -5,10 +5,7 @@ import { Paper, Table, TableHead, TableBody, TableRow, TableContainer, TablePagi
 import { makeStyles } from "@material-ui/styles";
 import { StyledTableCell, StyledTableSortLabel } from "../Shared/CustomComponents";
 import TableToolbar from "../Shared/TableToolbar";
-import {
-  getComparator,
-  stableSort
-} from "../../helpers/sorting";
+import { stableSort } from "../../helpers/sorting";
 import { formatNumber } from "../../helpers/conversions";
 import { today } from "../../helpers/misc";
 
@@ -101,7 +98,7 @@ export default function TopMoversTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {createRows(stableSort(rows, getComparator(order, orderBy)))
+            {createRows(stableSort(rows, order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row.country}>

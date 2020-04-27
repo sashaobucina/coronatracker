@@ -15,7 +15,7 @@ import { withStyles, makeStyles } from "@material-ui/styles";
 import TableToolbar from "../Shared/TableToolbar";
 import { StyledTableSortLabel } from "../Shared/CustomComponents";
 import { daysSinceScale, percentBelowScale } from "./scales";
-import { getComparator, stableSort } from "../../helpers/sorting";
+import { stableSort } from "../../helpers/sorting";
 import { today } from "../../helpers/misc";
 import { formatNumber } from "../../helpers/conversions";
 
@@ -122,7 +122,7 @@ export default function PeakTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
+            {stableSort(rows, order, orderBy)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row.country}>

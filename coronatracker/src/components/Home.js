@@ -66,11 +66,7 @@ export default function Home(props) {
 
     // otherwise need to perform fetch if valid country
     maybeCountry = getCountry(userInput, validCountries);
-    if (maybeCountry) {
-      fetchData(maybeCountry);
-    } else {
-      setAlert(COUNTRY_ALERT);
-    }
+    maybeCountry ? fetchData(maybeCountry) : setAlert(COUNTRY_ALERT);
   }
 
   function removeTab(e, index) {
@@ -187,7 +183,7 @@ export default function Home(props) {
           />
         </Grid>
         <Grid item sm={3} xs={3} md={2} lg={2}>
-          <SearchButton fetchData={fetchOnInput} loading={loading} />
+          <SearchButton fetchData={fetchOnInput} disabled={loading} />
         </Grid>
         <Grid item xs={2} sm={2} md={3} lg={3} />
       </Grid>
