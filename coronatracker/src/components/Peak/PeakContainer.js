@@ -11,8 +11,9 @@ import { makeStyles } from "@material-ui/styles";
 import { CustomSwitch } from "../Shared/CustomComponents";
 import PeakTable from "./PeakTable";
 import TableSearch from "../Shared/TableSearch";
-import { PREFETCH_URL, today } from "../../helpers/misc";
+import { PREFETCH_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
+import { getDate } from "../../helpers/conversions";
 
 
 const useStyles = makeStyles({
@@ -57,6 +58,7 @@ export default function PeakContainer(props) {
   };
 
   const classes = useStyles();
+  const subheader = rows.length === 0 ? "" : `(as of ${getDate(rows[0]["lastDate"])})`;
 
   return (
     <Grid
@@ -82,7 +84,7 @@ export default function PeakContainer(props) {
         <PeakTable
           dense={dense}
           rows={ query ? rows.filter(x => x["country"].toLowerCase().includes(query)) : rows }
-          title={`Days Since Peak New Cases (as of ${today()})`}
+          title={`Days Since Peak # of New Cases ${subheader}`}
         />
       </Grid>
       <Grid item md={1} lg={1} />

@@ -33,6 +33,7 @@ export default function SummaryCard(props) {
   const classes = useStyle();
 
   const idFn = (x) => x;
+  const formatFn = (x) => formatNumber(x);
   const percentFn = (x) => `${formatNumber(x)}%`;
   const indicatorFn = (x) => `+${formatNumber(x)}`;
 
@@ -81,7 +82,7 @@ export default function SummaryCard(props) {
               {getRow("Total Cases", "total", indicatorFn)}
               {getRow("New Cases", "newCases", indicatorFn, true)}
               {getRow("Percent Change", "percentChange", percentFn)}
-              {getRow("Max # of Cases", "maxCases", idFn)}
+              {getRow("Max # of Cases", "maxCases", formatFn)}
               {getRow("Days Since Peak", "daysSince", idFn)}
               {getRow("Percent Below Peak", "percentBelow", percentFn)}
             </TableBody>

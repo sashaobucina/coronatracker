@@ -39,7 +39,7 @@ export default function GraphBundle(props) {
         <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item xs={10} sm={10} md={10} lg={10}>
           <Typography color="inherit" variant="h5" align="center">
-            Daily Report for {country} - {getDate(overall, overall.length - 1)}
+            Daily Report for {country} - {getDate(overall[overall.length - 1]["date"])}
           </Typography>
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} />

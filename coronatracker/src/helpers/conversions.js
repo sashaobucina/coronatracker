@@ -22,8 +22,8 @@ export function getSummary(data, key) {
   return n <= 1 ? "0" : formatNumber((data[n - 1][key] - data[n - 2][key]));
 }
 
-export function getDate(data, ind) {
-  const date = new Date(data[ind]["date"].toString());
+export function getDate(dateStr) {
+  const date = new Date(dateStr);
   return date.toDateString();
 }
 
