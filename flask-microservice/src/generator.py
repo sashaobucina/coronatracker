@@ -167,6 +167,7 @@ class DataGenerator:
       # get peak
       idx, peak = self._get_peak(changes)
       peak_date = self.dates[idx + 1]
+      last_date = self.dates[-1]
 
       # percent diff between recent and peak
       percent_below = get_percent_below(recent, peak)
@@ -182,7 +183,8 @@ class DataGenerator:
           "percentBelow": numpy_to_native(percent_below),
           "newCases": numpy_to_native(recent),
           "peak": numpy_to_native(peak),
-          "peakDate": peak_date
+          "peakDate": peak_date,
+          "lastDate": last_date
         }
       )
 
