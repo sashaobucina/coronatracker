@@ -108,13 +108,40 @@ export default function FAQs(props) {
                 expandIcon={<ExpandMore />}
               >
                 <Typography align="center">
+                  Q: Why is some data missing or different from other sites?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography variant="subtitle1">
+                  A: Collecting and reporting data on a global scale is an extremely challenging task and requires cooperation on a global scale. Hence, any countries that do not disclose their data for COVID-19 will not be shown here.
+                  <br/><br/>
+                  This site aggregates all the data from the John Hopkins CSSE repository, which in turn collects data from the World Health Organization (WHO) and various governments/health organizations across the world. If there seems to be any inconsistencies with data, please consult the John Hopkins CSSE repository to view if these issues have already been brought to attention.
+                </Typography>
+              </ExpansionPanelDetails>
+              <Divider className={classes.divider} />
+              <ExpansionPanelActions>
+                <Tooltip title="View all current issues" placement="right">
+                  <Button className={classes.button} href="https://github.com/CSSEGISandData/COVID-19/issues" size="small">
+                    View issues
+                  </Button>
+                </Tooltip>
+              </ExpansionPanelActions>
+            </ExpansionPanel>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
+                <Typography align="center">
                   Q: How should the derivative plots be interpreted for rate of change and acceleration?
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography variant="subtitle1">
-                  A: When dealing with rate of change, the first derivative is involved. Hence, this figure plots the amount of new cases per day against time. The greater the points, the more cases a country is experiencing per day. This can be seen as the speed at which the virus growing.
-                  <br /><br />
+                  A: When dealing with rate of change, the first derivative is involved. Hence, this figure plots the amount of new cases per day against time as a gradient. The greater the points, the more cases a country is experiencing per day. This can be seen as the speed at which the virus growing.
+                  <br/><br/>
                   The acceleration figure plots the change in the speed of new cases over time. When this plot is positive, it means the amount of new cases is accelerating, and negative values means it is decelerating.
                 </Typography>
               </ExpansionPanelDetails>
