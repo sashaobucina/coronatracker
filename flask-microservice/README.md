@@ -97,7 +97,6 @@ Return Type:
   summary: {
     confirmed: [
       {
-        index: int,
         country: String,
         total: int,
         newCases: int,
@@ -109,7 +108,6 @@ Return Type:
     ...],
     deaths: [
       {
-        index: int,
         country: String,
         total: int,
         newCases: int,
@@ -182,8 +180,46 @@ Return Type:
 
 ```yaml
 {
-  overall: [...],
-  first_derivative_data: [...],
-  decond_derivative_data: [...]
+  overall: [
+    {
+      date: Date,
+      confirmed: int,
+      deaths: int
+    },
+  ...],
+  first_derivative_data: [
+    {
+      date: Date,
+      confirmed: int,
+      deaths: int
+    },
+  ...],
+  second_derivative_data: [
+    {
+      date: Date,
+      confirmed: int,
+      deaths: int
+    },
+  ...],
+  summary: {
+    confirmed: {
+      country: String,
+      total: int,
+      newCases: int,
+      maxCases: int,
+      percentBelow: float,
+      daysSince: int,
+      percentChange: float
+    },
+    deaths: {
+      country: String,
+      total: int,
+      newCases: int,
+      maxCases: int,
+      percentBelow: float,
+      daysSince: int,
+      percentChange: float
+    }
+  }
 }
 ```
