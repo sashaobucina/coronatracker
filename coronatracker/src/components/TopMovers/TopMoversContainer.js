@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import assign from "lodash/assign";
 import axios from "axios";
 import {
   Grid,
@@ -21,13 +22,11 @@ const useStyles = makeStyles({
   }
 })
 
-const formatRows = (topMovers) => {
-  return topMovers.map((mover) => {
-    const country = mover[0];
-    const [ percent, change, total ] = mover[1];
-    return { country, change, percent, total };
-  })
-}
+const indexRows = (topMovers) => (
+  topMovers.map((mover, idx) => (
+    assign(mover, { index: idx + 1 })
+  ))
+)
 
 const initialReport = "confirmed";
 const emptyInfo = { "top_gainers": [], "top_losers": [] };
@@ -65,8 +64,8 @@ export default function TopMoversContainer(props) {
   }, [setAlert])
 
   const { top_gainers, top_losers } = topMovers[report];
-  const gainerRows = formatRows(top_gainers);
-  const loserRows = formatRows(top_losers);
+  const gainerRows = indexRows(top_gainers);
+  const loserRows = indexRows(top_losers);
 
   const classes = useStyles();
 
@@ -98,7 +97,7 @@ export default function TopMoversContainer(props) {
       <Grid item xs={12} sm={12} md={5} lg={5}>
         <TopMoversTable
           dense={dense}
-          order="asc"
+          order="desc"
           report={report}
           rows={ query ? gainerRows.filter(x => x["country"].toLowerCase().includes(query)) : gainerRows }
           title="Top Gainers"
@@ -107,7 +106,7 @@ export default function TopMoversContainer(props) {
       <Grid item xs={12} sm={12} md={5} lg={5}>
         <TopMoversTable
           dense={dense}
-          order="desc"
+          order="asc"
           report={report}
           rows={ query ? loserRows.filter(x => x["country"].toLowerCase().includes(query)) : loserRows }
           setDense={setDense}

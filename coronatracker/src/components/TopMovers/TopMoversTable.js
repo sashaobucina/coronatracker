@@ -20,26 +20,25 @@ const useStyles = makeStyles({
 });
 
 function createRows(rows) {
-  return rows.map((row, index) => {
-    let { country, change, percent, total } = row;
-    index += 1;
+  return rows.map(row => {
+    let { index, country, change, percentChange, totalCases } = row;
     change = `+${formatNumber(change)}`;
-    percent = `${percent}%`;
-    total = formatNumber(total);
-    return { index, country, change, percent, total };
+    percentChange = `${percentChange}%`;
+    totalCases = formatNumber(totalCases);
+    return { index, country, change, percentChange, totalCases };
   })
 }
 
 const headCells = [
   { id: "index", align: false, label: "#", sort: false },
   { id: "country", align: false, label: "Country", sort: false },
-  { id: "percent", align: true, label: "Percent Change (%)", sort: true },
+  { id: "percentChange", align: true, label: "Percent Change (%)", sort: true },
   { id: "change", align: true, label: "Change", sort: true },
-  { id: "total", align: true, label: "Total Cases", sort: true }
+  { id: "totalCases", align: true, label: "Total Cases", sort: true }
 ];
 
 export default function TopMoversTable(props) {
-  const [ orderBy, setOrderBy ] = useState('percent');
+  const [ orderBy, setOrderBy ] = useState('percentChange');
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
   const { dense, order, rows, report, title } = props;
@@ -101,12 +100,12 @@ export default function TopMoversTable(props) {
             {createRows(stableSort(rows, order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow key={row.country}>
-                  <StyledTableCell>{row.index}</StyledTableCell>
-                  <StyledTableCell>{row.country}</StyledTableCell>
-                  <StyledTableCell align="right">{row.percent}</StyledTableCell>
-                  <StyledTableCell align="right">{row.change}</StyledTableCell>
-                  <StyledTableCell align="right">{row.total}</StyledTableCell>
+                <TableRow key={row["country"]}>
+                  <StyledTableCell>{row["index"]}</StyledTableCell>
+                  <StyledTableCell>{row["country"]}</StyledTableCell>
+                  <StyledTableCell align="right">{row["percentChange"]}</StyledTableCell>
+                  <StyledTableCell align="right">{row["change"]}</StyledTableCell>
+                  <StyledTableCell align="right">{row["totalCases"]}</StyledTableCell>
                 </TableRow>
             ))}
               {emptyRows > 0 && (

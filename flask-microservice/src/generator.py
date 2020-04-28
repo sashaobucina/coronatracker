@@ -68,7 +68,7 @@ class DataGenerator:
 
     # populate the movers dict
     for report_type, report in self.reports.items():
-      movers = {}
+      movers = []
 
       for country in self.valid_countries:
         data = report[country]
@@ -88,10 +88,15 @@ class DataGenerator:
           continue
 
         percentage_diff = get_percent_change(value1, value2)
-        movers[country] = (percentage_diff, diff, value1)
+        movers.append({
+          "country": country,
+          "change": diff,
+          "percentChange": percentage_diff,
+          "totalCases": value1
+        })
 
       # sort all movers
-      sorted_movers = list(sorted(movers.items(), key=lambda kv: kv[1][0]))
+      sorted_movers = list(sorted(movers, key=lambda d: d["percentChange"]))
 
       # get top movers and accumulate them
       top_movers[report_type]["top_gainers"] = sorted_movers[::-1]
@@ -137,7 +142,8 @@ class DataGenerator:
       DEATHS: []
     }
 
-    for report_type, report in self.reports.items():
+    for report_type in self.reports:
+      report = self.reports[CONFIRMED]
       top10 = self._get_top10(report)
       for i, country in enumerate(top10):
         summary[report_type].append(self.get_country_summary(country, report_type))
