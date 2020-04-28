@@ -63,7 +63,7 @@ const generateStyle = (value, scale) => ({
 });
 
 export default function PeakTable(props) {
-  const [ order, setOrder ] = useState("asc");
+  const [ order, setOrder ] = useState("desc");
   const [ orderBy, setOrderBy ] = useState('daysSince');
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(20);

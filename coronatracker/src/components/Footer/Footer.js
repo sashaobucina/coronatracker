@@ -14,7 +14,7 @@ export default function Footer() {
       <Grid item xs={1} />
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" style={{ fontSize: 12 }}>
-          (Updated daily at 8:00PM ET)
+          (Updated daily at 11:59PM ET)
         </Typography>
       </Grid>
     </Grid>
