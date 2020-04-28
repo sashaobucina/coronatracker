@@ -40,12 +40,40 @@ Return Type:
 ```yaml
 {
   confirmed: {
-    top_gainers: [...],
-    top_losers: [...]
+    top_gainers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...],
+    top_losers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...]
   },
   deaths: {
-    top_gainers: [...],
-    top_losers: [...]
+    top_gainers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...],
+    top_losers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...]
   }
 }
 ```
@@ -62,7 +90,10 @@ Return Type:
 
 ```yaml
 {
-  graph: [...],
+  graph: {
+    labels: [...],
+    contributors: [...]
+  },
   summary: {
     confirmed: [
       {
