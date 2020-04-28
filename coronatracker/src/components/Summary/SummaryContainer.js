@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import find from "lodash/find";
 import range from "lodash/range";
 import {
   Button,
@@ -57,10 +58,12 @@ export default function SummaryContainer(props) {
   const matches = useMediaQuery('(min-width:960px)');
   const size = matches ? "medium" : "small";
 
-  const getCardData = (idx) => ({
-    confirmed: confirmed[idx],
-    deaths: deaths[idx]
-  })
+  const getCardData = (country) => {
+    return {
+      confirmed: find(confirmed, {country}),
+      deaths: find(deaths, {country})
+    }
+  }
 
   const selectAll = () => setCheckboxList(range(10).map(() => true));
   const deselectAll = () => setCheckboxList(range(10).map(() => false));
@@ -72,18 +75,19 @@ export default function SummaryContainer(props) {
   const getCardContainers = () => (
     checkList.reduce((acc, curr, idx) => {
       if (curr) {
+        const country = getCountry(idx);
         acc.push((
           <React.Fragment key={idx}>
             <Grid item xs={10} sm={10} md={5} lg={5} xl={5}>
               <SummaryCard 
-                data={getCardData(idx)}
+                data={getCardData(country)}
                 buttonComponent={(
-                  <Tooltip title={`Search for ${getCountry(idx)}`} placement="right">
+                  <Tooltip title={`Search for ${country}`} placement="right">
                     <Button
                       className={classes.button}
                       size="small"
                       variant="outlined"
-                      onClick={() => fetchFn(getCountry(idx))}
+                      onClick={() => fetchFn(country)}
                     >
                       More Details
                     </Button>

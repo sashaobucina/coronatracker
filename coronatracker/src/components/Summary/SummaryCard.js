@@ -79,7 +79,7 @@ export default function SummaryCard(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {getRow("Total Cases", "total", indicatorFn)}
+              {getRow("Total Cases", "total", formatFn)}
               {getRow("New Cases", "newCases", indicatorFn, true)}
               {getRow("Percent Change", "percentChange", percentFn)}
               {getRow("Max # of Cases", "maxCases", formatFn)}
