@@ -127,7 +127,9 @@ export default function PeakTable(props) {
               .map((row) => (
                 <TableRow key={row.country}>
                   <StyledTableCell>{row.country}</StyledTableCell>
-                  <StyledTableCell align="right">{formatNumber(row.newCases)}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.newCases >= 0 ? `+${formatNumber(row.newCases)}` : formatNumber(row.newCases)}
+                  </StyledTableCell>
                   <StyledTableCell align="right">{formatNumber(row.peak)}</StyledTableCell>
                   <TableCell
                     align="right"

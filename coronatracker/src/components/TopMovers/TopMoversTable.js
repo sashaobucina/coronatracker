@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 function createRows(rows) {
   return rows.map(row => {
     let { index, country, change, percentChange, totalCases } = row;
-    change = `+${formatNumber(change)}`;
+    change = change >= 0 ? `+${formatNumber(change)}` : `${formatNumber(change)}`;
     percentChange = `${percentChange}%`;
     totalCases = formatNumber(totalCases);
     return { index, country, change, percentChange, totalCases };

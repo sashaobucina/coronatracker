@@ -60,28 +60,48 @@ export default function SliderButtonGroup(props) {
       {playButton}
       <Tooltip title="Skip animation" placement="top">
         <span>
-          <IconButton color="inherit" disabled={disabled} onClick={() => updateIndexState(maxIndex)}>
+          <IconButton
+            color="inherit"
+            disabled={disabled}
+            size={size}
+            onClick={() => updateIndexState(maxIndex)}
+          >
             <SkipNext />
           </IconButton>
         </span>
       </Tooltip>
       <Tooltip title="Reset" placement="top">
         <span>
-          <IconButton color="inherit" disabled={disabled} onClick={restore}>
+          <IconButton
+            color="inherit"
+            disabled={disabled}
+            size={size}
+            onClick={restore}
+          >
             <Restore />
           </IconButton>
         </span>
       </Tooltip>
       <Tooltip title="Decrement" placement="top">
         <span>
-          <IconButton color="inherit" disabled={disabled} onClick={(_) => onStepClick(maxIndex, false)}>
+          <IconButton
+            color="inherit"
+            disabled={disabled}
+            size={size}
+            onClick={(_) => onStepClick(maxIndex, false)}
+          >
             <ArrowBack />
           </IconButton>
         </span>
       </Tooltip>
       <Tooltip title="Increment" placement="top">
         <span>
-          <IconButton color="inherit" disabled={disabled} onClick={(_) => onStepClick(maxIndex, true)}>
+          <IconButton
+            color="inherit"
+            disabled={disabled}
+            size={size}
+            onClick={(_) => onStepClick(maxIndex, true)}
+          >
             <ArrowForward />
           </IconButton>
         </span>

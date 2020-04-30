@@ -35,7 +35,7 @@ export default function SummaryCard(props) {
   const idFn = (x) => x;
   const formatFn = (x) => formatNumber(x);
   const percentFn = (x) => `${formatNumber(x)}%`;
-  const indicatorFn = (x) => `+${formatNumber(x)}`;
+  const indicatorFn = (x) => x >= 0 ? `+${formatNumber(x)}` : `${formatNumber(x)}`;
 
   const getRow = (title, key, formatFn, withStyle) => (
     <TableRow>
