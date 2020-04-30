@@ -1,6 +1,5 @@
 from datetime import date
 import os
-import pandas as pd
 import urllib.request as request
 
 CONFIRMED_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
@@ -9,7 +8,7 @@ DEATHS_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/c
 def backup(url):
   # get current date
   curr_date = date.today().strftime("%Y-%m-%d")
-  curr_time = date.today().strftime("%Y-%m-%d %H:%M:%S")
+  curr_time = date.today().strftime("%Y-%m-%d %H:%M:%S") 
 
   # request data for confirmed and deaths
   print(f"{curr_time}: Requesting data from {url}...")
