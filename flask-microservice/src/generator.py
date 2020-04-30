@@ -167,8 +167,8 @@ class DataGenerator:
       recent = changes[-1]
 
       # ignore countries w/ negative change; usually result of changing data source for tracking cases
-      # if recent < 0:
-      #   continue
+      if recent < 0:
+        continue
 
       # get peak
       idx, peak = self._get_peak(changes)
