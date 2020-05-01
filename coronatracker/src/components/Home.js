@@ -3,7 +3,7 @@ import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
 import ContributorGraph from './Graphs/ContributorGraph';
-import Footer from './Footer/Footer';
+import Footer from './Footer';
 import GraphBundle from './Graphs/GraphBundle';
 import SearchBar from './SearchBar/SearchBar';
 import SearchButton from "./Buttons/SearchButton";
