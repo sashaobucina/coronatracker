@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "afbcb3cfec7622862de6536f436d69ff",
+    "revision": "9fadfabecc5dd4d7c7c57776992d0d88",
     "url": "/coronatracker/index.html"
   },
   {
-    "revision": "ecfe8ce18912bb2dae5c",
+    "revision": "c95f724631e0c2811651",
     "url": "/coronatracker/static/css/main.ec3dd237.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coronatracker/static/js/2.9d4c1f7b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ecfe8ce18912bb2dae5c",
-    "url": "/coronatracker/static/js/main.d0326bf1.chunk.js"
+    "revision": "c95f724631e0c2811651",
+    "url": "/coronatracker/static/js/main.ae3b513c.chunk.js"
   },
   {
     "revision": "44874d783db6d7be508b",
