@@ -94,12 +94,11 @@ export default function TopMoversContainer(props) {
       <Grid item xs={11} sm={11} md={11} lg={11}>
         <TableSearch setQuery={setQuery} />
       </Grid>
-      <Grid item md={1} lg={1}/>
-      <Grid item xs={2} sm={4} md={4} lg={4}>
+      <Grid item xs={1} sm ={1} md={1} lg={1} />
+      <Grid item xs={11} sm={11} md={11} lg={11}>
           <MoverButtonGroup report={report} setReport={handleReportChange} />
       </Grid>
-      <Grid item xs={9} sm={7} md={7} lg={7} />
-      <Grid item md={1} lg={1}/>
+      <Grid item md={1} lg={1} />
       <Grid item xs={12} sm={12} md={5} lg={5}>
         <TopMoversTable
           dense={dense}

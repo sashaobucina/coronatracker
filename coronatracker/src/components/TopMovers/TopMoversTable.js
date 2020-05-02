@@ -44,6 +44,7 @@ export default function TopMoversTable(props) {
   const { dense, order, rows, report, title } = props;
 
   const classes = useStyles();
+  const padding = dense ? "checkbox" : "default";
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage)
@@ -69,13 +70,14 @@ export default function TopMoversTable(props) {
         title={`${title} (# of ${report})`}
       />
       <TableContainer>
-        <Table size={dense ? "small" : "medium"}>
+        <Table>
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
                 <StyledTableCell
                   id={headCell.id}
                   key={headCell.id}
+                  padding={padding}
                   align={headCell.align ? "right" : "left"}
                   sortDirection={orderBy === headCell.id ? order : false}
                 >
@@ -101,16 +103,26 @@ export default function TopMoversTable(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row["country"]}>
-                  <StyledTableCell>{row["index"]}</StyledTableCell>
-                  <StyledTableCell>{row["country"]}</StyledTableCell>
-                  <StyledTableCell align="right">{row["percentChange"]}</StyledTableCell>
-                  <StyledTableCell align="right">{row["change"]}</StyledTableCell>
-                  <StyledTableCell align="right">{row["totalCases"]}</StyledTableCell>
+                  <StyledTableCell padding={padding}>
+                    {row["index"]}
+                  </StyledTableCell>
+                  <StyledTableCell padding={padding}>
+                    {row["country"]}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" padding={padding}>
+                    {row["percentChange"]}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" padding={padding}>
+                    {row["change"]}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" padding={padding}>
+                      {row["totalCases"]}
+                  </StyledTableCell>
                 </TableRow>
             ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <StyledTableCell colSpan={6} />
+                  <StyledTableCell padding={padding} colSpan={6} />
                 </TableRow>
               )}
           </TableBody>
