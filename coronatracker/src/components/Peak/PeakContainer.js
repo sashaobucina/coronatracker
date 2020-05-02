@@ -53,6 +53,12 @@ export default function PeakContainer(props) {
     updatePath(match.url);
   }, [match, updatePath]);
 
+  const filterRows = () => {
+    return query
+      ? rows.filter(row => row["country"].toLowerCase().includes(query))
+      : rows
+  }
+
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
@@ -83,7 +89,7 @@ export default function PeakContainer(props) {
       <Grid item xs={12} sm={12} md={10} lg={10}>
         <PeakTable
           dense={dense}
-          rows={ query ? rows.filter(x => x["country"].toLowerCase().includes(query)) : rows }
+          rows={filterRows()}
           title={`Days Since Peak # of New Cases ${subheader}`}
         />
       </Grid>

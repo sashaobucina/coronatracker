@@ -36,7 +36,7 @@ export default function TopMoversContainer(props) {
   const [ dense, setDense ] = useState(false);
   const [ query, setQuery ] = useState("");
   const [ report, setReport ] = useState(initialReport);
-  const [topMovers, setTopMovers] = useState(initialData);
+  const [ topMovers, setTopMovers ] = useState(initialData);
 
   const matches = useMediaQuery('(min-width:960px)');
   const { match, setAlert, updatePath } = props;
@@ -77,6 +77,12 @@ export default function TopMoversContainer(props) {
     setDense(event.target.checked);
   };
 
+  const filterRows = (rows) => {
+    return query
+      ? rows.filter(row => row["country"].toLowerCase().includes(query))
+      : rows
+  }
+
   return (
     <Grid container className={classes.grid} direction="row" alignItems="center" alignContent="center" spacing={2}>
       <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -99,7 +105,7 @@ export default function TopMoversContainer(props) {
           dense={dense}
           order="desc"
           report={report}
-          rows={ query ? gainerRows.filter(x => x["country"].toLowerCase().includes(query)) : gainerRows }
+          rows={filterRows(gainerRows)}
           title="Top Gainers"
         />
       </Grid>
@@ -108,7 +114,7 @@ export default function TopMoversContainer(props) {
           dense={dense}
           order="asc"
           report={report}
-          rows={ query ? loserRows.filter(x => x["country"].toLowerCase().includes(query)) : loserRows }
+          rows={filterRows(loserRows)}
           setDense={setDense}
           title="Top Losers"
         />
