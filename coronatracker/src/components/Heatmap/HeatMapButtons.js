@@ -18,7 +18,7 @@ const continents = [
   { continent: "America", position: { coordinates: [-115, 42], zoom: 2 }},
   { continent: "Europe", position: { coordinates: [12, 50], zoom: 4 }},
   { continent: "Asia", position: { coordinates: [112, 30], zoom: 2.25 }},
-  { continent: "Australia", position: { coordinates: [135, -27], zoom: 2.7 }},
+  { continent: "Australia & Oceania", position: { coordinates: [135, -27], zoom: 2.7 }},
   { continent: "South America", position: { coordinates: [-85, -25], zoom: 1.7 }},
   { continent: "Middle East", position: { coordinates: [43, 28], zoom: 4 }},
   { continent: "Africa", position: { coordinates: [6.5, -4.5], zoom: 1.85 }},
