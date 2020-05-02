@@ -70,7 +70,6 @@ export default function PeakTable(props) {
   const { dense, rows, title } = props;
 
   const classes = useStyle();
-  const padding = dense ? "checkbox" : "default";
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage)
@@ -96,14 +95,13 @@ export default function PeakTable(props) {
         title={title}
       />
       <TableContainer>
-        <Table>
+        <Table size={dense ? "small" : "medium"}>
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
                 <StyledTableCell
                   id={headCell.id}
                   key={headCell.id}
-                  padding={padding}
                   align={headCell.align ? "right" : "left"}
                 >
                   {headCell.sort
@@ -128,30 +126,28 @@ export default function PeakTable(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row.country}>
-                  <StyledTableCell padding={padding}>
+                  <StyledTableCell>
                     {row.country}
                   </StyledTableCell>
-                  <StyledTableCell align="right" padding={padding}>
+                  <StyledTableCell align="right">
                     {row.newCases >= 0 ? `+${formatNumber(row.newCases)}` : formatNumber(row.newCases)}
                   </StyledTableCell>
-                  <StyledTableCell align="right" padding={padding}>
+                  <StyledTableCell align="right">
                     {formatNumber(row.peak)}
                   </StyledTableCell>
                   <TableCell
                     align="right"
-                    padding={padding}
                     style={generateStyle(row.daysSince, daysSinceScale)}
                   >
                     {row.daysSince}
                   </TableCell>
                   <TableCell
                     align="right"
-                    padding={padding}
                     style={generateStyle(row.percentBelow, percentBelowScale)}
                   >
                     {`${row.percentBelow}%`}
                   </TableCell>
-                  <StyledTableCell align="right" padding={padding}>
+                  <StyledTableCell align="right">
                     {row.peakDate}
                   </StyledTableCell>
                 </TableRow>
