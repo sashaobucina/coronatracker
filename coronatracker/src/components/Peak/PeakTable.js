@@ -5,7 +5,6 @@ import {
   Table,
   TableHead,
   TableBody,
-  TableCell,
   TableRow,
   TableContainer,
   TablePagination,
@@ -40,10 +39,7 @@ const headCells = [
 
 
 const generateStyle = (value, scale) => ({
-  backgroundColor: "#3C3F58",
-  borderBottom: "1px solid #3BBA9C",
-  color: scale(value),
-  fontSize: 15
+  color: scale(value)
 });
 
 export default function PeakTable(props) {
@@ -119,18 +115,18 @@ export default function PeakTable(props) {
                   <StyledTableCell align="right">
                     {formatNumber(row.peak)}
                   </StyledTableCell>
-                  <TableCell
+                  <StyledTableCell
                     align="right"
                     style={generateStyle(row.daysSince, daysSinceScale)}
                   >
                     {row.daysSince}
-                  </TableCell>
-                  <TableCell
+                  </StyledTableCell>
+                  <StyledTableCell
                     align="right"
                     style={generateStyle(row.percentBelow, percentBelowScale)}
                   >
                     {`${row.percentBelow}%`}
-                  </TableCell>
+                  </StyledTableCell>
                   <StyledTableCell align="right">
                     {row.peakDate}
                   </StyledTableCell>
