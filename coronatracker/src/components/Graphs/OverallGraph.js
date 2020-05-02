@@ -28,13 +28,13 @@ export default function OverallGraph(props) {
             <stop offset="5%" stopColor={confirmedColor} stopOpacity={0.8}/>
             <stop offset="95%" stopColor={confirmedColor} stopOpacity={0}/>
           </linearGradient>
-          <linearGradient id="colorDeaths" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={deathsColor} stopOpacity={0.8}/>
-            <stop offset="95%" stopColor={deathsColor} stopOpacity={0}/>
-          </linearGradient>
           <linearGradient id="colorRecovered" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={recoveredColor} stopOpacity={0.8}/>
               <stop offset="95%" stopColor={recoveredColor} stopOpacity={0}/>
+          </linearGradient>
+          <linearGradient id="colorDeaths" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={deathsColor} stopOpacity={0.8}/>
+            <stop offset="95%" stopColor={deathsColor} stopOpacity={0}/>
           </linearGradient>
         </defs>
         <Brush
@@ -54,18 +54,18 @@ export default function OverallGraph(props) {
           type="monotone"
         />
         <Area
-          dataKey="deaths"
-          fill="url(#colorDeaths)"
-          fillOpacity={1}
-          stroke="#F44336"
-          type="monotone"
-        />
-        <Area
           dataKey="recovered"
           fill="url(#colorRecovered)"
           fillOpacity={1}
           stroke={recoveredColor}
           type="monotone" 
+        />
+        <Area
+          dataKey="deaths"
+          fill="url(#colorDeaths)"
+          fillOpacity={1}
+          stroke="#FF2919"
+          type="monotone"
         />
         <Tooltip content={<CustomTooltip title="Date" />} />
         <Legend />

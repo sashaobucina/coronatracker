@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, useMediaQuery } from "@material-ui/core";
 
 import DateSlider from "../Slider/DateSlider"
 import DerivativeGraph from "./DerivativeGraph"
@@ -33,6 +33,9 @@ export default function GraphBundle(props) {
     }
   }
 
+  const matches = useMediaQuery('(min-width:960px)');
+  const size = matches ? "medium" : "small";
+
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: 50, marginBottom: 20 }}>
@@ -47,7 +50,7 @@ export default function GraphBundle(props) {
       <Grid item xs={10} sm={10} md={6} lg={6} style={{ marginBottom: 40 }}>
         <SummaryCard
           data={summary}
-          size="medium"
+          size={size}
           subheader=""
         />
       </Grid>
