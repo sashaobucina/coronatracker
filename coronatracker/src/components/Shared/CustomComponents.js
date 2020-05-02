@@ -29,6 +29,9 @@ export const StyledTableCell = withStyles(() => ({
     borderBottom: "1px solid #3BBA9C",
     color: '#3BBA9C',
     fontSize: 15
+  },
+  sizeSmall: {
+    padding: "6px"
   }
 }))(TableCell);
 

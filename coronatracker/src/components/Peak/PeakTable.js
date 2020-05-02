@@ -11,9 +11,9 @@ import {
   TablePagination,
   Tooltip
 } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import TableToolbar from "../Shared/TableToolbar";
-import { StyledTableSortLabel } from "../Shared/CustomComponents";
+import { StyledTableCell, StyledTableSortLabel } from "../Shared/CustomComponents";
 import { daysSinceScale, percentBelowScale } from "./scales";
 import { stableSort } from "../../helpers/sorting";
 import { today } from "../../helpers/misc";
@@ -37,22 +37,6 @@ const headCells = [
   { id: "percentBelow", align: true, label: "% Below Peak", sort: true },
   { id: "peakDate", align: true, label: "Date of Peak", sort: false }
 ];
-
-export const StyledTableCell = withStyles(() => ({
-  head: {
-    background: '#373b52',
-    borderBottom: "2px solid #3BBA9C",
-    color: '#3BBA9C',
-    fontSize: 16,
-    fontWeight: "bolder"
-  },
-  body: {
-    background: '#3C3F58',
-    borderBottom: "1px solid #3BBA9C",
-    color: '#3BBA9C',
-    fontSize: 15
-  }
-}))(TableCell);
 
 
 const generateStyle = (value, scale) => ({
