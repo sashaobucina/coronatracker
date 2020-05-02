@@ -15,12 +15,13 @@ import {
 import { withStyles } from "@material-ui/styles";
 
 const continents = [
-  { continent: "America", position: { coordinates: [-115, 42], zoom: 2 }},
   { continent: "Europe", position: { coordinates: [12, 50], zoom: 4 }},
+  { continent: "North America", position: { coordinates: [-115, 42], zoom: 2 }},
+  { continent: "Central America", position: { coordinates: [-91.3, 17.3], zoom: 5.2 }},
+  { continent: "South America", position: { coordinates: [-73, -32], zoom: 1.78 }},
   { continent: "Asia", position: { coordinates: [112, 30], zoom: 2.25 }},
+  { continent: "Middle East", position: { coordinates: [46.5, 27.5], zoom: 5.2 }},
   { continent: "Australia & Oceania", position: { coordinates: [135, -27], zoom: 2.7 }},
-  { continent: "South America", position: { coordinates: [-85, -25], zoom: 1.7 }},
-  { continent: "Middle East", position: { coordinates: [43, 28], zoom: 4 }},
   { continent: "Africa", position: { coordinates: [6.5, -4.5], zoom: 1.85 }},
 ];
 
