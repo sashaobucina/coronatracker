@@ -4,6 +4,7 @@ import urllib.request as request
 
 CONFIRMED_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 DEATHS_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+RECOVERED_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
 
 ABSOLUTE_PATH = "/Users/sashaobucina/repos/coding_projects/coronatracker/flask-microservice/backups"
 
@@ -35,6 +36,6 @@ def backup(url):
     f.write(response_str)
 
 if __name__ == "__main__":
-  for url in [CONFIRMED_URL, DEATHS_URL]:
+  for url in [CONFIRMED_URL, DEATHS_URL, RECOVERED_URL]:
     backup(url)
   print()

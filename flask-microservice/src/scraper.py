@@ -6,7 +6,7 @@ import urllib.request as request
 
 from generator import DataGenerator
 from preprocess import process_data, process_dates
-from util import CONFIRMED, DEATHS
+from util import CONFIRMED, DEATHS, RECOVERED
 
 class CoronaScraper():
   def __init__(self, logger):
@@ -24,7 +24,7 @@ class CoronaScraper():
     """
     reports = {}
 
-    for report_type in ["confirmed", "deaths"]:
+    for report_type in [CONFIRMED, DEATHS, RECOVERED]:
       url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
       req = request.urlopen(url)
 

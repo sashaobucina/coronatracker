@@ -8,7 +8,7 @@ export default function DerivativeGraph(props) {
   const { data, report } = props;
   const { height } = useWindowDimensions();
 
-  const stroke = report !== "deaths" ? "#DB7C00" : "#F44336";
+  const stroke = report === "deaths" ? "#F44336" : (report === "confirmed" ? "#DB7C00" : "#447A28");
 
   const formatAxis = (num) => rounded(num);
 

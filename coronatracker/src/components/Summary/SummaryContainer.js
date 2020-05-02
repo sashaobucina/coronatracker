@@ -52,7 +52,7 @@ const MyCheckbox = withStyles({
 export default function SummaryContainer(props) {
   const [checkList, setCheckboxList] = useState(range(10).map(() => true));
   const { data, fetchFn } = props;
-  const { confirmed, deaths } = data
+  const { confirmed, deaths, recovered } = data
 
   const classes = useStyle();
   const matches = useMediaQuery('(min-width:960px)');
@@ -61,7 +61,8 @@ export default function SummaryContainer(props) {
   const getCardData = (country) => {
     return {
       confirmed: find(confirmed, {country}),
-      deaths: find(deaths, {country})
+      deaths: find(deaths, {country}),
+      recovered: find(recovered, {country})
     }
   }
 

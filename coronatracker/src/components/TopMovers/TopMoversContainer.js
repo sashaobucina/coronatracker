@@ -30,7 +30,7 @@ const indexRows = (topMovers) => (
 
 const initialReport = "confirmed";
 const emptyInfo = { "top_gainers": [], "top_losers": [] };
-const initialData = { "confirmed": emptyInfo, "deaths": emptyInfo };
+const initialData = { "confirmed": emptyInfo, "deaths": emptyInfo, "recovered": emptyInfo };
 
 export default function TopMoversContainer(props) {
   const [ dense, setDense ] = useState(false);
@@ -70,7 +70,7 @@ export default function TopMoversContainer(props) {
   const classes = useStyles();
 
   const handleReportChange = (report) => {
-    setReport(report)
+    setReport(report);
   }
 
   const handleChangeDense = (event) => {

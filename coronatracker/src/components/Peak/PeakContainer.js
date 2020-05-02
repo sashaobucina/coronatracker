@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { CustomSwitch } from "../Shared/CustomComponents";
+import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import PeakTable from "./PeakTable";
 import TableSearch from "../Shared/TableSearch";
 import { PREFETCH_URL } from "../../helpers/misc";
@@ -22,13 +23,16 @@ const useStyles = makeStyles({
   }
 })
 
+const initialData = { "confirmed": [], "deaths": [], "recovered": [] };
+
 export default function PeakContainer(props) {
   // get size of screen by media query
   const matches = useMediaQuery('(min-width:960px)');
 
-  const [rows, setRows] = useState([]);
+  const [allRows, setAllRows] = useState(initialData);
   const [dense, setDense] = useState(false);
   const [query, setQuery] = useState("");
+  const [report, setReport] = useState("confirmed")
   const { match, setAlert, updatePath } = props;
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function PeakContainer(props) {
       try {
         const url = PREFETCH_URL + "peak-data";
         const { data } = await axios.get(url);
-        setRows(data);
+        setAllRows(data);
       } catch (e) {
         console.error(e);
         setAlert(SERVER_ALERT);
@@ -63,6 +67,12 @@ export default function PeakContainer(props) {
     setDense(event.target.checked);
   };
 
+  const handleReportChange = (report) => {
+    setReport(report);
+  }
+
+  const rows = allRows[report];
+
   const classes = useStyles();
   const subheader = rows.length === 0 ? "" : `(as of ${getDate(rows[0]["lastDate"])})`;
 
@@ -85,11 +95,16 @@ export default function PeakContainer(props) {
       <Grid item xs={11} sm={11} md={11} lg={11}>
         <TableSearch setQuery={setQuery} />
       </Grid>
+      <Grid item xs={1} sm ={1} md={1} lg={1} />
+      <Grid item xs={11} sm={11} md={11} lg={11}>
+          <MoverButtonGroup report={report} setReport={handleReportChange} />
+      </Grid>
       <Grid item md={1} lg={1} />
       <Grid item xs={12} sm={12} md={10} lg={10}>
         <PeakTable
           dense={dense}
           rows={filterRows()}
+          report={report}
           title={`Days Since Peak # of New Cases ${subheader}`}
         />
       </Grid>

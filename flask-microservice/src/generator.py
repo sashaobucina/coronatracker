@@ -1,5 +1,5 @@
 import numpy as np
-from util import div, numpy_to_native, get_percent_below, get_percent_change, CONFIRMED, DEATHS
+from util import div, numpy_to_native, get_percent_below, get_percent_change, CONFIRMED, DEATHS, RECOVERED
 
 class DataGenerator:
   """
@@ -31,7 +31,7 @@ class DataGenerator:
 
     Preconditions:
       - country in self.valid_countries
-      - report_type in ["Confirmed", "Deaths"]
+      - report_type in ["confirmed", "deaths", "recovered"]
     """
     if report_type not in self.reports:
       raise ValueError(f"Invalid report type given - {report_type}")
@@ -43,7 +43,7 @@ class DataGenerator:
     Return the number of cases for all countries, throughout time.
 
     Preconditions:
-      - report_type in ["Confirmed", "Deaths"]
+      - report_type in ["confirmed", "deaths", "recovered"]
     """
     data = []
     report = self.reports[report_type]
@@ -58,12 +58,13 @@ class DataGenerator:
 
   def top_movers(self):
     """
-    Return a dictionary containing the top movers for both confirmed cases and deaths.
+    Return a dictionary containing the top movers for both confirmed cases, deaths, and recovered cases.
     """
     top_movers = {k: {} for k, _ in self.reports.items()}
     thresholds = {
       DEATHS: 50,
-      CONFIRMED: 1000
+      CONFIRMED: 1000,
+      RECOVERED: 1000
     }
 
     # populate the movers dict
@@ -139,7 +140,8 @@ class DataGenerator:
   def get_summary(self):
     summary = {
       CONFIRMED: [],
-      DEATHS: []
+      DEATHS: [],
+      RECOVERED: []
     }
 
     for report_type in self.reports:
@@ -150,52 +152,55 @@ class DataGenerator:
 
     return summary
 
-  def get_peak_data(self, report_type="confirmed"):
-    peak_data = []
-    report = self.reports[report_type]
+  def get_peak_data(self):
+    full_peak_data = {}
 
-    for country in self.valid_countries:
-      country_data = report[country]
-      num_cases = country_data[-1]
+    for report_type, report in self.reports.items():
+      peak_data = []
+      for country in self.valid_countries:
+        country_data = report[country]
+        num_cases = country_data[-1]
 
-      # dont account for countries with less than 5000 cases
-      if num_cases < 5000:
-        continue
+        # dont account for countries with less than 5000 cases
+        if num_cases < 5000:
+          continue
 
-      # get changes per day
-      changes = np.diff(country_data)
-      recent = changes[-1]
+        # get changes per day
+        changes = np.diff(country_data)
+        recent = changes[-1]
 
-      # ignore countries w/ negative change; usually result of changing data source for tracking cases
-      if recent < 0:
-        continue
+        # ignore countries w/ negative change; usually result of changing data source for tracking cases
+        if recent < 0:
+          continue
 
-      # get peak
-      idx, peak = self._get_peak(changes)
-      peak_date = self.dates[idx + 1]
-      last_date = self.dates[-1]
+        # get peak
+        idx, peak = self._get_peak(changes)
+        peak_date = self.dates[idx + 1]
+        last_date = self.dates[-1]
 
-      # percent diff between recent and peak
-      percent_below = get_percent_below(recent, peak)
+        # percent diff between recent and peak
+        percent_below = get_percent_below(recent, peak)
 
-      # days since recent and peak
-      days_since = (len(self.dates) - 1) - (idx + 1)
+        # days since recent and peak
+        days_since = (len(self.dates) - 1) - (idx + 1)
 
-      # aggregate all data needed
-      peak_data.append(
-        {
-          "country": country,
-          "daysSince": numpy_to_native(days_since),
-          "percentBelow": numpy_to_native(percent_below),
-          "newCases": numpy_to_native(recent),
-          "peak": numpy_to_native(peak),
-          "peakDate": peak_date,
-          "lastDate": last_date
-        }
-      )
+        # aggregate all data needed
+        peak_data.append(
+          {
+            "country": country,
+            "daysSince": numpy_to_native(days_since),
+            "percentBelow": numpy_to_native(percent_below),
+            "newCases": numpy_to_native(recent),
+            "peak": numpy_to_native(peak),
+            "peakDate": peak_date,
+            "lastDate": last_date
+          }
+        )
 
-    peak_data = sorted(peak_data, key=lambda d: d["daysSince"], reverse=True)
-    return peak_data
+      peak_data = sorted(peak_data, key=lambda d: d["daysSince"], reverse=True)
+      full_peak_data[report_type] = peak_data
+
+    return full_peak_data
 
   def _get_top10(self, report):
     contributions = [(country, report[country][-1]) for country in self.valid_countries]

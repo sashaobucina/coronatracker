@@ -27,7 +27,7 @@ const useStyle = makeStyles({
 
 export default function SummaryCard(props) {
   const { buttonComponent, data, size, subheader } = props;
-  const { confirmed, deaths } = data;
+  const { confirmed, deaths, recovered } = data;
   const { country } = confirmed;
 
   const classes = useStyle();
@@ -47,6 +47,9 @@ export default function SummaryCard(props) {
       </StyledTableCell>
       <StyledTableCell style={withStyle ? { color: "#F44336" } : {} }>
         {formatFn(deaths[key])}
+      </StyledTableCell>
+      <StyledTableCell style={withStyle ? { color: "#478C30" } : {} }>
+        {formatFn(recovered[key])}
       </StyledTableCell>
     </TableRow>
   );
@@ -75,6 +78,12 @@ export default function SummaryCard(props) {
                   style={{ color: "#F44336" }}
                 >
                   Deaths
+                </StyledTableCell>
+                <StyledTableCell
+                  id="recovered"
+                  style={{ color: "#478C30" }}
+                >
+                  Recovered
                 </StyledTableCell>
               </TableRow>
             </TableHead>

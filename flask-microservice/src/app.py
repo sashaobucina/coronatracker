@@ -82,7 +82,7 @@ def get_top_contributors():
 
 @app.route('/peak-data')
 def peak_data():
-  response = generator.get_peak_data(report_type=util.CONFIRMED)
+  response = generator.get_peak_data()
   return jsonify(response)
 
 @app.route('/cases')
@@ -96,18 +96,20 @@ def country_data(country):
     dates = generator.get_dates()
     confirmed = generator.get_country_data(country, util.CONFIRMED)
     deaths = generator.get_country_data(country, util.DEATHS)
+    recovered = generator.get_country_data(country, util.RECOVERED)
 
-    labels = ["date", util.CONFIRMED, util.DEATHS]
-    drv1_confirmed, drv1_deaths = np.gradient(confirmed), np.gradient(deaths)
-    drv2_confirmed, drv2_deaths = np.gradient(drv1_confirmed), np.gradient(drv1_deaths)
+    labels = ["date", util.CONFIRMED, util.DEATHS, util.RECOVERED]
+    drv1_confirmed, drv1_deaths, drv1_recovered = np.gradient(confirmed), np.gradient(deaths), np.gradient(recovered)
+    drv2_confirmed, drv2_deaths, drv2_recovered = np.gradient(drv1_confirmed), np.gradient(drv1_deaths), np.gradient(drv1_recovered)
 
-    overall = util.json_like(labels, [dates, confirmed, deaths])
-    first_derivative = util.json_like(labels, [dates, drv1_confirmed, drv1_deaths])
-    second_derivative = util.json_like(labels, [dates, drv2_confirmed, drv2_deaths])
+    overall = util.json_like(labels, [dates, confirmed, deaths, recovered])
+    first_derivative = util.json_like(labels, [dates, drv1_confirmed, drv1_deaths, drv1_recovered])
+    second_derivative = util.json_like(labels, [dates, drv2_confirmed, drv2_deaths, drv2_recovered])
 
     summary = {
       util.CONFIRMED: generator.get_country_summary(country, util.CONFIRMED),
-      util.DEATHS: generator.get_country_summary(country, util.DEATHS)
+      util.DEATHS: generator.get_country_summary(country, util.DEATHS),
+      util.RECOVERED: generator.get_country_summary(country, util.RECOVERED)
     }
 
     response = {

@@ -10,6 +10,7 @@ export default function OverallGraph(props) {
 
   const confirmedColor = "#DB7C00";
   const deathsColor = "#9C3321";
+  const recoveredColor = "#478C30";
 
   const formatAxis = (num) => rounded(num);
 
@@ -30,6 +31,10 @@ export default function OverallGraph(props) {
           <linearGradient id="colorDeaths" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={deathsColor} stopOpacity={0.8}/>
             <stop offset="95%" stopColor={deathsColor} stopOpacity={0}/>
+          </linearGradient>
+          <linearGradient id="colorRecovered" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={recoveredColor} stopOpacity={0.8}/>
+              <stop offset="95%" stopColor={recoveredColor} stopOpacity={0}/>
           </linearGradient>
         </defs>
         <Brush
@@ -53,6 +58,13 @@ export default function OverallGraph(props) {
           fill="url(#colorDeaths)"
           fillOpacity={1}
           stroke="#F44336"
+          type="monotone"
+        />
+        <Area
+          dataKey="recovered"
+          fill="url(#colorRecovered)"
+          fillOpacity={1}
+          stroke={recoveredColor}
           type="monotone" 
         />
         <Tooltip content={<CustomTooltip title="Date" />} />

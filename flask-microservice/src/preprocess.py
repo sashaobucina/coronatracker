@@ -1,5 +1,5 @@
 import numpy as np
-from util import CONFIRMED, DEATHS
+from util import CONFIRMED, DEATHS, RECOVERED
 
 def process_dates(reports: dict):
   """
@@ -7,10 +7,13 @@ def process_dates(reports: dict):
   """
   confirmed = reports[CONFIRMED]
   deaths = reports[DEATHS]
+  recovered = reports[RECOVERED]
 
   dates1 = confirmed.columns.to_numpy()[4:]
   dates2 = deaths.columns.to_numpy()[4:]
+  dates3 = deaths.columns.to_numpy()[4:]
   assert np.array_equal(dates1, dates2)
+  assert np.array_equal(dates2, dates3)
 
   return dates1.tolist()
 

@@ -48,6 +48,25 @@ const useStyles = makeStyles({
         opacity: 1,
       },
     }
+  },
+  recovered: {
+    background: "#3C3F58",
+    color: "#212121",
+    "&:hover": {
+      background: "#3C3F58",
+      color: "#478C30",
+      fontWeight: "bolder",
+      opacity: 0.8,
+    },
+    "&.Mui-selected": {
+      background: '#3C3F58',
+      color: "#478C30",
+      fontWeight: "bold",
+      "&:hover": {
+        background: "#3C3F58",
+        opacity: 1,
+      },
+    }
   }
 });
 
@@ -75,6 +94,9 @@ export default function MoverButtonGroup(props) {
         </ToggleButton>
         <ToggleButton className={classes.deaths} value="deaths">
           Deaths
+        </ToggleButton>
+        <ToggleButton className={classes.recovered} value="recovered">
+          Recovered
         </ToggleButton>
       </ToggleButtonGroup>
     </Tooltip>

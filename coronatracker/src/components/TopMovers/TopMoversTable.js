@@ -66,7 +66,7 @@ export default function TopMoversTable(props) {
         columns={headCells.map(({ label }) => label)}
         filename={`top_movers_${report}_${today()}.csv`}
         rows={rows.map((row, i) => union([i+1], values(row)))}
-        title={`${title} (# of ${report})`}
+        title={title}
       />
       <TableContainer>
         <Table size={dense ? "small" : "medium"}>
