@@ -81,7 +81,7 @@ export default function MoverButtonGroup(props) {
   }
 
   return (
-    <Tooltip title={"Toggle " + report} placement="bottom">
+    <Tooltip title="Toggle report type" placement="bottom">
       <ToggleButtonGroup
         className={classes.root}
         value={report}
