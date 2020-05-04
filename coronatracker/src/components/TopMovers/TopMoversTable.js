@@ -32,8 +32,8 @@ function createRows(rows) {
 const headCells = [
   { id: "index", align: false, label: "#", sort: false },
   { id: "country", align: false, label: "Country", sort: false },
-  { id: "percentChange", align: true, label: "Percent Change (%)", sort: true },
-  { id: "change", align: true, label: "Change", sort: true },
+  { id: "percentChange", align: true, label: "Percent Change", sort: true },
+  { id: "change", align: true, label: "New Cases", sort: true },
   { id: "totalCases", align: true, label: "Total Cases", sort: true }
 ];
 

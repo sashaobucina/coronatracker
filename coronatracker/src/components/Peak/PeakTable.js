@@ -33,7 +33,7 @@ const headCells = [
   { id: "newCases", align: true, label: "New Cases", sort: true },
   { id: "peak", align: true, label: "Peak", sort: true },
   { id: "daysSince", align: true, label: "Days Since", sort: true },
-  { id: "percentBelow", align: true, label: "% Below Peak", sort: true },
+  { id: "percentBelow", align: true, label: "Percent Below Peak", sort: true },
   { id: "peakDate", align: true, label: "Date of Peak", sort: false }
 ];
 
