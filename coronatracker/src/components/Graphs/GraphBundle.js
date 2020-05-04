@@ -47,6 +47,7 @@ export default function GraphBundle(props) {
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} />
       </Grid>
+      <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6} style={{ marginBottom: 40 }}>
         <SummaryCard
           data={summary}
@@ -54,6 +55,7 @@ export default function GraphBundle(props) {
           subheader=""
         />
       </Grid>
+      <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={12} sm={12}>
         <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
       </Grid>

@@ -1,14 +1,17 @@
 import React from "react";
+import get from "lodash/get";
 import {
   Card,
   CardActions,
   CardContent,
   CardHeader,
+  Grid,
   Table,
   TableContainer,
   TableHead,
   TableRow,
-  TableBody
+  TableBody,
+  Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { StyledTableCell } from "../Shared/CustomComponents";
@@ -23,6 +26,15 @@ const useStyle = makeStyles({
     backgroundImage: `url(${require("../../static/coronavirus.jpg")})`,
     color: "#2E3047"
   },
+  grid: {
+    paddingTop: 10
+  },
+  recoveredText: {
+    color: "#478C30"
+  },
+  deathsText: {
+    color: "#F44336"
+  }
 });
 
 export default function SummaryCard(props) {
@@ -32,10 +44,17 @@ export default function SummaryCard(props) {
 
   const classes = useStyle();
 
+  // create format functions for table rows
   const idFn = (x) => x;
   const formatFn = (x) => formatNumber(x);
   const percentFn = (x) => `${formatNumber(x)}%`;
   const indicatorFn = (x) => x >= 0 ? `+${formatNumber(x)}` : `${formatNumber(x)}`;
+
+  // calculate mortality and recovery rates
+  const confirmedTotal = get(confirmed, "total", 0);
+  const deathsTotal = get(deaths, "total", 0);
+  const mortalityRate = confirmedTotal !== 0 ? ((deathsTotal / confirmedTotal) * 100).toFixed(2) : 0;
+  const recoveryRate = 100 - mortalityRate;
 
   const getRow = (title, key, formatFn, withStyle) => (
     <TableRow>
@@ -97,6 +116,24 @@ export default function SummaryCard(props) {
             </TableBody>
           </Table>
         </TableContainer>
+        <Grid
+          container
+          className={classes.grid}
+          direction="row"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <Typography className={classes.recoveredText} align="center">
+              Recovery Rate: {recoveryRate}%
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <Typography className={classes.deathsText} align="center">
+              Mortality Rate: {mortalityRate}%
+            </Typography>
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions>
         {buttonComponent ? buttonComponent : null }
