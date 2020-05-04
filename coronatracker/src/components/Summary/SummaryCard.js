@@ -54,7 +54,7 @@ export default function SummaryCard(props) {
   const confirmedTotal = get(confirmed, "total", 0);
   const deathsTotal = get(deaths, "total", 0);
   const mortalityRate = confirmedTotal !== 0 ? ((deathsTotal / confirmedTotal) * 100).toFixed(2) : 0;
-  const recoveryRate = 100 - mortalityRate;
+  const recoveryRate = (100 - mortalityRate).toFixed(2);
 
   const getRow = (title, key, formatFn, withStyle) => (
     <TableRow>
