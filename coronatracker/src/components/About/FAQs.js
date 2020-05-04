@@ -83,7 +83,7 @@ export default function FAQs(props) {
                 expandIcon={<ExpandMore />}
               >
                 <Typography>
-                  Q: What are key indicators that the virus is no longer exponentially growing or that we are "flattening the curve"?
+                  Q: What are key indicators that we are "flattening the curve"?
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
@@ -115,7 +115,7 @@ export default function FAQs(props) {
                 <Typography variant="subtitle1">
                   A: Collecting and reporting data on a global scale is an extremely challenging task and requires cooperation on a global scale. Hence, any countries that do not disclose their data for COVID-19 will not be shown here.
                   <br/><br/>
-                  This site aggregates all the data from the John Hopkins CSSE repository, which in turn collects data from the World Health Organization (WHO) and various governments/health organizations across the world. If there seems to be any inconsistencies with data, please consult the John Hopkins CSSE repository to view if these issues have already been brought to attention.
+                  This site aggregates all the data from the John Hopkins CSSE repository, which in turn collects data from the World Health Organization (WHO) and various governments/health organizations across the world. If there seems to be any inconsistencies with data, please consult the John Hopkins CSSE repository to view if these issues have already been brought to attention or have been addressed.
                 </Typography>
               </ExpansionPanelDetails>
               <Divider className={classes.divider} />
@@ -126,6 +126,29 @@ export default function FAQs(props) {
                   </Button>
                 </Tooltip>
               </ExpansionPanelActions>
+            </ExpansionPanel>
+          </Grid>
+          <Grid item>
+            <ExpansionPanel className={classes.panel}>
+              <ExpansionPanelSummary
+                classes={{ expandIcon: classes.icon }}
+                expandIcon={<ExpandMore />}
+              >
+                <Typography align="center">
+                  Q: How should some key metrics be interpreted?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography variant="subtitle1">
+                  A: The following list compiles all metrics that may not be self-evident:
+                  <ul>
+                    <li><b>New Cases:</b> The number of new cases reported in a day</li>
+                    <li><b>Percent Change:</b> The percent change from the previous day to the current day</li>
+                    <li><b>Peak:</b> The maximum number of new cases reported in a day</li>
+                    <li><b>Percent Below Peak:</b> The percent change of the difference between the peak and number of new cases, relative to the peak</li>
+                  </ul>
+                </Typography>
+              </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
           <Grid item>
