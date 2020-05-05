@@ -1,5 +1,6 @@
 from datetime import date
 import os
+import subprocess
 import urllib.request as request
 
 CONFIRMED_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
@@ -34,6 +35,14 @@ def backup(url):
   with open(full_path, "w+") as f:
     print(f"Writing data for {curr_date} to {full_path}")
     f.write(response_str)
+
+  # wrote to file successfully, add the changes using git
+  try:
+    subprocess.run(["git", "add", dir_name], check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", f"Add backup for {curr_date}"], check=True, capture_output=True)
+    subprocess.run(["git", "push"], check=True, capture_output=True)
+  except subprocess.CalledProcessError as grepexc:
+    print(f"Exited with non-zero return code {grepexc.returncode}: {grepexc.output}")
 
 if __name__ == "__main__":
   for url in [CONFIRMED_URL, DEATHS_URL, RECOVERED_URL]:
