@@ -24,6 +24,7 @@ const useStyle = makeStyles({
   },
   header: {
     backgroundImage: `url(${require("../../static/coronavirus.jpg")})`,
+    backgroundSize: "cover",
     color: "#2E3047"
   },
   grid: {
