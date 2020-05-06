@@ -9,9 +9,11 @@ RECOVERED_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/maste
 
 ABSOLUTE_PATH = "/Users/sashaobucina/repos/coding_projects/coronatracker/flask-microservice/backups"
 
+# get current date
+curr_date = date.today().strftime("%Y-%m-%d")
+
 def backup(url):
-  # get current date
-  curr_date = date.today().strftime("%Y-%m-%d")
+  # get current time
   curr_time = date.today().strftime("%Y-%m-%d %H:%M:%S") 
 
   # request data for confirmed and deaths
@@ -36,15 +38,16 @@ def backup(url):
     print(f"Writing data for {curr_date} to {full_path}")
     f.write(response_str)
 
-  # wrote to file successfully, add the changes using git
-  try:
-    subprocess.run(["git", "add", dir_name], check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", f"Add backup for {curr_date}"], check=True, capture_output=True)
-    subprocess.run(["git", "push"], check=True, capture_output=True)
-  except subprocess.CalledProcessError as grepexc:
-    print(f"Exited with non-zero return code {grepexc.returncode}: {grepexc.output}")
-
 if __name__ == "__main__":
   for url in [CONFIRMED_URL, DEATHS_URL, RECOVERED_URL]:
     backup(url)
+
+  # wrote to all files successfully, add the changes using git
+  try:
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "add", curr_date], check=True, capture_output=True)
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "commit", "-m", f"Add backup for {curr_date}"], check=True, capture_output=True)
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "push"], check=True, capture_output=True)
+  except subprocess.CalledProcessError as grepexc:
+    print(f"Exited with non-zero return code {grepexc.returncode}: {grepexc.output}")
+
   print()
