@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Typography, useMediaQuery } from "@material-ui/core";
 
 import DateSlider from "../Slider/DateSlider"
@@ -25,6 +25,14 @@ export default function GraphBundle(props) {
   const dates = convertToDates(overall, weeklyData.length);
   const maxIndex = dates.length - 1;
 
+  // set the slider to max index when available
+  useEffect(() => {
+    setIndexValue(maxIndex);
+  }, [maxIndex]);
+
+  const matches = useMediaQuery('(min-width:960px)');
+  const size = matches ? "medium" : "small";
+
   function onStepClick(n, increment) {
     if (increment) {
       setIndexValue(indexValue < n ? indexValue + 1 : 0);
@@ -32,9 +40,6 @@ export default function GraphBundle(props) {
       setIndexValue(indexValue > 0 ? indexValue - 1 : n);
     }
   }
-
-  const matches = useMediaQuery('(min-width:960px)');
-  const size = matches ? "medium" : "small";
 
   return (
     <Grid container direction="row" justify="center" alignItems="center">

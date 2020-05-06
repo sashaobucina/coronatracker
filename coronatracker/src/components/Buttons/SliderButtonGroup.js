@@ -3,7 +3,7 @@ import { IconButton, Tooltip, ButtonGroup } from "@material-ui/core";
 import { ArrowBack, ArrowForward, PlayArrow, Pause, Restore, SkipNext } from "@material-ui/icons";
 
 export default function SliderButtonGroup(props) {
-  const [ playing, setPlaying ] = useState(true);
+  const [ playing, setPlaying ] = useState(false);
   const { disabled, indexValue, maxIndex, onStepClick, size, speed, updateIndexState } = props;
 
   useEffect(() => {
