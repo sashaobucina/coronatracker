@@ -65,10 +65,12 @@ def get_top_contributors():
     summary = generator.get_summary()
 
     # graph data
+    dates = generator.get_dates()
     labels += ["date"]
-    data += [generator.get_dates()]
+    data += [dates]
 
     response = {
+      "date": dates[-1],
       "summary": summary,
       "graph": {
         "labels": labels,
@@ -113,6 +115,7 @@ def country_data(country):
     }
 
     response = {
+      "date": dates[-1],
       "overall": overall,
       "first_derivative_data": first_derivative,
       "second_derivative_data": second_derivative,

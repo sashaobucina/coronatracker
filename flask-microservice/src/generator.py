@@ -103,6 +103,9 @@ class DataGenerator:
       top_movers[report_type]["top_gainers"] = sorted_movers[::-1]
       top_movers[report_type]["top_losers"] = sorted_movers[:]
 
+    # add last updated date
+    top_movers["date"] = self.dates[-1]
+
     return top_movers
 
   def top_contributors(self):
@@ -176,7 +179,6 @@ class DataGenerator:
         # get peak
         idx, peak = self._get_peak(changes)
         peak_date = self.dates[idx + 1]
-        last_date = self.dates[-1]
 
         # percent diff between recent and peak
         percent_below = get_percent_below(recent, peak)
@@ -192,13 +194,15 @@ class DataGenerator:
             "percentBelow": numpy_to_native(percent_below),
             "newCases": numpy_to_native(recent),
             "peak": numpy_to_native(peak),
-            "peakDate": peak_date,
-            "lastDate": last_date
+            "peakDate": peak_date
           }
         )
 
       peak_data = sorted(peak_data, key=lambda d: d["daysSince"], reverse=True)
       full_peak_data[report_type] = peak_data
+
+    # add last updated date
+    full_peak_data["date"] = self.dates[-1]
 
     return full_peak_data
 

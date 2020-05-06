@@ -23,16 +23,21 @@ const useStyles = makeStyles({
   }
 })
 
-const initialData = { "confirmed": [], "deaths": [], "recovered": [] };
+const initialData = {
+  confirmed: [],
+  date: "",
+  deaths: [],
+  recovered: []
+};
 
 export default function PeakContainer(props) {
   // get size of screen by media query
   const matches = useMediaQuery('(min-width:960px)');
 
-  const [allRows, setAllRows] = useState(initialData);
-  const [dense, setDense] = useState(false);
-  const [query, setQuery] = useState("");
-  const [report, setReport] = useState("confirmed")
+  const [ allRows, setAllRows ] = useState(initialData);
+  const [ dense, setDense ] = useState(false);
+  const [ query, setQuery ] = useState("");
+  const [ report, setReport ] = useState("confirmed")
   const { match, setAlert, updatePath } = props;
 
   useEffect(() => {
@@ -72,9 +77,10 @@ export default function PeakContainer(props) {
   }
 
   const rows = allRows[report];
+  const date = allRows.date;
 
   const classes = useStyles();
-  const subheader = rows.length === 0 ? "" : `(as of ${getDate(rows[0]["lastDate"])})`;
+  const subtitle = date === "" ? "" : `(as of ${getDate(date)})`;
 
   return (
     <Grid
@@ -88,7 +94,10 @@ export default function PeakContainer(props) {
     >
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
-          COVID-19 Tracking - Days Since Peak
+          COVID-19 Days Since Peak
+        </Typography>
+        <Typography align="center" variant="subtitle1">
+          {subtitle}
         </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
@@ -105,7 +114,7 @@ export default function PeakContainer(props) {
           dense={dense}
           rows={filterRows()}
           report={report}
-          title={`Days Since Peak # of New Cases ${subheader}`}
+          title="Peak Data"
         />
       </Grid>
       <Grid item md={1} lg={1} />

@@ -13,13 +13,14 @@ import { PREFETCH_URL } from "../helpers/misc";
 import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
 
 const initialTopContributors = {
-  summary: {
-    confirmed: [],
-    deaths: []
-  },
+  date: "",
   graph: {
     labels: [],
     contributors: []
+  },
+  summary: {
+    confirmed: [],
+    deaths: []
   }
 }
 

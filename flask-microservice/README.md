@@ -39,6 +39,7 @@ Return Type:
 
 ```yaml
 {
+  date: Date,
   confirmed: {
     top_gainers: [
       {
@@ -74,6 +75,24 @@ Return Type:
         totalCases: int
       }
     ...]
+  },
+  recovered: {
+    top_gainers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...],
+    top_losers: [
+      {
+        country: String,
+        change: int,
+        percentChange: float,
+        totalCases: int
+      }
+    ...]
   }
 }
 ```
@@ -90,6 +109,7 @@ Return Type:
 
 ```yaml
 {
+  date: Date,
   graph: {
     labels: [...],
     contributors: [...]
@@ -116,6 +136,17 @@ Return Type:
         daysSince: int,
         percentChange: float
       }
+    ...],
+    recovered: [
+      {
+        country: String,
+        total: int,
+        newCases: int,
+        maxCases: int,
+        percentBelow: float,
+        daysSince: int,
+        percentChange: float
+      }
     ...]
   }
 }
@@ -132,16 +163,36 @@ GET /peak-data
 Return Type:
 
 ```yaml
-[
-  {
-    country: String,
-    daysSince: int,
-    percentBelow: float,
-    newCases: int,
-    peak: int,
-    peakDate: Date
-  }
-...]
+{
+  date: Date,
+  confirmed: [
+    {
+      country: String,
+      daysSince: int,
+      percentBelow: float,
+      newCases: int,
+      peak: int,
+    }
+  ...],
+  deaths: [
+    {
+      country: String,
+      daysSince: int,
+      percentBelow: float,
+      newCases: int,
+      peak: int,
+    }
+  ...],
+  recovered: [
+    {
+      country: String,
+      daysSince: int,
+      percentBelow: float,
+      newCases: int,
+      peak: int,
+    }
+  ...]
+}
 ```
 
 ### Confirmed Cases
@@ -180,25 +231,29 @@ Return Type:
 
 ```yaml
 {
+  date: Date,
   overall: [
     {
       date: Date,
       confirmed: int,
-      deaths: int
+      deaths: int,
+      recovered: int
     },
   ...],
   first_derivative_data: [
     {
       date: Date,
       confirmed: int,
-      deaths: int
+      deaths: int,
+      recovered: int
     },
   ...],
   second_derivative_data: [
     {
       date: Date,
       confirmed: int,
-      deaths: int
+      deaths: int,
+      recovered: int
     },
   ...],
   summary: {
@@ -212,6 +267,15 @@ Return Type:
       percentChange: float
     },
     deaths: {
+      country: String,
+      total: int,
+      newCases: int,
+      maxCases: int,
+      percentBelow: float,
+      daysSince: int,
+      percentChange: float
+    },
+    recovered: {
       country: String,
       total: int,
       newCases: int,

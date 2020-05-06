@@ -5,23 +5,25 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import { Brush, ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tooltip } from "recharts";
 
 import CustomTooltip from "./CustomTooltip";
-import { rounded } from "../../helpers/conversions";
+import { rounded, getDate } from "../../helpers/conversions";
 import { useWindowDimensions } from "../../helpers/windowProvider";
 import { COLOURS } from "../../helpers/misc";
 
 const useStyles = makeStyles({
   root: {
     marginBottom: 20,
-    marginTop: 30
+    marginTop: 25
   }
 })
 
 export default function ContributorGraph(props) {
-  const { labels, data } = props;
+  const { labels, data, date } = props;
   const { height } = useWindowDimensions();
   const classes = useStyles();
 
   const formatAxis = (num) => rounded(num);
+
+  const subtitle = date === "" ? "" : `(as of ${getDate(date)})`;
 
   const lines = labels
     .filter(label => label !== "date")
@@ -41,7 +43,12 @@ export default function ContributorGraph(props) {
   return (
     <Grid container className={classes.root} direction="row" alignItems="center" justify="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <Typography align="center" variant="h5">Most Impacted Countries (by # of confirmed cases)</Typography>
+        <Typography align="center" variant="h4">
+          Most Impacted Countries - Confirmed Cases
+        </Typography>
+        <Typography align="center" variant="subtitle1">
+          {subtitle}
+        </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>

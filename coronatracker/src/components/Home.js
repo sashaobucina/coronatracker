@@ -125,12 +125,12 @@ export default function Home(props) {
   }
 
   function showGraphs() {
-    const { graph } = topContributors;
+    const { date, graph } = topContributors;
     const { contributors, labels } = graph;
     return data.length === 0
       ? fetched
         ? (<>
-            <ContributorGraph labels={labels} data={contributors} />
+            <ContributorGraph labels={labels} data={contributors} date={date} />
             <SummaryContainer data={topContributors.summary} fetchFn={fetchData} />
           </>)
         : null

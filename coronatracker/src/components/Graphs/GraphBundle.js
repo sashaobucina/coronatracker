@@ -20,7 +20,7 @@ export default function GraphBundle(props) {
   const { country, data } = props;
 
   // collect data in proper format
-  const { overall, first_derivative_data, second_derivative_data, summary } = data;
+  const { date, overall, first_derivative_data, second_derivative_data, summary } = data;
   const weeklyData = convertDataToWeekly(overall);
   const dates = convertToDates(overall, weeklyData.length);
   const maxIndex = dates.length - 1;
@@ -42,7 +42,7 @@ export default function GraphBundle(props) {
         <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item xs={10} sm={10} md={10} lg={10}>
           <Typography color="inherit" variant="h5" align="center">
-            Daily Report for {country} - {getDate(overall[overall.length - 1]["date"])}
+            Daily Report for {country} - {getDate(date)}
           </Typography>
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} />
@@ -57,7 +57,7 @@ export default function GraphBundle(props) {
       </Grid>
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={12} sm={12}>
-        <Typography align="center" variant="h4">COVID-19 Cases ({country})</Typography>
+        <Typography align="center" variant="h4">COVID-19 Cases</Typography>
       </Grid>
       <Grid item xs={10} sm={10}>
         <OverallGraph data={overall} />

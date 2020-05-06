@@ -15,6 +15,7 @@ import TableSearch from "../Shared/TableSearch";
 import { CustomSwitch } from "../Shared/CustomComponents"
 import { PREFETCH_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
+import { getDate } from "../../helpers/conversions";
 
 const useStyles = makeStyles({
   grid: {
@@ -30,7 +31,12 @@ const indexRows = (topMovers) => (
 
 const initialReport = "confirmed";
 const emptyInfo = { "top_gainers": [], "top_losers": [] };
-const initialData = { "confirmed": emptyInfo, "deaths": emptyInfo, "recovered": emptyInfo };
+const initialData = {
+  confirmed: emptyInfo,
+  date: "",
+  deaths: emptyInfo,
+  recovered: emptyInfo
+};
 
 export default function TopMoversContainer(props) {
   const [ dense, setDense ] = useState(false);
@@ -63,11 +69,13 @@ export default function TopMoversContainer(props) {
     fetchData();
   }, [setAlert])
 
+  const date = topMovers.date;
   const { top_gainers, top_losers } = topMovers[report];
   const gainerRows = indexRows(top_gainers);
   const loserRows = indexRows(top_losers);
 
   const classes = useStyles();
+  const subtitle = date === "" ? "" : `(as of ${getDate(date)})`;
 
   const handleReportChange = (report) => {
     setReport(report);
@@ -84,10 +92,13 @@ export default function TopMoversContainer(props) {
   }
 
   return (
-    <Grid container className={classes.grid} direction="row" alignItems="center" alignContent="center" spacing={2}>
+    <Grid container className={classes.grid} direction="row" spacing={2}>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
           COVID-19 Top Movers
+        </Typography>
+        <Typography align="center" variant="subtitle1">
+          {subtitle}
         </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
