@@ -110,6 +110,7 @@ export default function HeatMapButtons(props) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
+        variant="menu"
       >
         {generateMenuItems()}
       </StyledMenu>
