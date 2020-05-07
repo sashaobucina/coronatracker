@@ -44,9 +44,9 @@ if __name__ == "__main__":
 
   # wrote to all files successfully, add the changes using git
   try:
-    subprocess.run(["git", "-C", ABSOLUTE_PATH, "add", curr_date], check=True, capture_output=True)
-    subprocess.run(["git", "-C", ABSOLUTE_PATH, "commit", "-m", f"Add backup for {curr_date}"], check=True, capture_output=True)
-    subprocess.run(["git", "-C", ABSOLUTE_PATH, "push"], check=True, capture_output=True)
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "add", curr_date], check=True)
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "commit", "-m", f"Add backup for {curr_date}"], check=True)
+    subprocess.run(["git", "-C", ABSOLUTE_PATH, "push"], check=True)
   except subprocess.CalledProcessError as grepexc:
     print(f"Exited with non-zero return code {grepexc.returncode}: {grepexc.output}")
 
