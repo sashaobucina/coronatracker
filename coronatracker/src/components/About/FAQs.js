@@ -8,7 +8,7 @@ import { useWindowDimensions } from "../../helpers/windowProvider";
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 55,
+    marginTop: 60,
     marginBottom: 50
   },
   panel: {
@@ -48,7 +48,7 @@ export default function FAQs(props) {
         <Grid container direction="column" alignItems="stretch" spacing={2}>
           <Grid item>
             <Typography variant="h5">
-              FAQs
+              Frequently Asked Questions
             </Typography>
           </Grid>
           <Grid item>

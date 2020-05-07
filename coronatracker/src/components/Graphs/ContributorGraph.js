@@ -42,7 +42,8 @@ export default function ContributorGraph(props) {
 
   return (
     <Grid container className={classes.root} direction="row" alignItems="center" justify="center">
-      <Grid item xs={12} sm={12} md={12} lg={12}>
+      <Grid item xs={1} />
+      <Grid item xs={10} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
           Most Impacted Countries - Confirmed Cases
         </Typography>
@@ -50,6 +51,7 @@ export default function ContributorGraph(props) {
           {subtitle}
         </Typography>
       </Grid>
+      <Grid item xs={1} />
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
         <ResponsiveContainer height={0.75 * height}>
