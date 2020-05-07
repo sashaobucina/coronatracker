@@ -1,3 +1,5 @@
+import find from "lodash/find";
+
 export function convertDataToWeekly(overall) {
   const filteredData = overall.filter((entry) => entry.confirmed !== 0);
 
@@ -22,9 +24,20 @@ export function getSummary(data, key) {
   return n <= 1 ? "0" : formatNumber((data[n - 1][key] - data[n - 2][key]));
 }
 
+export function getCountry(country, countries) {
+  return find(countries, (maybeCountry) => (
+    maybeCountry.toLowerCase() === country.toLowerCase()
+  ));
+}
+
 export function getDate(dateStr) {
   const date = new Date(dateStr);
   return date.toDateString();
+}
+
+export function today() {
+  const today = new Date();
+  return `${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
 }
 
 export function formatNumber(num) {

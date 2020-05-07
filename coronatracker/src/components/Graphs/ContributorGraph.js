@@ -7,7 +7,19 @@ import { Brush, ResponsiveContainer, LineChart, XAxis, YAxis, Line, Legend, Tool
 import CustomTooltip from "./CustomTooltip";
 import { rounded, getDate } from "../../helpers/conversions";
 import { useWindowDimensions } from "../../helpers/windowProvider";
-import { COLOURS } from "../../helpers/misc";
+
+const COLOURS = [
+  "#55f1c2",
+  "#684f9e",
+  "#49c0f8",
+  "#d1632f",
+  "#b44286",
+  "#d5e8e0",
+  "#ffdc09",
+  "#eb4956",
+  "#6d884e",
+  "#f5bc5e"
+];
 
 const useStyles = makeStyles({
   root: {

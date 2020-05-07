@@ -6,8 +6,7 @@ import { makeStyles } from "@material-ui/styles";
 import { StyledTableCell, StyledTableSortLabel } from "../Shared/CustomComponents";
 import TableToolbar from "../Shared/TableToolbar";
 import { stableSort } from "../../helpers/sorting";
-import { formatNumber } from "../../helpers/conversions";
-import { today } from "../../helpers/misc";
+import { formatNumber, today } from "../../helpers/conversions";
 
 const useStyles = makeStyles({
   paper: {

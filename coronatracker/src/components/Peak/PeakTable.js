@@ -15,8 +15,7 @@ import TableToolbar from "../Shared/TableToolbar";
 import { StyledTableCell, StyledTableSortLabel } from "../Shared/CustomComponents";
 import { daysSinceScale, percentBelowScale } from "./scales";
 import { stableSort } from "../../helpers/sorting";
-import { today } from "../../helpers/misc";
-import { formatNumber } from "../../helpers/conversions";
+import { formatNumber, today } from "../../helpers/conversions";
 
 const useStyle = makeStyles({
   paper: {

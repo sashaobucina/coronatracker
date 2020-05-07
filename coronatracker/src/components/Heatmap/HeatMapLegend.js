@@ -1,6 +1,20 @@
 import React from "react";
 import { Paper, Typography } from "@material-ui/core";
-import { HEATMAP_COLORS, HEATMAP_LABELS } from "../../helpers/misc";
+import { HEATMAP_COLORS } from "./colors";
+
+const LABELS = [
+  "N/A",
+  "<100",
+  "100",
+  "500",
+  "1K",
+  "5K",
+  "10K",
+  "25K",
+  "50K",
+  "100K",
+  ">250K"
+];
 
 export default function HeatMapLegend() {
   const colors = HEATMAP_COLORS.slice();
@@ -21,7 +35,7 @@ export default function HeatMapLegend() {
         variant="caption"
         style={{ fontWeight: "bold" }}
       >
-        {HEATMAP_LABELS[i]}
+        {LABELS[i]}
       </Typography>
     </Paper>
   ));

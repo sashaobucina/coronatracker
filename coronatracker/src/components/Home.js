@@ -10,7 +10,8 @@ import SearchButton from "./Buttons/SearchButton";
 import SummaryContainer from './Summary/SummaryContainer';
 import TabsContainer from './Tabs/TabsContainer';
 
-import { getCountry, FETCH_URL } from '../helpers/misc';
+import { getCountry } from '../helpers/conversions';
+import { FETCH_URL } from '../helpers/misc';
 import { COUNTRY_ALERT, SERVER_ALERT, NO_ALERT, DUPLICATE_ALERT } from '../helpers/alerts';
 
 export default function Home(props) {

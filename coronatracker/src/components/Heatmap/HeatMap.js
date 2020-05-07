@@ -7,12 +7,24 @@ import {
   Graticule,
   ZoomableGroup
 } from "react-simple-maps";
-import { HEATMAP_COLORS, HEATMAP_VALUES } from "../../helpers/misc";
+import { HEATMAP_COLORS } from "./colors";
 import { rounded } from "../../helpers/conversions";
 import worldMap from "../../static/world-110m.json";
 
+const VALUES = [
+  100,
+  500,
+  1000,
+  5000,
+  10000,
+  25000,
+  50000,
+  100000,
+  250000
+];
+
 const colorScale = scaleThreshold()
-  .domain(HEATMAP_VALUES)
+  .domain(VALUES)
   .range(HEATMAP_COLORS);
 
 export default function HeatMap(props) {
