@@ -7,7 +7,7 @@ import { useWindowDimensions } from "../../helpers/windowProvider";
 export default function TrajectoryGraph(props) {
   const { data, scale } = props;
   const { height } = useWindowDimensions();
-  const domain = scale === "log" ? [1, 10000000] : [1, 10000];
+  const domain = scale === "log" ? [1, 10000000] : [1, 1000];
   const ticks = [1, 10, 100, 1000, 10000, 100000, 1000000];
 
   const formatAxis = (num) => rounded(num);

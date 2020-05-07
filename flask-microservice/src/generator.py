@@ -165,7 +165,7 @@ class DataGenerator:
         num_cases = country_data[-1]
 
         # dont account for countries with less than 5000 cases
-        if num_cases < 5000:
+        if num_cases < 1000:
           continue
 
         # get changes per day
