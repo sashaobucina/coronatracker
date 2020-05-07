@@ -92,8 +92,8 @@ export default function PeakContainer(props) {
       alignContent="center"
       spacing={2}
     >
-      <Grid item xs={1} />
-      <Grid item xs={10} sm={12} md={12} lg={12}>
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10}>
         <Typography align="center" variant="h4">
           COVID-19 Days Since Peak
         </Typography>
@@ -101,7 +101,7 @@ export default function PeakContainer(props) {
           {subtitle}
         </Typography>
       </Grid>
-      <Grid item xs={1} />
+      <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={11} sm={11} md={11} lg={11}>
         <TableSearch setQuery={setQuery} />

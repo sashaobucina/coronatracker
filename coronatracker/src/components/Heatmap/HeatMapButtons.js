@@ -28,7 +28,7 @@ const continents = [
 const StyledMenuItem = withStyles({
   root: {
     background: "#2E3047",
-    color: "#3BBA9C"
+    color: "#3BBA9C",
   }
 })(MenuItem);
 

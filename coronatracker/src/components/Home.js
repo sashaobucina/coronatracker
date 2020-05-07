@@ -168,11 +168,13 @@ export default function Home(props) {
   return (
     <div id="root-app" style={{ marginTop: "50px" }}>
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Grid item xs={1} sm={1} md={1} lg={1} />
+        <Grid item xs={10} sm={10} md={10} lg={10}>
           <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
             Tracking COVID-19 movements and trends - search "<b>Global</b>" to get world view
           </Typography>
         </Grid>
+        <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item sm={2} xs={2} md={3} lg={3} />
         <Grid item xs={5} sm={5} md={4} lg={4}>
           <SearchBar
