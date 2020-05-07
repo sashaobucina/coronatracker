@@ -2,7 +2,7 @@ import React from "react";
 import { Snackbar} from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-export default function SuccessAlert(props) {
+export default function AppAlert(props) {
   const { action, open, message, handleClose, severity } = props;
 
   return (

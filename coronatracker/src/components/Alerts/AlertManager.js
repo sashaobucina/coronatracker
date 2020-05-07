@@ -1,5 +1,5 @@
 import React from "react";
-import MyAlert from "./MyAlert"
+import AppAlert from "./AppAlert"
 import ReportIssueButton from "../Buttons/ReportIssueButton";
 import { 
   alertStrings,
@@ -25,28 +25,28 @@ export default function AlertManager(props) {
 
   return (
     <>
-      <MyAlert
+      <AppAlert
         action={<ReportIssueButton />}
         open={alert === SERVER_ALERT}
         message={server_err}
         handleClose={() => {}}
         severity="error"
       />
-      <MyAlert
+      <AppAlert
         action={null}
         open={alert === COUNTRY_ALERT}
         message={country_err}
         handleClose={resetAlert}
         severity="error"
       />
-      <MyAlert
+      <AppAlert
         action={null}
         open={alert === SUCCESS_ALERT}
         message={success}
         handleClose={resetAlert}
         severity="success"
       />
-      <MyAlert
+      <AppAlert
         action={null}
         open={alert === DUPLICATE_ALERT}
         message={info}
