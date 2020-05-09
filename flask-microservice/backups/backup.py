@@ -46,7 +46,6 @@ if __name__ == "__main__":
   try:
     subprocess.run(["git", "-C", ABSOLUTE_PATH, "add", curr_date], check=True)
     subprocess.run(["git", "-C", ABSOLUTE_PATH, "commit", "-m", f"Add backup for {curr_date}"], check=True)
-    subprocess.run(["git", "-C", ABSOLUTE_PATH, "push"], check=True)
   except subprocess.CalledProcessError as grepexc:
     print(f"Exited with non-zero return code {grepexc.returncode}: {grepexc.output}")
 
