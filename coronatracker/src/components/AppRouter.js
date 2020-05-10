@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
-import Home from "./Home";
+import Home from "./Home/Home";
 import HeatMap from './Heatmap/HeatMapContainer';
 import Peak from "./Peak/PeakContainer";
 import Main from "./Main"
@@ -20,7 +20,8 @@ const initialTopContributors = {
   },
   summary: {
     confirmed: [],
-    deaths: []
+    deaths: [],
+    recovered: []
   }
 }
 

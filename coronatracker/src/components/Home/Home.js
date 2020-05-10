@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
-import ContributorGraph from './Graphs/ContributorGraph';
 import Footer from './Footer';
-import GraphBundle from './Graphs/GraphBundle';
-import SearchBar from './SearchBar/SearchBar';
-import SearchButton from "./Buttons/SearchButton";
-import SummaryContainer from './Summary/SummaryContainer';
-import TabsContainer from './Tabs/TabsContainer';
+import GraphBundle from '../Graphs/GraphBundle';
+import LandingPage from './LandingPage';
+import SearchBar from './SearchBar';
+import SearchButton from "../Buttons/SearchButton";
+import TabsContainer from '../Tabs/TabsContainer';
 
-import { getCountry } from '../helpers/conversions';
-import { FETCH_URL } from '../helpers/misc';
-import { COUNTRY_ALERT, SERVER_ALERT, NO_ALERT, DUPLICATE_ALERT } from '../helpers/alerts';
+import { getCountry } from '../../helpers/conversions';
+import { FETCH_URL } from '../../helpers/misc';
+import { COUNTRY_ALERT, SERVER_ALERT, NO_ALERT, DUPLICATE_ALERT } from '../../helpers/alerts';
 
 export default function Home(props) {
   const [state, setState] = useState({
@@ -125,15 +124,10 @@ export default function Home(props) {
       : null
   }
 
-  function showGraphs() {
-    const { date, graph } = topContributors;
-    const { contributors, labels } = graph;
+  function showFrontPage() {
     return data.length === 0
       ? fetched
-        ? (<>
-            <ContributorGraph labels={labels} data={contributors} date={date} />
-            <SummaryContainer data={topContributors.summary} fetchFn={fetchData} />
-          </>)
+        ? (<LandingPage fetchFn={fetchData} topContributors={topContributors} />)
         : null
       : (
         <GraphBundle
@@ -191,7 +185,7 @@ export default function Home(props) {
         <Grid item xs={2} sm={2} md={3} lg={3} />
       </Grid>
       {showTabs()}
-      {showGraphs()}
+      {showFrontPage()}
       <Footer />
     </div>
   );
