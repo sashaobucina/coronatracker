@@ -45,7 +45,7 @@ export default function LandingPage(props) {
   }
 
   const getCardData = (country) => {
-    const { confirmed, deaths, recovered} = summary;
+    const { confirmed, deaths, recovered } = summary;
     return {
       confirmed: find(confirmed, {country}),
       deaths: find(deaths, {country}),
@@ -78,7 +78,7 @@ export default function LandingPage(props) {
                 data={getCardData(country)}
                 buttonComponent={getButtonComponent(country)}
                 index={idx+1}
-                subheader={`#${idx+1} in Confirmed Cases`}
+                subheader={`#${idx+1} in Cases`}
                 size={size}
               />
             </Grid>
@@ -90,12 +90,7 @@ export default function LandingPage(props) {
   );
 
   return (
-    <Grid
-      container
-      className={classes.grid}
-      direction="row"
-      spacing={2}
-    >
+    <Grid container className={classes.grid} spacing={2}>
       <Grid item>
         <ContributorGraph
           labels={labels}
@@ -115,12 +110,7 @@ export default function LandingPage(props) {
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          spacing={3}
-        >
+        <Grid container justify="center" spacing={3}>
           {getCards()}
         </Grid>
       </Grid>

@@ -66,7 +66,6 @@ export default function SelectionFilter(props) {
   return (
     <Grid
       container
-      direction="row"
       justify="center"
       spacing={3}
     >
