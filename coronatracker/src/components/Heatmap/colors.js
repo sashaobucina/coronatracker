@@ -1,4 +1,3 @@
-
 export const HEATMAP_COLORS = [
   "#ffe9e6",
   "#ffcec5",
