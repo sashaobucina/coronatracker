@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 })
 
 export default function SearchButton(props) {
-  const { fetchData, disabled } = props;
+  const { onClick, disabled } = props;
   const classes = useStyles();
   return (
     <Tooltip title="Search">
@@ -27,7 +27,7 @@ export default function SearchButton(props) {
         disabled={disabled}
         fullWidth
         variant="contained"
-        onClick={fetchData}
+        onClick={onClick}
         startIcon={ <SearchIcon /> }
       >
         Search
