@@ -180,7 +180,7 @@ export default function Home(props) {
           />
         </Grid>
         <Grid item sm={3} xs={3} md={2} lg={2}>
-          <SearchButton fetchData={fetchOnInput} disabled={loading} />
+          <SearchButton onClick={fetchOnInput} disabled={loading} />
         </Grid>
         <Grid item xs={2} sm={2} md={3} lg={3} />
       </Grid>
