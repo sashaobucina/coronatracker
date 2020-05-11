@@ -54,3 +54,10 @@ def get_percent_change(value1, value2):
   Return the percent change from value2 to value1.
   """
   return round(div((value1 - value2), value2) * 100, 2)
+
+def clip(s):
+  if s is None or len(s) == 0:
+    return "No description available..."
+  if len(s) > 200:
+    s = s[:200].strip() + "..."
+  return s

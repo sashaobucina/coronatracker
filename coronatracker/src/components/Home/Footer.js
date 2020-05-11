@@ -1,9 +1,19 @@
 import React from "react";
 import { Link, Grid, Typography, Tooltip } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyle = makeStyles({
+  grid: {
+    marginTop: 10,
+    marginBottom: 25
+  }
+})
 
 export default function Footer() {
+  const classes = useStyle();
+
   return (
-    <Grid container direction="row" justify="center" alignItems="center" style={{ marginBottom: 25 }}>
+    <Grid container className={classes.grid} justify="center">
       <Grid item xs={1} />
       <Grid item xs={10} sm={12} md={12} lg={12}>
         <Typography align="center" variant="body1">

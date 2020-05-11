@@ -7,7 +7,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
 
-from scraper import CoronaScraper
+from scraper import CoronaScraper, GoogleNewsScraper
 from generator import DataGenerator
 from preprocess import process_data, process_dates
 import util
@@ -23,11 +23,18 @@ logger = app.logger
 PORT = os.environ.get("PORT", 5000)
 
 scraper = CoronaScraper(logger)
+news_scraper = GoogleNewsScraper(logger)
 generator = DataGenerator()
 
 def initialize():
   global scraper, generator, logger
   logger.info("Updating data if available...")
+
+  # scraping COVID-19 news
+  news_scraper.clear_cache()
+  news_scraper.get_news("Canada")
+
+  # scraping COVID-19 data
   scraper.download_reports()
   reports, countries = scraper.reports, scraper.valid_countries
   dates = process_dates(reports)
@@ -38,15 +45,15 @@ def initialize():
 # populate the data generator and web scraper
 initialize()
 
-# schedule job to update data every 3 hours
+# schedule job to update data every 12 hours
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=initialize, trigger="interval", hours=3)
+scheduler.add_job(func=initialize, trigger="interval", hours=12)
 scheduler.start()
 
 ###################### Routes ######################
 @app.route('/')
 def index():
-  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/peak-data', '/cases', '/cases/<country>' endpoints for further functionality")
+  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/peak-data', '/cases', '/cases/<country>', '/news/country/<country>' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
@@ -126,6 +133,16 @@ def country_data(country):
   except Exception as e:
     logger.error(str(e))
     abort(404)
+
+@app.route('/news/supported-countries')
+def get_supported_countries():
+  response = news_scraper.get_supported_countries()
+  return jsonify(response)
+
+@app.route('/news/country/<string:country>')
+def get_news(country):
+  response = news_scraper.get_news(country)
+  return jsonify(response)
 
 # shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())

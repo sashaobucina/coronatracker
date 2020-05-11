@@ -6,7 +6,7 @@ import Home from "./Home/Home";
 import HeatMap from './Heatmap/HeatMapContainer';
 import Peak from "./Peak/PeakContainer";
 import Main from "./Main"
-import FAQs from "./About/FAQs";
+import News from "./News/NewsContainer";
 import TopMovers from "./TopMovers/TopMoversContainer";
 
 import { PREFETCH_URL } from "../helpers/misc";
@@ -26,11 +26,12 @@ const initialTopContributors = {
 }
 
 export default function AppRouter() {
-  const [alert, setAlert] = useState(NO_ALERT);
-  const [path, setPath] = useState("/");
-  const [fetchState, setState] = useState({
+  const [ alert, setAlert ] = useState(NO_ALERT);
+  const [ path, setPath ] = useState("/");
+  const [ fetchState, setState ] = useState({
     fetched: false,
     loaded: false,
+    supportedCountries: [],
     topContributors: initialTopContributors,
     validCountries: []
   });
@@ -38,14 +39,17 @@ export default function AppRouter() {
   const preFetchData = () => {
     const request1 = axios.get(PREFETCH_URL + "valid-countries")
     const request2 = axios.get(PREFETCH_URL + "top-contributors")
+    const request3 = axios.get(PREFETCH_URL + "news/supported-countries")
 
-    axios.all([request1, request2]).then(
+    axios.all([request1, request2, request3]).then(
       axios.spread((...responses) => {
         const validCountries = responses[0].data;
         const topContributors = responses[1].data;
+        const supportedCountries = responses[2].data;
         setState({
           fetched: true,
           loaded: true,
+          supportedCountries: supportedCountries,
           topContributors: topContributors,
           validCountries: validCountries
         });
@@ -65,7 +69,7 @@ export default function AppRouter() {
     preFetchData();
   }, []);
 
-  const { fetched, loaded, topContributors, validCountries } = fetchState;
+  const { fetched, loaded, supportedCountries, topContributors, validCountries } = fetchState;
 
   return (
     <Router hashType="noslash">
@@ -91,7 +95,7 @@ export default function AppRouter() {
           <Route exact path="/top-movers" render={(props) => <TopMovers {...props} setAlert={setAlert} updatePath={setPath} />} />
           <Route exact path="/peak-data" render={(props) => <Peak {...props} setAlert={setAlert} updatePath={setPath} />} />
           <Route exact path="/heatmap" render={(props) => <HeatMap {...props} setAlert={setAlert} updatePath={setPath} />} />
-          <Route exact path="/faqs" render={(props) => <FAQs {...props} updatePath={setPath} />} />
+          <Route exact path="/news" render={(props) => <News {...props} supportedCountries={supportedCountries} updatePath={setPath} />} />
         </Switch>
       </Main>
     </Router>

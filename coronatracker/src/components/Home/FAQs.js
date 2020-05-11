@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { Button, Divider, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanelActions, Tooltip, Typography } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
@@ -7,15 +6,18 @@ import { makeStyles } from "@material-ui/styles";
 import { useWindowDimensions } from "../../helpers/windowProvider";
 
 const useStyles = makeStyles({
-  root: {
-    marginTop: 60,
-    marginBottom: 50
+  grid: {
+    marginTop: 25,
+    marginBottom: 15
   },
   panel: {
     background: "#3C3F58",
     color: "#3BBA9C"
   },
-  divider: {
+  divider1: {
+    background: "#3BBA9C"
+  },
+  divider2: {
     background: "#2E3047"
   },
   button: {
@@ -32,25 +34,30 @@ const useStyles = makeStyles({
   }
 });
 
-export default function FAQs(props) {
+export default function FAQs() {
   const { height, width } = useWindowDimensions();
   const classes = useStyles();
 
-  useEffect(() => {
-    const { match, updatePath } = props;
-    updatePath(match.url);
-  }, [props]);
-
   return (
-    <Grid className={classes.root} container direction="row" alignItems="center" spacing={3}>
-      <Grid item xs={1} sm={2} md={2} lg={2} />
-      <Grid item xs={10} sm={8} md={8} lg={8}>
+    <Grid container className={classes.grid} alignItems="center" spacing={3}>
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10}>
+        <Divider className={classes.divider1} />
+      </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10}>
+        <Typography variant="h4">
+          FAQs
+        </Typography>
+        <Typography variant="caption">
+          (NOTE: This project is maintained by a one-man team, responses to any issues may be delayed)
+        </Typography>
+      </Grid>
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10}>
         <Grid container direction="column" alignItems="stretch" spacing={2}>
-          <Grid item>
-            <Typography variant="h5">
-              Frequently Asked Questions
-            </Typography>
-          </Grid>
           <Grid item>
             <ExpansionPanel className={classes.panel}>
               <ExpansionPanelSummary
@@ -66,14 +73,6 @@ export default function FAQs(props) {
                   A: The COVID-19 Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and tabular data. Go to the home page and search for a country of interest to get started!
                 </Typography>
               </ExpansionPanelDetails>
-              <Divider className={classes.divider} />
-              <ExpansionPanelActions>
-                <Tooltip title="Go to home" placement="right">
-                  <Button className={classes.button} size="small" component={Link} to="/">
-                    Back to home
-                  </Button>
-                </Tooltip>
-              </ExpansionPanelActions>
             </ExpansionPanel>
           </Grid>
           <Grid item>
@@ -202,13 +201,8 @@ export default function FAQs(props) {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
-          <Grid item>
-            <Typography variant="body2">
-              NOTE: This project is maintained by a one-man team, responses to any issues may be delayed
-            </Typography>
-          </Grid>
         </Grid>
-      <Grid item xs={1} sm={2} md={2} lg={2} />
+      <Grid item xs={1} sm={1} md={1} lg={1} />
       </Grid>
     </Grid>
   );

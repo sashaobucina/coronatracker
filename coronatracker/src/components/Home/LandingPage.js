@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import ContributorGraph from "../Graphs/ContributorGraph";
+import FAQs from "./FAQs";
 import SelectionFilter from "./SelectionFilter";
 import SummaryCard from "../Summary/SummaryCard";
 
@@ -73,7 +74,7 @@ export default function LandingPage(props) {
         const country = countries[idx];
         acc.push((
           <React.Fragment key={idx}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={5}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <SummaryCard 
                 data={getCardData(country)}
                 buttonComponent={getButtonComponent(country)}
@@ -91,14 +92,14 @@ export default function LandingPage(props) {
 
   return (
     <Grid container className={classes.grid} spacing={2}>
-      <Grid item>
+      <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
         <ContributorGraph
           labels={labels}
           data={filterData()}
           date={date}
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
         <SelectionFilter
           checkList={checkList}
           countries={countries}
@@ -108,13 +109,16 @@ export default function LandingPage(props) {
           size={size}
         />
       </Grid>
-      <Grid item xs={1} sm={1} md={1} lg={1} />
-      <Grid item xs={10} sm={10} md={10} lg={10}>
+      <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
+      <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
         <Grid container justify="center" spacing={3}>
           {getCards()}
         </Grid>
       </Grid>
-      <Grid item xs={1} sm={1} md={1} lg={1} />
+      <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
+      <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+        <FAQs />
+      </Grid>
     </Grid>
   );
 }
