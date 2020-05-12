@@ -81,7 +81,6 @@ class GoogleNewsScraper:
       "Serbia": 25
     }
 
-
   def scrape_all(self):
     """
     Scrape Google News for top news stories about COVID-19 for each supported country.
@@ -91,7 +90,6 @@ class GoogleNewsScraper:
       self._scrape(country)
 
     self.logger.info("Finished scraping all news!")
-
 
   def _scrape(self, country):
     self.logger.info(f"Getting news for {country}...")
@@ -143,7 +141,6 @@ class GoogleNewsScraper:
 
     self.cache[country] = feed
 
-
   def get_news(self, country):
     """
     Get all the news on COVID-19 given a specific country
@@ -156,7 +153,6 @@ class GoogleNewsScraper:
     """
     return list(self.supported_countries.keys())
 
-
   def _construct_url(self, country):
     """
     Construct URL that contacts the Google News RSS feed
@@ -164,14 +160,12 @@ class GoogleNewsScraper:
     query = urllib.parse.quote(f"Coronavirus {country}")
     return f"{self.base_url}?q={query}"
 
-
   def _get_metatag(self, soup, name):
     """
     Extract meta tag data from given HTML parse tree
     """
     tag = soup.find("meta", property=f"og:{name}")
     return tag["content"].strip() if tag else None
-
 
 if __name__ == "__main__":
   # TESTING ONLY
