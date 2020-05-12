@@ -72,7 +72,7 @@ class GoogleNewsScraper:
     self.supported_countries = [
       "Canada",
       "US",
-      "Great Britian",
+      "United Kingdom",
       "Germany",
       "France",
       "Italy",
