@@ -166,7 +166,7 @@ export default function Home(props) {
         <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item xs={10} sm={10} md={10} lg={10}>
           <Typography variant="body1" color="inherit" align="center" style={{ marginTop: 40 }}>
-            Tracking COVID-19 movements and trends - search "<b>Global</b>" to get world view
+            Tracking COVID-19 movements and trends - search <b>"Global"</b> to get world view
           </Typography>
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} />
