@@ -44,10 +44,9 @@ const useStyle = makeStyles({
 const since = (published) => {
   const now = Date.now();
 
-  let publishDate = published;
-  if (typeof published.getTime !== "function") {
-    publishDate = new Date(published);
-  }
+  const publishDate = typeof published.getTime !== "function"
+    ? new Date(published)
+    : published;
 
   let hoursAgo = (now - publishDate.getTime()) / (1000 * 60 * 60);
   hoursAgo = Math.abs(Math.round(hoursAgo));

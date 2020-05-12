@@ -41,13 +41,11 @@ const useStyle = makeStyles({
 });
 
 const convertToDate = (arr, prop) => {
-  return arr.map(obj => {
-    if (has(obj, prop)) {
-      return set(obj, prop, new Date(get(obj, prop)));
-    } else {
-      return obj;
-    }
-  });
+  return arr.map(obj => (
+   has(obj, prop)
+      ? set(obj, prop, new Date(get(obj, prop)))
+      : obj
+  ));
 }
 
 export default function NewsContainer(props) {
