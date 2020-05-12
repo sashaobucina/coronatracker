@@ -32,9 +32,7 @@ def initialize():
   logger.info("Updating data if available...")
 
   # scraping COVID-19 news
-  def scrape_news():
-    news_scraper.scrape_all()
-  thread = Thread(target=scrape_news, args=())
+  thread = Thread(target=news_scraper.scrape_all, args=())
   thread.start()
 
   # scraping COVID-19 data
