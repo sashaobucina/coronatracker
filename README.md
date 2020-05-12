@@ -10,25 +10,28 @@ The trends of the virus are visualized through interactive graphs and tables tha
 
 The data is accmulated from the [John Hopkins University CSSE](https://github.com/CSSEGISandData/COVID-19) repository.
 
+Now supporting live news about COVID-19 on a per-country basis!
+
 ## Demos
 
 ### Country Search
 
-![demo](assets/demo-final.gif)
-
-*Deprecated Warning: No longer supporting Recovered data points due to the following [issue](https://github.com/CSSEGISandData/COVID-19/issues/1250)*
+![Search demo](assets/demo.gif)
 
 ### Top Movers
 
-![demo](assets/top-movers-final.gif)
+![Top Movers demo](assets/top-movers.gif)
 
 ### Heat Map
 
-![demo](assets/heatmap-final.gif)
+![Heat Map demo](assets/heatmap.gif)
 
 ### Peak Table
 
-![demo](assets/peak-final.gif)
+![Peak demo](assets/peak.gif)
+
+### News
+![News demo](assets/news.gif)
 
 ## Usage Locally
 
