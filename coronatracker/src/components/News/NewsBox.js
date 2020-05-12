@@ -73,6 +73,8 @@ export default function NewsBox(props) {
           onChange={handlePageChange}
           size="large"
           variant="outlined"
+          showFirstButton
+          showLastButton
           renderItem={(item) => <StyledPaginationItem {...item} />}
         />
       </Grid>

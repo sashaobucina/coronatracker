@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { get, has, set } from "lodash";
 import {
   Grid,
   Link,
@@ -12,6 +13,7 @@ import NewsBox from "./NewsBox";
 import NewsSelect from "./NewsSelect";
 import NewsSkeletonBox from "./NewsSkeletonBox";
 import { PREFETCH_URL } from "../../helpers/misc";
+import { stableSort } from "../../helpers/sorting";
 
 const useStyle = makeStyles({
   root: {
@@ -38,6 +40,16 @@ const useStyle = makeStyles({
   }
 });
 
+const convertToDate = (arr, prop) => {
+  return arr.map(obj => {
+    if (has(obj, prop)) {
+      return set(obj, prop, new Date(get(obj, prop)));
+    } else {
+      return obj;
+    }
+  });
+}
+
 export default function NewsContainer(props) {
   const [ news, setNews ] = useState([]);
   const [ fetched, setFetched ] = useState(false);
@@ -52,6 +64,7 @@ export default function NewsContainer(props) {
       try {
         setFetched(false);
         const response = await axios.get(url);
+        convertToDate(response.data, "published");
         setNews(response.data);
         setFetched(true);
       } catch (e) {
@@ -110,7 +123,7 @@ export default function NewsContainer(props) {
           <Grid item>
             <Paper className={classes.paper}>
               {fetched
-                ? <NewsBox news={news} />
+                ? <NewsBox news={stableSort(news, "desc", "published")} />
                 : <NewsSkeletonBox />
               }
             </Paper>
