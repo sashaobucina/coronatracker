@@ -20,8 +20,7 @@ const useStyle = makeStyles({
     }
   },
   cover: {
-    minHeight: 96,
-    height: "90%",
+    minHeight: 135,
     width: "90%",
     borderRadius: 5,
     margin: 5

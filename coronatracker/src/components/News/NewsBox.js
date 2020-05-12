@@ -58,7 +58,7 @@ export default function NewsBox(props) {
       </Grid>
       <Grid item>
         <Typography align="center" variant="subtitle2">
-          No news available right now, check back in later...
+          No news available right now, please check back in a few minutes...
         </Typography>
       </Grid>
     </React.Fragment>
