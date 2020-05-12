@@ -67,26 +67,25 @@ class GoogleNewsScraper:
     self.base_url = 'https://news.google.com/rss/search'
     self.timeout = 2
 
-    # set the countries that can be queried and how many stories will be extracted
-    self.supported_countries = {
-      "Canada": 50,
-      "US": 25,
-      "Great Britian": 25,
-      "Germany": 25,
-      "France": 25,
-      "Italy": 25,
-      "Spain": 25,
-      "China": 25,
-      "Russia": 25,
-      "Serbia": 25
-    }
+    # set the countries that can be queried
+    self.supported_countries = [
+      "Canada",
+      "US",
+      "Great Britian",
+      "Germany",
+      "France",
+      "Italy",
+      "Spain",
+      "China",
+      "Russia",
+      "Serbia"
+    ]
 
   def scrape_all(self):
     """
     Scrape Google News for top news stories about COVID-19 for each supported country.
     """
-    supported_countries = self.get_supported_countries()
-    for country in supported_countries:
+    for country in self.supported_countries:
       self._scrape(country)
 
     self.logger.info("Finished scraping all news!")
@@ -99,8 +98,7 @@ class GoogleNewsScraper:
 
     # get the top Google news entries from the RSS feed
     idx, feed = 0, []
-    num_stories = self.supported_countries.get(country, 0)
-    while idx < num_stories and idx < len(rss.entries):
+    while idx < 50 and idx < len(rss.entries):
       try:
         entry = rss.entries[idx]
         link, published, title = entry.link, entry.published, entry.title
@@ -151,7 +149,7 @@ class GoogleNewsScraper:
     """
     Return the supported countries that news can be extracted from
     """
-    return list(self.supported_countries.keys())
+    return self.supported_countries
 
   def _construct_url(self, country):
     """
