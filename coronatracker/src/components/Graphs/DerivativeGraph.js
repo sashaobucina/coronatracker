@@ -22,7 +22,7 @@ export default function DerivativeGraph(props) {
           stroke='#3BBA9C'
           travellerWidth={8}
         />
-        <CartesianGrid strokeWidth={0.5} />
+        <CartesianGrid strokeWidth={0.5} strokeDasharray="3 3" />
         <XAxis dataKey="date" stroke={'#3BBA9C'} />
         <YAxis stroke={'#3BBA9C'} tickFormatter={formatAxis} />
         <Line

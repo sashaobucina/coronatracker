@@ -35,7 +35,7 @@ export default function ContributorGraph(props) {
 
   const formatAxis = (num) => rounded(num);
 
-  const subtitle = date === "" ? "" : `(as of ${getDate(date)})`;
+  const subtitle = date === "" ? "" : `(confirmed cases as of ${getDate(date)})`;
 
   const lines = labels
     .filter(label => label !== "date")
@@ -57,7 +57,7 @@ export default function ContributorGraph(props) {
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
         <Typography align="center" variant="h4">
-          Most Impacted Countries (Confirmed Cases)
+          Most Impacted Countries
         </Typography>
         <Typography align="center" variant="subtitle1">
           {subtitle}
