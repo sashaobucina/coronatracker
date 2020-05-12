@@ -1,4 +1,4 @@
-This directory contains the RESTful microservice supporting the client-side component of the web application.
+A RESTful API supporting the tracking of trends and movements for the COVID-19 virus. This API supports the client-side component of the [Coronatracker](https://sashaobucina.github.io/coronatracker/) site.
 
 Hosted on [Dockerhub](https://hub.docker.com/r/sashaobucina/coronatracker)
 
@@ -10,6 +10,8 @@ Hosted on [Dockerhub](https://hub.docker.com/r/sashaobucina/coronatracker)
   - [Peak Data](#peak-data)
   - [Confirmed Cases](#confirmed-cases)
   - [Country Data](#country-data)
+  - [News](#news)
+  - [News - Supported Countries](#news-supported-countries)
 
 ## Supported Endpoints
 
@@ -286,4 +288,38 @@ Return Type:
     }
   }
 }
+```
+
+### News
+
+Returns all COVID-19 related news stories for a country, given the country is supported.
+
+```bash
+GET /news/country/{country}
+```
+
+Return Type:
+```yaml
+[
+  {
+    description: String,
+    link: String,
+    image: String,
+    published: Date,
+    title: String
+  }
+...]
+```
+
+### News Supported Countries
+
+Returns all the countries that support news scraping.
+
+```bash
+GET /news/supported-countries
+```
+
+Return Type:
+```yaml
+[String...]
 ```

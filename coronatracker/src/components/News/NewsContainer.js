@@ -29,7 +29,7 @@ const useStyle = makeStyles({
     width: "100%"
   },
   progress: {
-    backgroundColor: "#3BBA9C",
+    backgroundColor: "#3C3F58",
     color: "#3BBA9C"
   },
   progressBar: {
@@ -72,10 +72,7 @@ export default function NewsContainer(props) {
 
   const progressComponent = (
     <Grid item>
-      <LinearProgress classes={{root: classes.progressm, bar: classes.progressBar}} variant="query" />
-      <Typography align="center" variant="caption">
-        (May take up to 20 secs...)
-      </Typography>
+      <LinearProgress classes={{root: classes.progress, bar: classes.progressBar}} variant="query" />
     </Grid>
   );
 
@@ -83,7 +80,7 @@ export default function NewsContainer(props) {
     <Grid container className={classes.root} justify="center" alignContent="center" spacing={2}>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography align="center" variant="h4">
-          Latest COVID-19 News
+          COVID-19 in the News
         </Typography>
       </Grid>
       <Grid item xs={3} sm={4} md={4} lg={5} />
@@ -102,10 +99,10 @@ export default function NewsContainer(props) {
       </Grid>
       <Grid item xs={3} sm={3} md={4} lg={5} />
       <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-        <Grid container className={classes.grid} direction="column" spacing={3}>
+        <Grid container className={classes.grid} direction="column" spacing={1}>
           <Grid item>
-            <Typography align="center" variant="h5">
-              {`General News (${selectValue})`}
+            <Typography align="left" variant="h5">
+              {`Latest News for ${selectValue}`}
             </Typography>
           </Grid>
           <Grid item>

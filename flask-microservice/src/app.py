@@ -32,7 +32,7 @@ def initialize():
 
   # scraping COVID-19 news
   news_scraper.clear_cache()
-  news_scraper.get_news("Canada")
+  news_scraper.scrape_all()
 
   # scraping COVID-19 data
   scraper.download_reports()
@@ -53,7 +53,7 @@ scheduler.start()
 ###################### Routes ######################
 @app.route('/')
 def index():
-  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/peak-data', '/cases', '/cases/<country>', '/news/country/<country>' endpoints for further functionality")
+  return jsonify("Microservice is live, use the '/valid-countries', '/top-movers', '/top-contributors', '/peak-data', '/cases', '/cases/<country>', '/news/country/<country>', '/news/supported-countries' endpoints for further functionality")
 
 @app.route('/valid-countries')
 def get_countries():
