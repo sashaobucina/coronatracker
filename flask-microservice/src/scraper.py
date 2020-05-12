@@ -94,10 +94,6 @@ class GoogleNewsScraper:
 
 
   def _scrape(self, country):
-    # check that queried country is actually supported
-    if country not in self.supported_countries:
-      return []
-
     self.logger.info(f"Getting news for {country}...")
 
     url = self._construct_url(country)
@@ -105,7 +101,7 @@ class GoogleNewsScraper:
 
     # get the top Google news entries from the RSS feed
     idx, feed = 0, []
-    num_stories = self.supported_countries[country]
+    num_stories = self.supported_countries.get(country, 0)
     while idx < num_stories and idx < len(rss.entries):
       try:
         entry = rss.entries[idx]
