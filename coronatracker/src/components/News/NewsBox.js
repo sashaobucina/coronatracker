@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Pagination from "@material-ui/lab/Pagination";
 import NewsCard from "./NewsCard";
 import NewsSkeleton from "./NewsSkeleton";
@@ -29,6 +30,8 @@ export default function NewsBox(props) {
   const [ page, setPage ] = useState(1);
   const [ pageCount, setPageCount ] = useState(1);
   const { news } = props;
+
+  const matches = useMediaQuery('(min-width:600px)');
 
   useEffect(() => {
     setPageCount(Math.ceil(news.length / 10));
@@ -71,7 +74,7 @@ export default function NewsBox(props) {
           disabled={news.length === 0}
           page={page}
           onChange={handlePageChange}
-          size="large"
+          size={matches ? "large" : "medium"}
           variant="outlined"
           showFirstButton
           showLastButton
