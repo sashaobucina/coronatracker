@@ -27,13 +27,9 @@ scraper = CoronaScraper(logger)
 news_scraper = GoogleNewsScraper(logger)
 generator = DataGenerator()
 
-def initialize():
+def initialize_data():
   global scraper, generator, logger
   logger.info("Updating data if available...")
-
-  # scraping COVID-19 news
-  thread = Thread(target=news_scraper.scrape_all, args=())
-  thread.start()
 
   # scraping COVID-19 data
   scraper.download_reports()
@@ -43,12 +39,19 @@ def initialize():
 
   generator = DataGenerator(dates, data, countries)
 
-# populate the data generator and web scraper
-initialize()
+def initialize_news():
+  # scraping COVID-19 news
+  thread = Thread(target=news_scraper.scrape_all, args=())
+  thread.start()
 
-# schedule job to update data every 12 hours
+# populate the data generator and web scraper, populate news as well
+initialize_data()
+initialize_news()
+
+# schedule jobs in background
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=initialize, trigger="interval", hours=12)
+scheduler.add_job(func=initialize_data, trigger="interval", hours=12)
+scheduler.add_job(func=initialize_news, trigger="interval", hours=2)
 scheduler.start()
 
 ###################### Routes ######################

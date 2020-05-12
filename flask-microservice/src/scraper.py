@@ -57,6 +57,7 @@ class CoronaScraper():
     self.valid_countries.sort()
 
     if len(reports) > 0:
+      self.logger.info("Updated data successfully!")
       self.reports = reports
     return self
 
