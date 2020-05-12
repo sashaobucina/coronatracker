@@ -90,11 +90,7 @@ export default function NewsContainer(props) {
           value={selectValue}
           setValue={handleSelectChange}
           title="Country of Interest"
-          supportedValues={
-            news.length === 0
-              ? []
-              : supportedCountries
-          }
+          supportedValues={supportedCountries}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={4} lg={5} />

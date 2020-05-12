@@ -2,6 +2,7 @@ import atexit
 import os
 import logging
 import numpy as np
+from threading import Thread
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
@@ -31,8 +32,10 @@ def initialize():
   logger.info("Updating data if available...")
 
   # scraping COVID-19 news
-  news_scraper.clear_cache()
-  news_scraper.scrape_all()
+  def scrape_news():
+    news_scraper.scrape_all()
+  thread = Thread(target=scrape_news, args=())
+  thread.start()
 
   # scraping COVID-19 data
   scraper.download_reports()

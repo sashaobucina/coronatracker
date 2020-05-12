@@ -90,13 +90,15 @@ class GoogleNewsScraper:
     for country in supported_countries:
       self._scrape(country)
 
+    self.logger.info("Finished scraping all news!")
+
 
   def _scrape(self, country):
-    self.logger.info(f"Getting news for {country}...")
-
     # check that queried country is actually supported
     if country not in self.supported_countries:
       return []
+
+    self.logger.info(f"Getting news for {country}...")
 
     url = self._construct_url(country)
     rss = feedparser.parse(url)
@@ -150,15 +152,7 @@ class GoogleNewsScraper:
     """
     Get all the news on COVID-19 given a specific country
     """
-    if not country in self.cache:
-      self._scrape(country)
     return self.cache.get(country, [])
-
-  def clear_cache(self):
-    """
-    Clear cache of news results so that new ones can be processed
-    """
-    self.cache = {}
 
   def get_supported_countries(self):
     """
