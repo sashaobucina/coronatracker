@@ -22,15 +22,16 @@ Now supporting live news about COVID-19 on a per-country basis!
 
 ![Top Movers demo](assets/top-movers.gif)
 
-### Heat Map
-
-![Heat Map demo](assets/heatmap.gif)
-
 ### Peak Table
 
 ![Peak demo](assets/peak.gif)
 
+### Heat Map
+
+![Heat Map demo](assets/heatmap.gif)
+
 ### News
+
 ![News demo](assets/news.gif)
 
 ## Usage Locally
