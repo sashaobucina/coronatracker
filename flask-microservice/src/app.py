@@ -41,7 +41,7 @@ def initialize_data():
 
 def initialize_news():
   # scraping COVID-19 news
-  thread = Thread(target=news_scraper.scrape_all, args=())
+  thread = Thread(target=news_scraper.scrape, args=())
   thread.start()
 
 # populate the data generator and web scraper, populate news as well

@@ -12,7 +12,7 @@ from http.client import HTTPException
 
 from generator import DataGenerator
 from preprocess import process_data, process_dates
-from util import CONFIRMED, DEATHS, RECOVERED, clip
+from util import CONFIRMED, DEATHS, RECOVERED, clip, get_utc_time, grep
 
 class CoronaScraper():
   def __init__(self, logger):
@@ -67,6 +67,7 @@ class GoogleNewsScraper:
     self.logger = logger
     self.base_url = 'https://news.google.com/rss/search'
     self.timeout = 2
+    self.last_update = get_utc_time()
 
     # set the countries that can be queried
     self.supported_countries = [
@@ -82,12 +83,14 @@ class GoogleNewsScraper:
       "Serbia"
     ]
 
-  def scrape_all(self):
+  def scrape(self):
     """
     Scrape Google News for top news stories about COVID-19 for each supported country.
     """
     for country in self.supported_countries:
       self._scrape(country)
+
+    self.last_update = get_utc_time()
 
     self.logger.info("Finished scraping all news!")
 
@@ -144,7 +147,10 @@ class GoogleNewsScraper:
     """
     Get all the news on COVID-19 given a specific country
     """
-    return self.cache.get(country, [])
+    return {
+      "updateDate": self.last_update,
+      "news": self.cache.get(country, [])
+    }
 
   def get_supported_countries(self):
     """

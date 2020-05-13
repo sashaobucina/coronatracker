@@ -52,6 +52,7 @@ export default function NewsContainer(props) {
   const [ news, setNews ] = useState([]);
   const [ fetched, setFetched ] = useState(false);
   const [ selectValue, setSelectValue ] = useState("Canada");
+  const [ lastUpdate, setLastUpdate ] = useState(null);
   const { match, supportedCountries, updatePath } = props;
 
   const classes = useStyle();
@@ -61,9 +62,11 @@ export default function NewsContainer(props) {
       const url = PREFETCH_URL + `news/country/${country}`;
       try {
         setFetched(false);
-        const response = await axios.get(url);
-        convertToDate(response.data, "published");
-        setNews(response.data);
+        const { data } = await axios.get(url);
+        const { news, updateDate } = data
+        convertToDate(news, "published");
+        setNews(news);
+        setLastUpdate(updateDate)
         setFetched(true);
       } catch (e) {
         console.error(e);
@@ -111,6 +114,12 @@ export default function NewsContainer(props) {
             <Typography align="left" variant="h5">
               {`Latest News for ${selectValue}`}
             </Typography>
+            {lastUpdate !== null
+              ? (<Typography align="left" style={{ fontSize: 11 }}>
+                  (Last updated: {lastUpdate})
+                </Typography>)
+              : null
+            }
           </Grid>
           <Grid item>
             {fetched

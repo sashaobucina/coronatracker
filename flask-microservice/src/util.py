@@ -1,5 +1,6 @@
-import datetime
+import re
 import numpy as np
+from datetime import datetime, timezone
 
 # Constants
 CONFIRMED = "confirmed"
@@ -61,3 +62,17 @@ def clip(s):
   if len(s) > 200:
     s = s[:200].strip() + "..."
   return s
+
+def grep(lst, term):
+  """
+  Finds the first match from a list of strings, given a single or multiple terms.
+  """
+  if isinstance(term, list):
+    term = "".join([f"(?=.*{x})" for x in term])
+
+  matches = [i for (i, s) in enumerate(lst) if re.search(term, s, re.IGNORECASE)]
+  return -1 if len(matches) == 0 else matches[0]
+
+def get_utc_time():
+  """ Get the current UTC time. """
+  return datetime.now(tz=timezone.utc).strftime("%b %d, %Y %H:%M:%S %Z")
