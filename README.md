@@ -12,7 +12,7 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 
 Now supporting live news about COVID-19 on a per-country basis!
 
-⭐ If you wish to stay notified or support my efforts, please consider starring this repo! ⭐
+⭐ If you wish to stay notified or show support, please consider starring this repo! ⭐
 
 ## Demos
 
