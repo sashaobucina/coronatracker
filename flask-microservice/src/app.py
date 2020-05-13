@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
 
-from scraper import CoronaScraper, GoogleNewsScraper
+from scraper import CoronaScraper, GoogleNewsScraper, TravelNewsScraper
 from generator import DataGenerator
 from preprocess import process_data, process_dates
 import util
@@ -25,6 +25,7 @@ PORT = os.environ.get("PORT", 5000)
 
 scraper = CoronaScraper(logger)
 news_scraper = GoogleNewsScraper(logger)
+travel_scraper = TravelNewsScraper(logger)
 generator = DataGenerator()
 
 def initialize_data():
@@ -44,14 +45,21 @@ def initialize_news():
   thread = Thread(target=news_scraper.scrape, args=())
   thread.start()
 
+def initialize_travel_alerts():
+  # scraping COVID-19 related travel alerts
+  thread = Thread(target=travel_scraper.scrape, args=())
+  thread.start()
+
 # populate the data generator and web scraper, populate news as well
 initialize_data()
 initialize_news()
+initialize_travel_alerts()
 
 # schedule jobs in background
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=initialize_data, trigger="interval", hours=12)
 scheduler.add_job(func=initialize_news, trigger="interval", hours=2)
+scheduler.add_job(func=initialize_travel_alerts, trigger="interval", hours=24)
 scheduler.start()
 
 ###################### Routes ######################
@@ -125,12 +133,15 @@ def country_data(country):
       util.RECOVERED: generator.get_country_summary(country, util.RECOVERED)
     }
 
+    travel_alert = travel_scraper.get_travel_alert(country)
+
     response = {
       "date": dates[-1],
       "overall": overall,
       "first_derivative_data": first_derivative,
       "second_derivative_data": second_derivative,
-      "summary": summary
+      "summary": summary,
+      "travel": travel_alert
     }
     return jsonify(response)
 

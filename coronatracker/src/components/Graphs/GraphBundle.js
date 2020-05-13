@@ -5,6 +5,7 @@ import DateSlider from "../Slider/DateSlider"
 import DerivativeGraph from "./DerivativeGraph"
 import OverallGraph from "./OverallGraph";
 import TrajectoryGraph from "./TrajectoryGraph";
+import TravelAlert from "../Travel/TravelAlert";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import ScaleButtonGroup from "../Buttons/ScaleButtonGroup";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
@@ -20,7 +21,7 @@ export default function GraphBundle(props) {
   const { country, data } = props;
 
   // collect data in proper format
-  const { date, overall, first_derivative_data, second_derivative_data, summary } = data;
+  const { date, overall, first_derivative_data, second_derivative_data, summary, travel } = data;
   const weeklyData = convertDataToWeekly(overall);
   const dates = convertToDates(overall, weeklyData.length);
   const maxIndex = dates.length - 1;
@@ -98,6 +99,9 @@ export default function GraphBundle(props) {
             <SpeedButtonGroup speed={speed} setSpeed={setSpeed} />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item xs={11} sm={11} md={11} lg={11} style={{ margin: 15 }}>
+        <TravelAlert country={country} data={travel} />
       </Grid>
     </Grid>
   )

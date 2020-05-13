@@ -1,6 +1,8 @@
 import csv
 import os
+import re
 import feedparser
+from datetime import datetime
 import pandas as pd
 import tempfile
 from socket import timeout
@@ -171,6 +173,91 @@ class GoogleNewsScraper:
     """
     tag = soup.find("meta", property=f"og:{name}")
     return tag["content"].strip() if tag else None
+
+
+class TravelNewsScraper:
+  def __init__(self, logger):
+    self.cache = {}
+    self.logger = logger
+    self.base_url = "https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm"
+
+  def scrape(self):
+    """
+    Scrape IATA for the latest travel alerts for all the listed countries in the document.
+    """
+    try:
+      req = request.Request(self.base_url, headers={"User-Agent": "Mozilla/5.0"})
+      response = request.urlopen(req).read()
+      soup = BeautifulSoup(response, 'lxml')
+
+      # replace line break tags with newlines
+      br_tags = soup.find_all("br")
+      for br in br_tags:
+        br.replaceWith("\n")
+
+      # find all text
+      all_text = soup.find_all(text=True)
+
+      # find start and end indices
+      start_idx = grep(all_text, "Afghanistan")
+      end_idx = grep(all_text, ["Timatic", "monitoring", "posted", "development"])
+
+      # could not match start and end properly
+      if start_idx == -1 or end_idx == -1:
+        self.logger.error("Could not match start or end for travel document when scraping travel alerts")
+        return
+
+      # split text into each country entry
+      all_text = "".join(all_text[start_idx: end_idx])
+      entries = all_text.strip().split("\n\n")
+
+      for entry in entries:
+        lines = entry.split("\n")
+
+        # dont deal with empty first line
+        if len(lines) == 0 or not lines[0]:
+          continue
+
+        # get the country and publish date, if applicable
+        first = lines[0]
+        country = first.split("-")[0].strip()
+        published = re.search(r"\d{2}.\d{2}.\d{4}", first)
+
+        # if matched, get the publish date, otherwise None
+        if published:
+          published = datetime.strptime(published.group(), "%d.%m.%Y").date().strftime("%b %d, %Y")
+
+        if country:
+          # common country conversions
+          if country == "USA":
+            country = "US"
+          if country == "THE MAINLAND OF CHINA":
+            country = "CHINA"
+          if country == "RUSSIAN FED.":
+            country = "RUSSIA"
+
+          country = country.lower().strip()
+          self.cache[country] = {
+            "description": "\n".join(lines[1:]),
+            "published": published
+          }
+
+      self.logger.info("Finished scraping all travel alerts!")
+
+    except Exception as e:
+      self.logger.error(str(e))
+      return
+
+  def get_travel_alert(self, country):
+    """
+    Get the travel alert for a given country, send an empty response if country not cached.
+    """
+    empty_response = {
+      "description": "No travel alerts available...",
+      "published": None
+    }
+    return self.cache.get(country.lower(), empty_response)
+
 
 if __name__ == "__main__":
   # TESTING ONLY
