@@ -286,6 +286,10 @@ Return Type:
       daysSince: int,
       percentChange: float
     }
+  },
+  travel: {
+    description: String,
+    published: Date
   }
 }
 ```

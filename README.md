@@ -10,7 +10,7 @@ The trends of the virus are visualized through interactive graphs and tables tha
 
 The data is accmulated from the [John Hopkins University CSSE](https://github.com/CSSEGISandData/COVID-19) repository.
 
-Now supporting live news about COVID-19 on a per-country basis!
+Now supporting live news about COVID-19 and travel alerts on a per-country basis!
 
 ⭐ If you wish to stay notified or show support, please consider starring this repo! ⭐
 
