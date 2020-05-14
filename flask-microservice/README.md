@@ -289,7 +289,8 @@ Return Type:
   },
   travel: {
     description: String,
-    published: Date
+    supported: Boolean,
+    updated: Date
   }
 }
 ```
@@ -304,15 +305,19 @@ GET /news/country/{country}
 
 Return Type:
 ```yaml
-[
-  {
-    description: String,
-    link: String,
-    image: String,
-    published: Date,
-    title: String
-  }
-...]
+{
+  news: [
+    {
+      description: String,
+      link: String,
+      image: String,
+      published: Date,
+      title: String
+    },
+    ...],
+  updated: Date
+}
+
 ```
 
 ### News Supported Countries

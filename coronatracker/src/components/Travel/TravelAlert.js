@@ -43,10 +43,19 @@ const useStyle = makeStyles({
 
 export default function TravelAlert(props) {
   const { country, data } = props;
-  const { description, published } = data;
-  const subheader = published === null ? null : `Last updated: ${published}`;
-
+  const { description, updated, supported } = data;
   const classes = useStyle();
+
+  const subheader = supported ? `Last updated: ${updated}` : null;
+  const footer = (
+    <Grid container className={classes.cardFooter} direction="row-reverse">
+      <Grid item>
+        <Typography variant="caption">
+          Provided by <Link href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">IATA</Link>
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 
   return (
     <Grid container direction="column">
@@ -72,13 +81,7 @@ export default function TravelAlert(props) {
               }
             </List>
           </CardContent>
-          <Grid container className={classes.cardFooter} direction="row-reverse">
-            <Grid item>
-              <Typography variant="caption">
-                Provided by <Link href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">IATA</Link>
-              </Typography>
-            </Grid>
-          </Grid>
+          { supported ? footer : null }
         </Card>
       </Grid>
     </Grid>

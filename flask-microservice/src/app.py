@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
 
-from scraper import CoronaScraper, GoogleNewsScraper, TravelNewsScraper
+from scraper import GithubScraper, GoogleNewsScraper, TravelAlertScraper
 from generator import DataGenerator
 from preprocess import process_data, process_dates
 import util
@@ -23,18 +23,36 @@ logger = app.logger
 # setting up proper port
 PORT = os.environ.get("PORT", 5000)
 
-scraper = CoronaScraper(logger)
-news_scraper = GoogleNewsScraper(logger)
-travel_scraper = TravelNewsScraper(logger)
+# instantiate scrapers
+gh_scraper = GithubScraper(
+  logger,
+  "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series"
+)
+travel_scraper = TravelAlertScraper(
+  logger,
+  "https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm",
+  {
+    "description": "No travel alerts available...",
+    "updated": None,
+    "supported": False
+  }
+)
+news_scraper = GoogleNewsScraper(
+  logger,
+  "https://news.google.com/rss/search",
+  { "news": [], "updated": None }
+)
+
+# instantiate the data generator
 generator = DataGenerator()
 
 def initialize_data():
-  global scraper, generator, logger
+  global gh_scraper, generator, logger
   logger.info("Updating data if available...")
 
   # scraping COVID-19 data
-  scraper.download_reports()
-  reports, countries = scraper.reports, scraper.valid_countries
+  gh_scraper.scrape()
+  reports, countries = gh_scraper.cache, gh_scraper.valid_countries
   dates = process_dates(reports)
   data = process_data(reports, countries)
 
@@ -59,7 +77,7 @@ initialize_travel_alerts()
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=initialize_data, trigger="interval", hours=12)
 scheduler.add_job(func=initialize_news, trigger="interval", hours=2)
-scheduler.add_job(func=initialize_travel_alerts, trigger="interval", hours=24)
+scheduler.add_job(func=initialize_travel_alerts, trigger="interval", hours=48)
 scheduler.start()
 
 ###################### Routes ######################
@@ -133,7 +151,7 @@ def country_data(country):
       util.RECOVERED: generator.get_country_summary(country, util.RECOVERED)
     }
 
-    travel_alert = travel_scraper.get_travel_alert(country)
+    travel_alert = travel_scraper.get_data(country.lower())
 
     response = {
       "date": dates[-1],
@@ -156,7 +174,7 @@ def get_supported_countries():
 
 @app.route('/news/country/<string:country>')
 def get_news(country):
-  response = news_scraper.get_news(country)
+  response = news_scraper.get_data(country)
   return jsonify(response)
 
 # shut down the scheduler when exiting the app

@@ -63,10 +63,10 @@ export default function NewsContainer(props) {
       try {
         setFetched(false);
         const { data } = await axios.get(url);
-        const { news, updateDate } = data
+        const { news, updated } = data;
         convertToDate(news, "published");
         setNews(news);
-        setLastUpdate(updateDate)
+        setLastUpdate(updated);
         setFetched(true);
       } catch (e) {
         console.error(e);

@@ -11,19 +11,32 @@ import urllib.error as request_err
 import urllib.request as request
 from bs4 import BeautifulSoup
 from http.client import HTTPException
+from selenium import webdriver
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException
 
 from generator import DataGenerator
 from preprocess import process_data, process_dates
 from util import CONFIRMED, DEATHS, RECOVERED, clip, get_utc_time, grep
 
-class CoronaScraper():
-  def __init__(self, logger):
+class WebScraper():
+  def __init__(self, logger, base_url, empty_response):
+    self.cache = {}
     self.logger = logger
-    self.reports = {}
-    self.valid_countries = []
-    self.base_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series"
+    self.base_url = base_url
+    self.empty_response = empty_response
 
-  def download_reports(self):
+  def scrape(self):
+    raise NotImplementedError
+
+  def get_data(self, key):
+    return self.cache.get(key, self.empty_response)
+
+class GithubScraper(WebScraper):
+  def __init__(self, logger, base_url, empty_response=""):
+    super().__init__(logger, base_url, empty_response)
+    self.valid_countries = []
+
+  def scrape(self):
     """
     Collects timeseries COVD-19 data and returns a dictionary of Pandas DFs for each
     type of reported case.
@@ -60,17 +73,13 @@ class CoronaScraper():
 
     if len(reports) > 0:
       self.logger.info("Updated data successfully!")
-      self.reports = reports
-    return self
+      self.cache = reports
 
-class GoogleNewsScraper:
-  def __init__(self, logger):
-    self.cache = {}
-    self.logger = logger
-    self.base_url = 'https://news.google.com/rss/search'
+class GoogleNewsScraper(WebScraper):
+  def __init__(self, logger, base_url, empty_response):
+    super().__init__(logger, base_url, empty_response)
+
     self.timeout = 2
-    self.last_update = get_utc_time()
-
     # set the countries that can be queried
     self.supported_countries = [
       "Canada",
@@ -91,8 +100,6 @@ class GoogleNewsScraper:
     """
     for country in self.supported_countries:
       self._scrape(country)
-
-    self.last_update = get_utc_time()
 
     self.logger.info("Finished scraping all news!")
 
@@ -143,15 +150,9 @@ class GoogleNewsScraper:
       finally:
         idx += 1
 
-    self.cache[country] = feed
-
-  def get_news(self, country):
-    """
-    Get all the news on COVID-19 given a specific country
-    """
-    return {
-      "updateDate": self.last_update,
-      "news": self.cache.get(country, [])
+    self.cache[country] = {
+      "news": feed,
+      "updated": get_utc_time()
     }
 
   def get_supported_countries(self):
@@ -175,94 +176,74 @@ class GoogleNewsScraper:
     return tag["content"].strip() if tag else None
 
 
-class TravelNewsScraper:
-  def __init__(self, logger):
-    self.cache = {}
-    self.logger = logger
-    self.base_url = "https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm"
-
+class TravelAlertScraper(WebScraper):
   def scrape(self):
     """
-    Scrape IATA for the latest travel alerts for all the listed countries in the document.
+    Scrape IATA for travel alerts through selenium
     """
-    try:
-      req = request.Request(self.base_url, headers={"User-Agent": "Mozilla/5.0"})
-      response = request.urlopen(req).read()
-      soup = BeautifulSoup(response, 'lxml')
+    # instantiate webdriver component in headless mode
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("window-size=1920,1080")
+    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.get(self.base_url)
 
-      # replace line break tags with newlines
-      br_tags = soup.find_all("br")
-      for br in br_tags:
-        br.replaceWith("\n")
+    css = 'path[class*="svgMap-country"]'
+    elements = driver.find_elements_by_css_selector(css)
 
-      # find all text
-      all_text = soup.find_all(text=True)
+    for i, element in enumerate(elements):
+      try:
+        self.logger.debug(f"Processing element {i} out of {len(elements) - 1}")
+        element.click()
 
-      # find start and end indices
-      start_idx = grep(all_text, "Afghanistan")
-      end_idx = grep(all_text, ["Timatic", "monitoring", "posted", "development"])
+        title = driver.find_elements_by_class_name("svgMap-tooltip-title")
+        content = driver.find_elements_by_class_name("svgMap-tooltip-content")
 
-      # could not match start and end properly
-      if start_idx == -1 or end_idx == -1:
-        self.logger.error("Could not match start or end for travel document when scraping travel alerts")
-        return
+        if title and content:
+          country = self._rename(title[0].text)
 
-      # split text into each country entry
-      all_text = "".join(all_text[start_idx: end_idx])
-      entries = all_text.strip().split("\n\n")
+          # get travel alert description
+          content_list = content[0].text.split("\n")
+          description = "\n".join(content_list[1:])
 
-      for entry in entries:
-        lines = entry.split("\n")
+          # get last published date
+          updated_str = content_list[0]
+          updated = re.search(r"\d{2}.\d{2}.\d{4}", updated_str)
+          if updated:
+            updated = datetime.strptime(updated.group(), "%d.%m.%Y").date().strftime("%b %d, %Y")
 
-        # dont deal with empty first line
-        if len(lines) == 0 or not lines[0]:
-          continue
-
-        # get the country and publish date, if applicable
-        first = lines[0]
-        country = first.split("-")[0].strip()
-        published = re.search(r"\d{2}.\d{2}.\d{4}", first)
-
-        # if matched, get the publish date, otherwise None
-        if published:
-          published = datetime.strptime(published.group(), "%d.%m.%Y").date().strftime("%b %d, %Y")
-
-        if country:
-          # common country conversions
-          if country == "USA":
-            country = "US"
-          if country == "THE MAINLAND OF CHINA":
-            country = "CHINA"
-          if country == "RUSSIAN FED.":
-            country = "RUSSIA"
-
-          country = country.lower().strip()
           self.cache[country] = {
-            "description": "\n".join(lines[1:]),
-            "published": published
+            "description": description,
+            "updated": updated,
+            "supported": True
           }
 
-      self.logger.info("Finished scraping all travel alerts!")
+      except (ElementClickInterceptedException, ElementNotInteractableException) as e:
+        self.logger.debug(str(e))
+        continue
 
-    except Exception as e:
-      self.logger.error(str(e))
-      return
+    self.logger.info("Finished scraping travel alerts!")
+    driver.quit()
 
-  def get_travel_alert(self, country):
-    """
-    Get the travel alert for a given country, send an empty response if country not cached.
-    """
-    empty_response = {
-      "description": "No travel alerts available...",
-      "published": None
-    }
-    return self.cache.get(country.lower(), empty_response)
+  def _rename(self, country):
+    """ Rename countries to lower case, and perform some common renamings """
+    if country == "United States":
+      country = "US"
+    if country == "The Mainland of China":
+      country = "China"
+    if country == "Korea (Rep.)":
+      country = "Korea, South"
+
+    return country.lower()
 
 
 if __name__ == "__main__":
   # TESTING ONLY
-  scraper = CoronaScraper(None)
-  reports = scraper.download_reports().reports
+  scraper = GithubScraper(None)
+  scraper.download_reports()
+  reports = scraper.cache
   valid_countries = scraper.valid_countries
 
   data = process_data(reports, valid_countries)
