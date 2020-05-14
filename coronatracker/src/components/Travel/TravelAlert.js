@@ -1,5 +1,15 @@
 import React from "react";
-import { Card, CardHeader, CardContent, Grid, List, ListItem, ListItemText } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  Typography
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyle = makeStyles({
@@ -15,6 +25,9 @@ const useStyle = makeStyles({
   },
   header: {
     padding: "16px 16px 2px 16px"
+  },
+  cardFooter: {
+    padding: 10
   },
   subheader: {
     color: "#3BBA9C",
@@ -59,6 +72,13 @@ export default function TravelAlert(props) {
               }
             </List>
           </CardContent>
+          <Grid container className={classes.cardFooter} direction="row-reverse">
+            <Grid item>
+              <Typography variant="caption">
+                Provided by <Link href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">IATA</Link>
+              </Typography>
+            </Grid>
+          </Grid>
         </Card>
       </Grid>
     </Grid>
