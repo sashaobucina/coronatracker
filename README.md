@@ -1,4 +1,4 @@
-# CoronaTracker
+# COVID-19 Coronavirus Tracker
 
 Tracking the trends and movements of the COVID-19 virus. Visit the site [here](https://sashaobucina.github.io/coronatracker/).
 
