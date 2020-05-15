@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import AutoComplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const useStyle = makeStyles({
+  root: {
+    paddingLeft: 10,
+    textAlign: "center"
+  },
   paper: {
     color: '#3BBA9C',
     background: '#3C3F58',
@@ -35,22 +40,25 @@ const useStyles = makeStyles({
 
 export default function SearchBar(props) {
   const [ opened, setOpened ] = useState(false);
-  const { fetchData, suggestions, updateState } = props;
-  const classes = useStyles();
+  const { searchFn, suggestions, updateInput } = props;
+
+  const classes = useStyle();
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      opened ? setOpened(false) : fetchData();
+      opened ? setOpened(false) : searchFn();
     }
   }
 
   const handleFilter = (options, state) => {
     const inputValue = state["inputValue"];
-    return options.filter((opt) => opt.toLowerCase().startsWith(inputValue.toLowerCase()));
+    return options.filter(
+      (opt) => opt.toLowerCase().startsWith(inputValue.toLowerCase())
+    );
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <Box className={classes.root}>
       <AutoComplete
         id="autocomplete-main"
         classes={{
@@ -66,7 +74,7 @@ export default function SearchBar(props) {
         onClose={() => {setOpened(false)}}
         onOpen={() => {setOpened(true)}}
         options={suggestions}
-        onSelect={(e) => updateState(e.target.value)}
+        onSelect={updateInput}
         renderInput={params => (
           <TextField
             {...params}
@@ -79,6 +87,6 @@ export default function SearchBar(props) {
           />
         )}
       />
-    </div>
+    </Box>
   );
 }
