@@ -3,5 +3,7 @@
   "files.exclude": {
     "**/__pycache__": true,
     "**/venv": true
-  }
+  },
+"editor.detectIndentation": false,
+"python.formatting.provider": "black"
 }
