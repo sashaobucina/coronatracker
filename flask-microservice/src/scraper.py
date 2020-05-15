@@ -112,7 +112,7 @@ class GoogleNewsScraper(WebScraper):
 
     # get the top Google news entries from the RSS feed
     idx, feed = 0, []
-    while idx < 50 and idx < len(rss.entries):
+    while idx < 100 and idx < len(rss.entries):
       try:
         entry = rss.entries[idx]
         link, published, title = entry.link, entry.published, entry.title
