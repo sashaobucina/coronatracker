@@ -33,7 +33,7 @@ const headCells = [
   { id: "country", align: false, label: "Country", sort: false },
   { id: "percentChange", align: true, label: "Percent Change", sort: true },
   { id: "change", align: true, label: "New Cases", sort: true },
-  { id: "totalCases", align: true, label: "Total Cases", sort: true }
+  { id: "totalCases", align: true, label: "Total Cases", sort: true },
 ];
 
 export default function TopMoversTable(props) {
@@ -57,14 +57,15 @@ export default function TopMoversTable(props) {
     setOrderBy(property);
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <Paper className={classes.paper}>
       <TableToolbar
         columns={headCells.map(({ label }) => label)}
         filename={`top_movers_${report}_${today()}.csv`}
-        rows={rows.map((row, i) => union([i+1], values(row)))}
+        rows={rows.map((row, i) => union([i + 1], values(row)))}
         title={title}
       />
       <TableContainer>
@@ -78,19 +79,19 @@ export default function TopMoversTable(props) {
                   align={headCell.align ? "right" : "left"}
                   sortDirection={orderBy === headCell.id ? order : false}
                 >
-                  {headCell.sort
-                    ?
-                      (<Tooltip title="Sort by" placement="top">
-                        <StyledTableSortLabel
-                          active={orderBy === headCell.id}
-                          direction={order}
-                          onClick={handleSort(headCell.id)}
-                        >
-                          { headCell.label }
-                        </StyledTableSortLabel>
-                      </Tooltip>)
-                    : headCell.label
-                  }
+                  {headCell.sort ? (
+                    <Tooltip title="Sort by" placement="top">
+                      <StyledTableSortLabel
+                        active={orderBy === headCell.id}
+                        direction={order}
+                        onClick={handleSort(headCell.id)}
+                      >
+                        {headCell.label}
+                      </StyledTableSortLabel>
+                    </Tooltip>
+                  ) : (
+                    headCell.label
+                  )}
                 </StyledTableCell>
               ))}
             </TableRow>
@@ -113,15 +114,15 @@ export default function TopMoversTable(props) {
                     {row["change"]}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                      {row["totalCases"]}
+                    {row["totalCases"]}
                   </StyledTableCell>
                 </TableRow>
-            ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <StyledTableCell colSpan={6} />
-                </TableRow>
-              )}
+              ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <StyledTableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

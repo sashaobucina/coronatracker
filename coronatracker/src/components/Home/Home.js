@@ -43,7 +43,7 @@ export default function Home(props) {
     }
 
     // try getting country from previous tab
-    let maybeCountry = getCountry(query, countries)
+    let maybeCountry = getCountry(query, countries);
     if (maybeCountry) {
       maybeCountry === countries[tabIndex]
         ? setAlert(DUPLICATE_ALERT)

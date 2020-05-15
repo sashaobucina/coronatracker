@@ -41,12 +41,10 @@ const useStyle = makeStyles({
 });
 
 const convertToDate = (arr, prop) => {
-  return arr.map(obj => (
-   has(obj, prop)
-      ? set(obj, prop, new Date(get(obj, prop)))
-      : obj
-  ));
-}
+  return arr.map((obj) =>
+    has(obj, prop) ? set(obj, prop, new Date(get(obj, prop))) : obj
+  );
+};
 
 export default function NewsContainer(props) {
   const [ news, setNews ] = useState([]);
@@ -86,7 +84,10 @@ export default function NewsContainer(props) {
 
   const progressComponent = (
     <Grid item>
-      <LinearProgress classes={{root: classes.progress, bar: classes.progressBar}} variant="query" />
+      <LinearProgress
+        classes={{ root: classes.progress, bar: classes.progressBar }}
+        variant="query"
+      />
     </Grid>
   );
 
