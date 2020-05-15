@@ -28,9 +28,9 @@ const StyledPaginationItem = withStyles({
 })(PaginationItem);
 
 export default function NewsBox(props) {
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [pageCount, setPageCount] = useState(1);
+  const [ page, setPage ] = useState(1);
+  const [ query, setQuery ] = useState("");
+  const [ pageCount, setPageCount ] = useState(1);
   const { news } = props;
 
   const matches = useMediaQuery("(min-width:600px)");
