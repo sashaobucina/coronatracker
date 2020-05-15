@@ -48,7 +48,6 @@ generator = DataGenerator()
 
 def initialize_data():
   global gh_scraper, generator, logger
-  logger.info("Updating data if available...")
 
   # scraping COVID-19 data
   gh_scraper.scrape()
@@ -58,26 +57,20 @@ def initialize_data():
 
   generator = DataGenerator(dates, data, countries)
 
-def initialize_news():
-  # scraping COVID-19 news
-  thread = Thread(target=news_scraper.scrape, args=())
+def trigger_scraper(scraper):
+  thread = Thread(target=scraper.scrape, args=())
   thread.start()
 
-def initialize_travel_alerts():
-  # scraping COVID-19 related travel alerts
-  thread = Thread(target=travel_scraper.scrape, args=())
-  thread.start()
-
-# populate the data generator and web scraper, populate news as well
+# populate the data generator and start web scrapers
 initialize_data()
-initialize_news()
-initialize_travel_alerts()
+trigger_scraper(news_scraper)
+trigger_scraper(travel_scraper)
 
 # schedule jobs in background
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=initialize_data, trigger="interval", hours=12)
-scheduler.add_job(func=initialize_news, trigger="interval", hours=2)
-scheduler.add_job(func=initialize_travel_alerts, trigger="interval", hours=48)
+scheduler.add_job(func=initialize_data, args=[], trigger="interval", hours=12)
+scheduler.add_job(func=trigger_scraper, args=[news_scraper], trigger="interval", hours=2)
+scheduler.add_job(func=trigger_scraper, args=[travel_scraper], trigger="interval", hours=12)
 scheduler.start()
 
 ###################### Routes ######################

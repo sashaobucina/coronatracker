@@ -43,6 +43,7 @@ class GithubScraper(WebScraper):
 
     Data recovered from John Hopkins CSSE repository.
     """
+    self.logger.info("Loading data if available...")
     reports = {}
 
     for report_type in [CONFIRMED, DEATHS, RECOVERED]:
@@ -72,7 +73,7 @@ class GithubScraper(WebScraper):
     self.valid_countries.sort()
 
     if len(reports) > 0:
-      self.logger.info("Updated data successfully!")
+      self.logger.info("Loaded data successfully!")
       self.cache = reports
 
 class GoogleNewsScraper(WebScraper):
@@ -101,10 +102,10 @@ class GoogleNewsScraper(WebScraper):
     for country in self.supported_countries:
       self._scrape(country)
 
-    self.logger.info("Finished scraping all news!")
+    self.logger.info("Finished scraping all the news!")
 
   def _scrape(self, country):
-    self.logger.info(f"Getting news for {country}...")
+    self.logger.info(f"Scraping news for {country}...")
 
     url = self._construct_url(country)
     rss = feedparser.parse(url)
@@ -155,6 +156,8 @@ class GoogleNewsScraper(WebScraper):
       "updated": get_utc_time()
     }
 
+    self.logger.info(f"Finished scraping news for {country}!")
+
   def get_supported_countries(self):
     """
     Return the supported countries that news can be extracted from
@@ -181,6 +184,8 @@ class TravelAlertScraper(WebScraper):
     """
     Scrape IATA for travel alerts through selenium
     """
+    self.logger.info("Scraping for new travel alerts...")
+
     # instantiate webdriver component in headless mode
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--disable-gpu")
@@ -224,7 +229,7 @@ class TravelAlertScraper(WebScraper):
         self.logger.debug(str(e))
         continue
 
-    self.logger.info("Finished scraping travel alerts!")
+    self.logger.info("Finished scraping for travel alerts!")
     driver.quit()
 
   def _rename(self, country):
