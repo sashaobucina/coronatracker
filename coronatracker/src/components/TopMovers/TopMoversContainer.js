@@ -11,7 +11,7 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import TopMoversTable from "./TopMoversTable";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
-import TableSearch from "../Shared/TableSearch";
+import TextSearch from "../Shared/TextSearch";
 import { CustomSwitch } from "../Shared/CustomComponents"
 import { PREFETCH_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
@@ -103,7 +103,10 @@ export default function TopMoversContainer(props) {
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={11} sm={11} md={11} lg={11}>
-        <TableSearch setQuery={setQuery} />
+        <TextSearch
+          label="Search country"
+          setQuery={setQuery}
+        />
       </Grid>
       <Grid item xs={1} sm ={1} md={1} lg={1} />
       <Grid item xs={11} sm={11} md={11} lg={11}>

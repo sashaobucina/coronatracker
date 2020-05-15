@@ -28,8 +28,8 @@ const useStyles = makeStyles({
   }
 })
 
-export default function TableSearch(props) {
-  const { setQuery } = props;
+export default function TextSearch(props) {
+  const { label, setQuery } = props;
   const classes = useStyles();
 
   const handleOnChange = (e) => {
@@ -40,7 +40,7 @@ export default function TableSearch(props) {
     <form noValidate autoComplete="off" style={{ color: "#3BBA9C" }}>
       <TextField
         className={classes.textfield}
-        label="Search query"
+        label={label}
         InputProps={{ className: classes.input }}
         onChange={handleOnChange}
         size="small"
