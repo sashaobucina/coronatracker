@@ -172,7 +172,7 @@ class GoogleNewsScraper(WebScraper):
 
         self.cache[country] = {"news": feed, "updated": get_utc_time()}
 
-        self.logger.info(f"Finished scraping news for {country}!")
+        self.logger.info(f"Finished scraping news for {country} - collected {len(feed)} stories!")
 
     def get_supported_countries(self):
         """
@@ -252,7 +252,7 @@ class TravelAlertScraper(WebScraper):
                 self.logger.debug(str(e))
                 continue
 
-        self.logger.info("Finished scraping for travel alerts!")
+        self.logger.info(f"Finished scraping travel alerts for {len(self.cache)} countries!")
         driver.quit()
 
     def _rename(self, country):
