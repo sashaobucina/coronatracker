@@ -10,7 +10,7 @@ import HeatMap from "./HeatMap";
 import HeatMapButtons from "./HeatMapButtons";
 import HeatMapLegend from "./HeatMapLegend";
 import SliderButtonGroup from "../Buttons/SliderButtonGroup";
-import { FETCH_URL } from "../../helpers/misc";
+import { HEATMAP_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
 
 const useStyle = makeStyles({
@@ -44,7 +44,7 @@ export default function HeatMapContainer(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(FETCH_URL);
+        const { data } = await axios.get(HEATMAP_URL);
         dispatch({ type: "update-heatmap", payload: data });
         setIndex(data.length - 1);
       } catch (e) {

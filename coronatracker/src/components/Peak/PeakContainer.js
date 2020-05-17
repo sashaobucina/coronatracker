@@ -14,7 +14,7 @@ import { CustomSwitch } from "../Shared/CustomComponents";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import PeakTable from "./PeakTable";
 import TextSearch from "../Shared/TextSearch";
-import { PREFETCH_URL } from "../../helpers/misc";
+import { PEAK_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
 import { getDate } from "../../helpers/conversions";
 
@@ -42,8 +42,7 @@ export default function PeakContainer(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = PREFETCH_URL + "peak-data";
-        const { data } = await axios.get(url);
+        const { data } = await axios.get(PEAK_URL);
         dispatch({ type: "update-peak", payload: data });
       } catch (e) {
         console.error(e);

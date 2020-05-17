@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/styles";
 import NewsBox from "./NewsBox";
 import NewsSelect from "./NewsSelect";
 import NewsSkeletonBox from "./NewsSkeletonBox";
-import { PREFETCH_URL } from "../../helpers/misc";
+import { NEWS_URL } from "../../helpers/misc";
 import { stableSort } from "../../helpers/sorting";
 
 const useStyle = makeStyles({
@@ -57,7 +57,7 @@ export default function NewsContainer(props) {
 
   useEffect(() => {
     const fetchData = async (country) => {
-      const url = PREFETCH_URL + `news/country/${country}`;
+      const url = NEWS_URL(country);
       try {
         setFetched(false);
         const { data } = await axios.get(url);

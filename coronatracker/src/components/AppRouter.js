@@ -9,7 +9,11 @@ import Main from "./Main"
 import News from "./News/NewsContainer";
 import TopMovers from "./TopMovers/TopMoversContainer";
 
-import { PREFETCH_URL } from "../helpers/misc";
+import {
+  TOP_CONTRIBUTORS_URL,
+  VALID_COUNTRIES_URL,
+  NEWS_SUPPORTED_URL,
+} from "../helpers/misc";
 import { NO_ALERT, SERVER_ALERT, SUCCESS_ALERT } from "../helpers/alerts";
 
 const initialTopContributors = {
@@ -37,9 +41,9 @@ export default function AppRouter() {
   });
 
   const preFetchData = () => {
-    const request1 = axios.get(PREFETCH_URL + "valid-countries")
-    const request2 = axios.get(PREFETCH_URL + "top-contributors")
-    const request3 = axios.get(PREFETCH_URL + "news/supported-countries")
+    const request1 = axios.get(VALID_COUNTRIES_URL);
+    const request2 = axios.get(TOP_CONTRIBUTORS_URL);
+    const request3 = axios.get(NEWS_SUPPORTED_URL);
 
     axios.all([request1, request2, request3]).then(
       axios.spread((...responses) => {

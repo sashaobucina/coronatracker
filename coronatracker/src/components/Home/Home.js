@@ -9,7 +9,7 @@ import SearchContainer from "./SearchContainer";
 import TabsContainer from '../Tabs/TabsContainer';
 
 import { getCountry } from '../../helpers/conversions';
-import { FETCH_URL } from '../../helpers/misc';
+import { COUNTRY_DATA_URL } from '../../helpers/misc';
 import { COUNTRY_ALERT, SERVER_ALERT, NO_ALERT, DUPLICATE_ALERT } from '../../helpers/alerts';
 
 const initialState = {
@@ -67,7 +67,7 @@ export default function Home(props) {
 
     setLoading(true);
 
-    const url = `${FETCH_URL}/${country}`
+    const url = COUNTRY_DATA_URL(country);
     axios.get(url).then(res => {
       setState(prevState => ({
         ...prevState,

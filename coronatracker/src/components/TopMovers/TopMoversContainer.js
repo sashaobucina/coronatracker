@@ -14,7 +14,7 @@ import TopMoversTable from "./TopMoversTable";
 import MoverButtonGroup from "../Buttons/MoverButtonGroup";
 import TextSearch from "../Shared/TextSearch";
 import { CustomSwitch } from "../Shared/CustomComponents";
-import { PREFETCH_URL } from "../../helpers/misc";
+import { TOP_MOVERS_URL } from "../../helpers/misc";
 import { SERVER_ALERT } from "../../helpers/alerts";
 import { getDate } from "../../helpers/conversions";
 
@@ -46,8 +46,7 @@ export default function TopMoversContainer(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = PREFETCH_URL + "top-movers";
-        const { data } = await axios.get(url);
+        const { data } = await axios.get(TOP_MOVERS_URL);
         dispatch({ type: "update-top-movers", payload: data });
       } catch (e) {
         console.error(e);
