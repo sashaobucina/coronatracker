@@ -3,10 +3,12 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 import { AppContext } from "./App";
+import AlertManager from "./Alerts/AlertManager";
+import Header from "./Header/Header";
 import Home from "./Home/Home";
 import HeatMap from './Heatmap/HeatMapContainer';
+import LoadingProgress from "./Progress/LoadingProgress";
 import Peak from "./Peak/PeakContainer";
-import Main from "./Main"
 import News from "./News/NewsContainer";
 import TopMovers from "./TopMovers/TopMoversContainer";
 
@@ -76,23 +78,24 @@ export default function AppRouter() {
 
   return (
     <Router hashType="noslash">
-      <Main loaded={loaded}>
-        <Switch>
-          <Route exact path="/" render={(props) =>
-            <Home
-                {...props}
-                fetched={fetched}
-                topContributors={topContributors}
-                validCountries={validCountries}
-              />
-            }
-          />
-          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} />} />
-          <Route exact path="/peak-data" render={(props) => <Peak {...props} />} />
-          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} />} />
-          <Route exact path="/news" render={(props) => <News {...props} supportedCountries={supportedCountries} />} />
-        </Switch>
-      </Main>
+      <AlertManager />
+      <LoadingProgress open={!loaded} />
+      <Header />
+      <Switch>
+        <Route exact path="/" render={(props) =>
+          <Home
+              {...props}
+              fetched={fetched}
+              topContributors={topContributors}
+              validCountries={validCountries}
+            />
+          }
+        />
+        <Route exact path="/top-movers" render={(props) => <TopMovers {...props} />} />
+        <Route exact path="/peak-data" render={(props) => <Peak {...props} />} />
+        <Route exact path="/heatmap" render={(props) => <HeatMap {...props} />} />
+        <Route exact path="/news" render={(props) => <News {...props} supportedCountries={supportedCountries} />} />
+      </Switch>
     </Router>
   );
 }
