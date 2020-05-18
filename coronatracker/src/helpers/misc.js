@@ -4,9 +4,7 @@ function isDev() {
   return '_self' in React.createElement('div');
 }
 
-export const FETCH_URL = isDev() ? "http://localhost:5000/cases" : "https://coronatracker-rest.herokuapp.com/cases";
-export const PREFETCH_URL = isDev() ? "http://localhost:5000/" : "https://coronatracker-rest.herokuapp.com/";
-
+// url mapping
 const BASE_URL = isDev() ? "http://localhost:5000" : "https://coronatracker-rest.herokuapp.com";
 export const VALID_COUNTRIES_URL = `${BASE_URL}/valid-countries`;
 export const TOP_CONTRIBUTORS_URL = `${BASE_URL}/top-contributors`;

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
+import { AppContext } from "../App";
 import Footer from './Footer';
 import GraphBundle from '../Graphs/GraphBundle';
 import LandingPage from './LandingPage';
@@ -23,10 +24,10 @@ export default function Home(props) {
   const [loading, setLoading] = useState(false);
 
   const { countries, data, tabIndex } = state;
+  const { dispatch } = useContext(AppContext);
   const {
     fetched,
     match,
-    setAlert,
     topContributors,
     updatePath,
     validCountries
@@ -82,6 +83,10 @@ export default function Home(props) {
     }).finally(() => {
       setLoading(false);
     });
+  }
+
+  function setAlert(alert) {
+    dispatch({ type: "set-alert", payload: alert });
   }
 
   function removeTab(e, index) {

@@ -32,7 +32,7 @@ export default function TopMoversContainer(props) {
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
   const { state, dispatch } = useContext(AppContext);
-  const { match, setAlert, updatePath } = props;
+  const { match, updatePath } = props;
 
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:960px)");
@@ -50,13 +50,13 @@ export default function TopMoversContainer(props) {
         dispatch({ type: "update-top-movers", payload: data });
       } catch (e) {
         console.error(e);
-        setAlert(SERVER_ALERT);
+        dispatch({ type: "set-alert", payload: SERVER_ALERT });
       }
     };
     if (topMovers === null) {
       fetchData();
     }
-  }, [dispatch, topMovers, setAlert]);
+  }, [dispatch, topMovers]);
 
   useEffect(() => {
     updatePath(match.url);

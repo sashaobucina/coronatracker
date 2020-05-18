@@ -1,10 +1,16 @@
 import React, { useReducer } from "react";
 import AppRouter from "./AppRouter";
+import { NO_ALERT } from "../helpers/alerts";
 
 export const AppContext = React.createContext({});
 
 export default function AppProvider() {
-  let initialState = { topMovers: null, peak: null, heatmap: [] };
+  let initialState = {
+    alert: NO_ALERT,
+    topMovers: null,
+    peak: null,
+    heatmap: [],
+  };
 
   let reducer = (state, action) => {
     switch (action.type) {
@@ -14,6 +20,8 @@ export default function AppProvider() {
         return { ...state, peak: action.payload };
       case "update-top-movers":
         return { ...state, topMovers: action.payload };
+      case "set-alert":
+        return { ...state, alert: action.payload };
       default:
         console.error("Action type provided is not defined!");
         return state;

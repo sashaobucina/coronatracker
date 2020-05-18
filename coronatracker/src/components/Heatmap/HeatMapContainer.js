@@ -29,7 +29,7 @@ export default function HeatMapContainer(props) {
   const [index, setIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
   const { state, dispatch } = useContext(AppContext);
-  const { match, setAlert, updatePath } = props;
+  const { match, updatePath } = props;
 
   const classes = useStyle();
   const matches = useMediaQuery("(min-width:960px)");
@@ -49,11 +49,11 @@ export default function HeatMapContainer(props) {
         setIndex(data.length - 1);
       } catch (e) {
         console.error(e);
-        setAlert(SERVER_ALERT);
+        dispatch({ type: "set-alert", payload: SERVER_ALERT });
       }
     };
     isEmpty(heatMapData) ? fetchData() : setIndex(heatMapData.length - 1);
-  }, [dispatch, heatMapData, setAlert]);
+  }, [dispatch, heatMapData]);
 
   useEffect(() => {
     updatePath(match.url);

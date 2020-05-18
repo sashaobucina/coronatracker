@@ -29,7 +29,7 @@ export default function PeakContainer(props) {
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
   const { state, dispatch } = useContext(AppContext);
-  const { match, setAlert, updatePath } = props;
+  const { match, updatePath } = props;
 
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:960px)");
@@ -46,13 +46,13 @@ export default function PeakContainer(props) {
         dispatch({ type: "update-peak", payload: data });
       } catch (e) {
         console.error(e);
-        setAlert(SERVER_ALERT);
+        dispatch({ type: "set-alert", payload: SERVER_ALERT });
       }
     };
     if (peakData === null) {
       fetchData();
     }
-  }, [dispatch, peakData, setAlert]);
+  }, [dispatch, peakData]);
 
   useEffect(() => {
     setDense(!matches);
