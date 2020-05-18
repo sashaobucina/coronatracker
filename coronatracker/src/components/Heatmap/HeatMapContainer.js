@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import { get, isEmpty } from "lodash";
@@ -29,7 +29,8 @@ export default function HeatMapContainer(props) {
   const [index, setIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
   const { state, dispatch } = useContext(AppContext);
-  const { match, updatePath } = props;
+  const { match } = props;
+  const pathRef = useRef(match.url);
 
   const classes = useStyle();
   const matches = useMediaQuery("(min-width:960px)");
@@ -56,8 +57,8 @@ export default function HeatMapContainer(props) {
   }, [dispatch, heatMapData]);
 
   useEffect(() => {
-    updatePath(match.url);
-  }, [match, updatePath]);
+    dispatch({ type: "update-path", payload: pathRef.current });
+  }, [dispatch]);
 
   function handleZoomIn() {
     if (position.zoom >= 5) return;

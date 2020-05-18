@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { get } from "lodash";
 import {
@@ -29,7 +29,8 @@ export default function PeakContainer(props) {
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
   const { state, dispatch } = useContext(AppContext);
-  const { match, updatePath } = props;
+  const { match } = props;
+  const pathRef = useRef(match.url)
 
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:960px)");
@@ -59,8 +60,8 @@ export default function PeakContainer(props) {
   }, [matches]);
 
   useEffect(() => {
-    updatePath(match.url);
-  }, [match, updatePath]);
+    dispatch({ type: "update-path", payload: pathRef.current });
+  }, [dispatch]);
 
   const filterRows = () => {
     return query

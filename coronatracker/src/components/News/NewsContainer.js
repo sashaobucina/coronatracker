@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { get, has, set } from "lodash";
 import {
@@ -9,6 +9,7 @@ import {
   LinearProgress
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { AppContext } from "../App";
 import NewsBox from "./NewsBox";
 import NewsSelect from "./NewsSelect";
 import NewsSkeletonBox from "./NewsSkeletonBox";
@@ -51,7 +52,9 @@ export default function NewsContainer(props) {
   const [ fetched, setFetched ] = useState(false);
   const [ selectValue, setSelectValue ] = useState("Canada");
   const [ lastUpdate, setLastUpdate ] = useState(null);
-  const { match, supportedCountries, updatePath } = props;
+  const { dispatch } = useContext(AppContext);
+  const { match, supportedCountries } = props;
+  const pathRef = useRef(match.url);
 
   const classes = useStyle();
 
@@ -75,8 +78,8 @@ export default function NewsContainer(props) {
   }, [selectValue]);
 
   useEffect(() => {
-    updatePath(match.url);
-  }, [match, updatePath]);
+    dispatch({ type: "update-path", payload: pathRef.current });
+  }, [dispatch]);
 
   const handleSelectChange = (e) => {
     setSelectValue(e.target.value);

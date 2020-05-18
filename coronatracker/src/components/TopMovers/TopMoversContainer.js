@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { assign, get } from "lodash";
 import axios from "axios";
 import {
@@ -32,7 +32,8 @@ export default function TopMoversContainer(props) {
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
   const { state, dispatch } = useContext(AppContext);
-  const { match, updatePath } = props;
+  const { match } = props;
+  const pathref = useRef(match.url)
 
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:960px)");
@@ -59,8 +60,8 @@ export default function TopMoversContainer(props) {
   }, [dispatch, topMovers]);
 
   useEffect(() => {
-    updatePath(match.url);
-  }, [match, updatePath]);
+    dispatch({ type: "update-path", payload: pathref.current });
+  }, [dispatch]);
 
   useEffect(() => {
     setDense(!matches);

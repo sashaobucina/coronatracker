@@ -7,6 +7,7 @@ export const AppContext = React.createContext({});
 export default function AppProvider() {
   let initialState = {
     alert: NO_ALERT,
+    path: "/",
     topMovers: null,
     peak: null,
     heatmap: [],
@@ -20,6 +21,8 @@ export default function AppProvider() {
         return { ...state, peak: action.payload };
       case "update-top-movers":
         return { ...state, topMovers: action.payload };
+      case "update-path":
+        return { ...state, path: action.payload };
       case "set-alert":
         return { ...state, alert: action.payload };
       default:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from "axios";
 import { Grid, Typography } from "@material-ui/core";
 
@@ -29,14 +29,14 @@ export default function Home(props) {
     fetched,
     match,
     topContributors,
-    updatePath,
     validCountries
   } = props;
+  const pathRef = useRef(match.url);
 
   // update the current path on component render
   useEffect(() => {
-    updatePath(match.url);
-  }, [match, updatePath]);
+    dispatch({ type: "update-path", payload: pathRef.current });
+  }, [dispatch]);
 
   function fetchData(query) {
     if (!fetched || query === "") {

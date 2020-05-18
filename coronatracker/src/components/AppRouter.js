@@ -31,7 +31,6 @@ const initialTopContributors = {
 }
 
 export default function AppRouter() {
-  const [ path, setPath ] = useState("/");
   const [ fetchState, setState ] = useState({
     fetched: false,
     loaded: false,
@@ -77,26 +76,21 @@ export default function AppRouter() {
 
   return (
     <Router hashType="noslash">
-      <Main
-        loaded={loaded}
-        path={path}
-        updatePath={setPath}
-      >
+      <Main loaded={loaded}>
         <Switch>
           <Route exact path="/" render={(props) =>
             <Home
                 {...props}
                 fetched={fetched}
                 topContributors={topContributors}
-                updatePath={setPath}
                 validCountries={validCountries}
               />
             }
           />
-          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} updatePath={setPath} />} />
-          <Route exact path="/peak-data" render={(props) => <Peak {...props} updatePath={setPath} />} />
-          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} updatePath={setPath} />} />
-          <Route exact path="/news" render={(props) => <News {...props} supportedCountries={supportedCountries} updatePath={setPath} />} />
+          <Route exact path="/top-movers" render={(props) => <TopMovers {...props} />} />
+          <Route exact path="/peak-data" render={(props) => <Peak {...props} />} />
+          <Route exact path="/heatmap" render={(props) => <HeatMap {...props} />} />
+          <Route exact path="/news" render={(props) => <News {...props} supportedCountries={supportedCountries} />} />
         </Switch>
       </Main>
     </Router>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction, SvgIcon } from "@material-ui/core";
 import { Search, DateRange, TrendingUp, Public } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
+import { AppContext } from "../App";
 
 const useStyles = makeStyles({
   navigation : {
@@ -47,12 +48,13 @@ function NewsIcon(props) {
   );
 }
 
-export default function Header(props) {
-  const { path, updatePath } = props;
+export default function Header() {
+  const { state, dispatch } = useContext(AppContext);
+  const { path } = state;
   const classes = useStyles();
 
   const handleChange = (_, newValue) => {
-    updatePath(paths[newValue]);
+    dispatch({ type: "update-path", payload: paths[newValue] });
   }
 
   return (
