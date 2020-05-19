@@ -7,7 +7,7 @@ import FAQsDialog from "./FAQsDialog";
 
 const useStyle = makeStyles({
   speedDial: {
-    position: "absolute",
+    position: "fixed",
     right: "20px",
     bottom: "80px",
     zIndex: 999,
