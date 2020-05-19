@@ -12,7 +12,11 @@ The data is accmulated from the [John Hopkins University CSSE](https://github.co
 
 Now supporting live news about COVID-19 and travel alerts on a per-country basis!
 
-⭐ If you wish to stay notified or show support, please consider starring this repo! ⭐
+⭐ If you wish to stay notified, please consider starring this repo! ⭐
+
+
+## Support the project
+<a href="https://www.buymeacoffee.com/sashaobucina" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="45" width="180"></a>
 
 ## Demos
 
