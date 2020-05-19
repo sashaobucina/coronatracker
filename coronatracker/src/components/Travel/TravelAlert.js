@@ -48,7 +48,7 @@ export default function TravelAlert(props) {
 
   const subheader = supported ? `Last updated: ${updated}` : null;
   const footer = (
-    <Grid container className={classes.cardFooter} direction="row-reverse">
+    <Grid container className={classes.cardFooter}>
       <Grid item>
         <Typography variant="caption">
           Provided by <Link href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">IATA</Link>
