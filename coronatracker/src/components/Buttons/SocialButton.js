@@ -4,16 +4,16 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyle = makeStyles({
   iconButton: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
     margin: 7,
     "&:hover": {
-      backgroundColor: "white",
+      // backgroundColor: "white",
       opacity: 0.9
     }
   }
 })
 
-export default function ShareButton({ icon, href, title }) {
+export default function ShareButton({ color, icon, href, title }) {
   const classes = useStyle();
   return (
     <Tooltip placement="bottom" title={`Share with ${title}`}>
@@ -21,6 +21,7 @@ export default function ShareButton({ icon, href, title }) {
         className={classes.iconButton}
         href={href}
         target="_blank"
+        style={{ backgroundColor: color }}
       >
         {icon}
       </IconButton>
