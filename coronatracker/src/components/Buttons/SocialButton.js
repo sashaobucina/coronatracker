@@ -4,10 +4,8 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyle = makeStyles({
   iconButton: {
-    // backgroundColor: "white",
     margin: 7,
     "&:hover": {
-      // backgroundColor: "white",
       opacity: 0.9
     }
   }
