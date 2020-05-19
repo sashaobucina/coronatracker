@@ -52,7 +52,7 @@ export default function TravelAlert(props) {
       <Grid item>
         <Typography variant="caption">
           Provided by{" "}
-          <Linsk href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">
+          <Link href="https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm">
             IATA
           </Link>
         </Typography>
