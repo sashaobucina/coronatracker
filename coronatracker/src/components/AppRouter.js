@@ -10,6 +10,7 @@ import HeatMap from './Heatmap/HeatMapContainer';
 import LoadingProgress from "./Progress/LoadingProgress";
 import Peak from "./Peak/PeakContainer";
 import News from "./News/NewsContainer";
+import FloatingActions from './Fab/FloatingActions';
 import TopMovers from "./TopMovers/TopMoversContainer";
 
 import {
@@ -81,6 +82,7 @@ export default function AppRouter() {
       <AlertManager />
       <LoadingProgress open={!loaded} />
       <Header />
+      <FloatingActions />
       <Switch>
         <Route exact path="/" render={(props) =>
           <Home

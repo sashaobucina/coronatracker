@@ -6,18 +6,11 @@ import { makeStyles } from "@material-ui/styles";
 import { useWindowDimensions } from "../../helpers/windowProvider";
 
 const useStyles = makeStyles({
-  grid: {
-    marginTop: 25,
-    marginBottom: 15
-  },
   panel: {
     background: "#3C3F58",
     color: "#3BBA9C"
   },
-  divider1: {
-    background: "#3BBA9C"
-  },
-  divider2: {
+  divider: {
     background: "#2E3047"
   },
   button: {
@@ -39,17 +32,9 @@ export default function FAQs() {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.grid} alignItems="center" spacing={3}>
+    <Grid container alignItems="center" spacing={3}>
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
-        <Divider className={classes.divider1} />
-      </Grid>
-      <Grid item xs={1} sm={1} md={1} lg={1} />
-      <Grid item xs={1} sm={1} md={1} lg={1} />
-      <Grid item xs={10} sm={10} md={10} lg={10}>
-        <Typography variant="h4">
-          FAQs
-        </Typography>
         <Typography variant="caption">
           (NOTE: This project is maintained by a one-man team, responses to any issues may be delayed)
         </Typography>

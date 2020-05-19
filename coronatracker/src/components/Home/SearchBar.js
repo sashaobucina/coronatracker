@@ -79,7 +79,7 @@ export default function SearchBar(props) {
           <TextField
             {...params}
             className={classes.textfield}
-            label="Search for a country"
+            label="Search by country"
             margin="normal"
             variant="outlined"
             onKeyDown={handleKeyDown}

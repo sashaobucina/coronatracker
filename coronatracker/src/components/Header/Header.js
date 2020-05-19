@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: 0,
     opacity: 0.95,
-    zIndex: 9999
+    zIndex: 50
   },
   navigationAction: {
     color: '#12131C',
