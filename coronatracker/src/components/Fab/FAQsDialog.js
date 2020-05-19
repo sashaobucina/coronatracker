@@ -8,7 +8,7 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import FAQs from "../Home/FAQs";
+import FAQs from "./FAQs";
 
 const useStyle = makeStyles({
   paper: {
@@ -21,7 +21,7 @@ const useStyle = makeStyles({
   },
 });
 
-export default function InfoDialog({ open, onClose }) {
+export default function FAQsDialog({ open, onClose }) {
   const classes = useStyle();
   const isXs = !useMediaQuery("(min-width:600px)");
 
