@@ -5,13 +5,16 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   root: {
-    background: '#3C3F58',
+    backgroundColor: '#3C3F58',
     color: '#3BBA9C',
     height: 48,
     marginLeft: 8,
     "&:hover": {
-      background: '#3C3F58',
+      backgroundColor: '#3C3F58',
       opacity: 0.8
+    },
+    "&.Mui-disabled": {
+      backgroundColor: '#3C3F58',
     }
   }
 })

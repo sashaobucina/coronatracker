@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from "axios";
+import { isEmpty } from "lodash";
 import { Grid, Typography } from "@material-ui/core";
 
 import { AppContext } from "../App";
@@ -153,7 +154,7 @@ export default function Home(props) {
         <Grid item xs={1} sm={1} md={1} lg={1} />
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <SearchContainer
-            disabled={loading}
+            disabled={loading || isEmpty(validCountries)}
             searchFn={fetchData}
             suggestions={validCountries}
           />

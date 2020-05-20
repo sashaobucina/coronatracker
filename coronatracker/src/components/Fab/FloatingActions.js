@@ -28,6 +28,7 @@ const useStyle = makeStyles({
     width: "48px",
     "&:hover": {
       backgroundColor: "#3C3F58",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
     },
   },
   tooltip: {
