@@ -52,57 +52,66 @@ class GithubScraper(WebScraper):
 
         reports = {}
         report_types = [CONFIRMED, DEATHS, RECOVERED]
+        try:
+            for report_type in report_types:
+                # encapsulate data retrieval in try-catch block to prevent denial of service
+                try:
+                    url = (
+                        f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
+                    )
+                    req = request.urlopen(url)
+                except request_err.HTTPError as e:
+                    self.logger.error(
+                        f"Could not scrape data for report type '{report_type}' - {str(e)}"
+                    )
+                    continue
 
-        for report_type in report_types:
-            # encapsulate data retrieval in try-catch block to prevent denial of service
-            try:
-                url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
-                req = request.urlopen(url)
-            except request_err.HTTPError as e:
-                self.logger.error(
-                    f"Could not scrape data for report type '{report_type}' - {str(e)}"
-                )
-                continue
+                # check the status code
+                if req.status != 200:
+                    self.logger.error(f"Request failed: {req.info()}")
+                    return
 
-            # check the status code
-            if req.status != 200:
-                self.logger.error(f"Request failed: {req.info()}")
-                return
+                # convert data to str if returned a successful response
+                req_str = req.read().decode("utf")
 
-            # convert data to str if returned a successful response
-            req_str = req.read().decode("utf")
+                # save to tempfile and process it with pandas; close after done processing
+                fd, path = tempfile.mkstemp()
+                try:
+                    with os.fdopen(fd, "w") as tmp:
+                        tmp.write(req_str)
+                        df = pd.read_csv(path, sep=",")
+                        reports[report_type] = df
+                        self.valid_countries += df["Country/Region"].tolist()
+                        self.valid_countries = list(set(self.valid_countries))
+                finally:
+                    os.remove(path)
 
-            # save to tempfile and process it with pandas; close after done processing
-            fd, path = tempfile.mkstemp()
-            try:
-                with os.fdopen(fd, "w") as tmp:
-                    tmp.write(req_str)
-                    df = pd.read_csv(path, sep=",")
-                    reports[report_type] = df
-                    self.valid_countries += df["Country/Region"].tolist()
-                    self.valid_countries = list(set(self.valid_countries))
-            finally:
-                os.remove(path)
+            self.valid_countries.sort()
 
-        self.valid_countries.sort()
+            if len(reports) == len(report_types):
+                self.logger.info("Loaded data successfully!")
+            else:
+                diff = list(set(report_types) - set(reports.keys()))
+                self.logger.error(f"Missing the following reports: {diff}")
+                self.logger.warning("Reverting to load from backup!")
+                return False
 
-        if len(reports) == len(report_types):
-            self.logger.info("Loaded data successfully!")
-        else:
-            diff = list(set(report_types) - set(reports.keys()))
-            self.logger.error(f"Missing the following reports: {diff}")
+            self.cache = reports
+            return True
+        except Exception as e:
+            self.logger.error(e)
+            self.logger.warning("Reverting to load from backup!")
+            return False
 
-        self.cache = reports
-
-    def load_from_backup(self, directory):
+    def load_from_backup(self):
         """
         Collect all the data from a local backup
         """
-        self.logger.info(f"Loading data from backup date {directory}...")
+        self.logger.info(f"Loading data from backup...")
 
         reports = {}
         report_types = [CONFIRMED, DEATHS, RECOVERED]
-        relative_path = os.path.join("backups", directory)
+        relative_path = os.path.join("backups", "latest")
 
         if not os.path.exists(relative_path):
             self.logger.error(f"Path to backup does not exist! - {relative_path}")

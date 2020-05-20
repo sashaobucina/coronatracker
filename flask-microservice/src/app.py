@@ -49,7 +49,10 @@ def initialize_data():
     global gh_scraper, generator, logger
 
     # scraping COVID-19 data
-    gh_scraper.scrape()
+    success = gh_scraper.scrape()
+    if not success:
+        gh_scraper.load_from_backup()
+
     reports, countries = gh_scraper.cache, gh_scraper.valid_countries
     dates = process_dates(reports)
     data = process_data(reports, countries)
