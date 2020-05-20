@@ -50,7 +50,7 @@ def initialize_data():
 
     # scraping COVID-19 data
     success = gh_scraper.scrape()
-    if not success:
+    if not success and gh_scraper.is_empty():
         gh_scraper.load_from_backup()
 
     reports, countries = gh_scraper.cache, gh_scraper.valid_countries

@@ -148,6 +148,9 @@ class GithubScraper(WebScraper):
 
         self.cache = reports
 
+    def is_empty(self):
+        return len(self.valid_countries) == 0 or len(self.cache) == 0
+
 
 class GoogleNewsScraper(WebScraper):
     def __init__(self, logger, base_url, empty_response):
