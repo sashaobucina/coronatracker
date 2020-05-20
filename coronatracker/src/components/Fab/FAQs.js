@@ -50,12 +50,12 @@ export default function FAQs() {
                 expandIcon={<ExpandMore />}
               >
                 <Typography>
-                  Q: What is the COVID-19 Tracker?
+                  Q: What is the COVID-19 Coronavirus Tracker?
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography>
-                  A: The COVID-19 Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and tabular data. Go to the home page and search for a country of interest to get started!
+                  A: The COVID-19 Coronavirus Tracker is an informative web app that tracks the trends and movements of the COVID-19 virus through visuals and tabular data. Go to the home page and search for a country of interest to get started!
                 </Typography>
               </ExpansionPanelDetails>
             </ExpansionPanel>

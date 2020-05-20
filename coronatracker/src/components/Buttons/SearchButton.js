@@ -24,17 +24,19 @@ export default function SearchButton(props) {
   const classes = useStyles();
   return (
     <Tooltip title="Search">
-      <Button
-        className={classes.root}
-        color="inherit"
-        disabled={disabled}
-        fullWidth
-        variant="contained"
-        onClick={onClick}
-        startIcon={ <SearchIcon /> }
-      >
-        Search
-      </Button>
+      <span>
+        <Button
+          className={classes.root}
+          color="inherit"
+          disabled={disabled}
+          fullWidth
+          variant="contained"
+          onClick={onClick}
+          startIcon={ <SearchIcon /> }
+        >
+          Search
+        </Button>
+      </span>
     </Tooltip>
   );
 }
