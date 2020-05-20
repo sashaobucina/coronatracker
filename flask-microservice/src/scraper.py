@@ -49,11 +49,20 @@ class GithubScraper(WebScraper):
         Data recovered from John Hopkins CSSE repository.
         """
         self.logger.info("Loading data if available...")
-        reports = {}
 
-        for report_type in [CONFIRMED, DEATHS, RECOVERED]:
-            url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
-            req = request.urlopen(url)
+        reports = {}
+        report_types = [CONFIRMED, DEATHS, RECOVERED]
+
+        for report_type in report_types:
+            # encapsulate data retrieval in try-catch block to prevent denial of service
+            try:
+                url = f"{self.base_url}/time_series_covid19_{report_type}_global.csv"
+                req = request.urlopen(url)
+            except request_err.HTTPError as e:
+                self.logger.error(
+                    f"Could not scrape data for report type '{report_type}' - {str(e)}"
+                )
+                continue
 
             # check the status code
             if req.status != 200:
@@ -77,9 +86,58 @@ class GithubScraper(WebScraper):
 
         self.valid_countries.sort()
 
-        if len(reports) > 0:
+        if len(reports) == len(report_types):
             self.logger.info("Loaded data successfully!")
-            self.cache = reports
+        else:
+            diff = list(set(report_types) - set(reports.keys()))
+            self.logger.error(f"Missing the following reports: {diff}")
+
+        self.cache = reports
+
+    def load_from_backup(self, directory):
+        """
+        Collect all the data from a local backup
+        """
+        self.logger.info(f"Loading data from backup date {directory}...")
+
+        reports = {}
+        report_types = [CONFIRMED, DEATHS, RECOVERED]
+        relative_path = os.path.join("backups", directory)
+
+        if not os.path.exists(relative_path):
+            self.logger.error(f"Path to backup does not exist! - {relative_path}")
+            return
+
+        if not os.path.isdir(relative_path):
+            self.logger.error(f"Path provided is not a directory! - {relative_path}")
+            return
+
+        # walk through backup files
+        for report_type in report_types:
+            filename = f"time_series_covid19_{report_type}_global.csv"
+            full_path = os.path.join(relative_path, filename)
+
+            if not os.path.exists(full_path):
+                self.logger.error(
+                    f"File '{filename}' for report type '{report_type}' does not exist in backups!"
+                )
+                continue
+
+            df = pd.read_csv(full_path)
+            reports[report_type] = df
+            self.valid_countries += df["Country/Region"].tolist()
+            self.valid_countries = list(set(self.valid_countries))
+
+        # last post-processing steps
+        self.valid_countries.sort()
+
+        if len(reports) == len(report_types):
+            self.logger.info("Loaded data successfully!")
+        else:
+            diff = list(set(report_types) - set(reports.keys()))
+            self.logger.error(f"Missing the following reports: {diff}")
+
+        self.cache = reports
 
 
 class GoogleNewsScraper(WebScraper):
@@ -172,7 +230,9 @@ class GoogleNewsScraper(WebScraper):
 
         self.cache[country] = {"news": feed, "updated": get_utc_time()}
 
-        self.logger.info(f"Finished scraping news for {country} - collected {len(feed)} stories!")
+        self.logger.info(
+            f"Finished scraping news for {country} - collected {len(feed)} stories!"
+        )
 
     def get_supported_countries(self):
         """
@@ -207,7 +267,7 @@ class TravelAlertScraper(WebScraper):
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument('--remote-debugging-port=9222')
+        chrome_options.add_argument("--remote-debugging-port=9222")
         chrome_options.add_argument("window-size=1920,1080")
         driver = webdriver.Chrome(chrome_options=chrome_options)
         driver.get(self.base_url)
@@ -253,7 +313,9 @@ class TravelAlertScraper(WebScraper):
                 self.logger.debug(str(e))
                 continue
 
-        self.logger.info(f"Finished scraping travel alerts for {len(self.cache)} countries!")
+        self.logger.info(
+            f"Finished scraping travel alerts for {len(self.cache)} countries!"
+        )
         driver.quit()
 
     def _rename(self, country):
@@ -270,8 +332,11 @@ class TravelAlertScraper(WebScraper):
 
 if __name__ == "__main__":
     # TESTING ONLY
-    scraper = GithubScraper(None)
-    scraper.download_reports()
+    scraper = GithubScraper(
+        None,
+        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series",
+    )
+    scraper.scrape()
     reports = scraper.cache
     valid_countries = scraper.valid_countries
 
@@ -284,4 +349,3 @@ if __name__ == "__main__":
     top_movers = generator.top_movers()
 
     countries, top10 = generator.top_contributors()
-
