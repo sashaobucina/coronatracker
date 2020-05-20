@@ -36,7 +36,7 @@ export default function FAQs() {
       <Grid item xs={1} sm={1} md={1} lg={1} />
       <Grid item xs={10} sm={10} md={10} lg={10}>
         <Typography variant="caption">
-          (NOTE: This project is maintained by a one-man team, responses to any issues may be delayed)
+          NOTE: This project is maintained by a one-man team, responses to any issues may be delayed
         </Typography>
       </Grid>
       <Grid item xs={1} sm={1} md={1} lg={1} />

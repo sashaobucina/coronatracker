@@ -116,7 +116,7 @@ export default function TopMoversContainer(props) {
           report={report}
           rows={filterRows(loserRows)}
           setDense={setDense}
-          title="Top Losers"
+          title="Top Decliners"
         />
       </Grid>
       <Grid item md={1} lg={1} />
