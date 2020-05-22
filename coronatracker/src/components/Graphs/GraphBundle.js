@@ -56,6 +56,7 @@ export default function GraphBundle(props) {
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6} style={{ marginBottom: 40 }}>
         <SummaryCard
+          country={country}
           data={summary}
           size={size}
           subheader=""

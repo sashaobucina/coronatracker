@@ -70,6 +70,7 @@ export default function LandingPage(props) {
           <React.Fragment key={idx}>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <SummaryCard
+                country={country}
                 data={getCardData(country)}
                 buttonComponent={getButtonComponent(country)}
                 index={idx + 1}

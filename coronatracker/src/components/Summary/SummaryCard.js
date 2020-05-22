@@ -39,9 +39,8 @@ const useStyle = makeStyles({
 });
 
 export default function SummaryCard(props) {
-  const { buttonComponent, data, size, subheader } = props;
+  const { buttonComponent, country, data, size, subheader } = props;
   const { confirmed, deaths, recovered } = data;
-  const { country } = confirmed;
 
   const classes = useStyle();
 
