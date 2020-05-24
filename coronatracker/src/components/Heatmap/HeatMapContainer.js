@@ -28,7 +28,6 @@ export default function HeatMapContainer(props) {
   const [content, setContent] = useState("");
   const [index, setIndex] = useState(-1);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
-  const { state, dispatch } = useContext(AppContext);
   const { match } = props;
   const pathRef = useRef(match.url);
 
@@ -36,10 +35,10 @@ export default function HeatMapContainer(props) {
   const matches = useMediaQuery("(min-width:960px)");
 
   // extract all necessary info from heatmap data
-  const heatMapData = state.heatmap;
-  const dates = getDates(heatMapData);
-  const maxIndex = heatMapData.length - 1;
-  const currData = get(heatMapData, `[${index}].data`, []);
+  const { heatmap, dispatch } = useContext(AppContext);
+  const dates = getDates(heatmap);
+  const maxIndex = heatmap.length - 1;
+  const currData = get(heatmap, `[${index}].data`, []);
   const currDate = get(dates, index, "");
 
   useEffect(() => {
@@ -53,8 +52,8 @@ export default function HeatMapContainer(props) {
         dispatch({ type: "set-alert", payload: SERVER_ALERT });
       }
     };
-    isEmpty(heatMapData) ? fetchData() : setIndex(heatMapData.length - 1);
-  }, [dispatch, heatMapData]);
+    isEmpty(heatmap) ? fetchData() : setIndex(heatmap.length - 1);
+  }, [dispatch, heatmap]);
 
   useEffect(() => {
     dispatch({ type: "update-path", payload: pathRef.current });
@@ -113,7 +112,7 @@ export default function HeatMapContainer(props) {
         style={{ marginTop: 5, marginBottom: 10 }}
       >
         <SliderButtonGroup
-          disabled={heatMapData.length === 0}
+          disabled={heatmap.length === 0}
           indexValue={index}
           maxIndex={maxIndex}
           size={matches ? "medium" : "small"}
@@ -126,7 +125,7 @@ export default function HeatMapContainer(props) {
       <Grid item xs={4} sm={5} md={5} lg={5} />
       <Grid item xs={4} sm={2} md={2} lg={2} align="center">
         <HeatMapButtons
-          disabled={heatMapData.length === 0}
+          disabled={heatmap.length === 0}
           handleReCenter={handleReCenter}
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}

@@ -31,7 +31,6 @@ export default function TopMoversContainer(props) {
   const [dense, setDense] = useState(false);
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
-  const { state, dispatch } = useContext(AppContext);
   const { match } = props;
   const pathref = useRef(match.url)
 
@@ -39,7 +38,7 @@ export default function TopMoversContainer(props) {
   const matches = useMediaQuery("(min-width:960px)");
 
   // extract all necessary info from top movers data
-  const topMovers = state.topMovers;
+  const { topMovers, dispatch } = useContext(AppContext);
   const date = get(topMovers, "date", null);
   const gainerRows = indexRows(get(topMovers, `${report}.top_gainers`, []));
   const loserRows = indexRows(get(topMovers, `${report}.top_losers`, []));

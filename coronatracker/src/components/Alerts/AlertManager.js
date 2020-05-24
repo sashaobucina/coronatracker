@@ -12,14 +12,13 @@ import {
 } from "../../helpers/alerts";
 
 export default function AlertManager() {
-  const { state, dispatch } = useContext(AppContext);
+  const { alert, dispatch } = useContext(AppContext);
 
   const resetAlert = () => {
     dispatch({ type: "set-alert", payload: NO_ALERT });
   }
 
   // accumulate the strings
-  const alert = state.alert;
   const success = alertStrings[SUCCESS_ALERT];
   const server_err = alertStrings[SERVER_ALERT];
   const country_err = alertStrings[COUNTRY_ALERT];

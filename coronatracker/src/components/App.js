@@ -2,11 +2,18 @@ import React, { useReducer } from "react";
 import AppRouter from "./AppRouter";
 import { NO_ALERT } from "../helpers/alerts";
 
+const initialHomeState = {
+  countries: [],
+  data: [],
+  tabIndex: 0
+};
+
 export const AppContext = React.createContext({});
 
 export default function AppProvider() {
   let initialState = {
     alert: NO_ALERT,
+    main: initialHomeState,
     path: "/",
     topMovers: null,
     peak: null,
@@ -17,6 +24,8 @@ export default function AppProvider() {
     switch (action.type) {
       case "update-heatmap":
         return { ...state, heatmap: action.payload };
+      case "update-main":
+        return { ...state, main: action.payload };
       case "update-peak":
         return { ...state, peak: action.payload };
       case "update-top-movers":
@@ -32,7 +41,7 @@ export default function AppProvider() {
   };
 
   let [state, dispatch] = useReducer(reducer, initialState);
-  let value = { state, dispatch };
+  let value = { ...state, dispatch };
 
   return (
     <AppContext.Provider value={value}>

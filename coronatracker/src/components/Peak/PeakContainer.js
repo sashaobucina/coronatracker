@@ -28,7 +28,6 @@ export default function PeakContainer(props) {
   const [dense, setDense] = useState(false);
   const [query, setQuery] = useState("");
   const [report, setReport] = useState("confirmed");
-  const { state, dispatch } = useContext(AppContext);
   const { match } = props;
   const pathRef = useRef(match.url)
 
@@ -36,9 +35,9 @@ export default function PeakContainer(props) {
   const matches = useMediaQuery("(min-width:960px)");
 
   // extract all necessary info from peak data
-  const peakData = state.peak;
-  const rows = get(peakData, report, []);
-  const date = get(peakData, "date", null);
+  const { peak, dispatch } = useContext(AppContext);
+  const rows = get(peak, report, []);
+  const date = get(peak, "date", null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,10 +49,10 @@ export default function PeakContainer(props) {
         dispatch({ type: "set-alert", payload: SERVER_ALERT });
       }
     };
-    if (peakData === null) {
+    if (peak === null) {
       fetchData();
     }
-  }, [dispatch, peakData]);
+  }, [dispatch, peak]);
 
   useEffect(() => {
     setDense(!matches);

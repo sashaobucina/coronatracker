@@ -49,8 +49,7 @@ function NewsIcon(props) {
 }
 
 export default function Header() {
-  const { state, dispatch } = useContext(AppContext);
-  const { path } = state;
+  const { path, dispatch } = useContext(AppContext);
   const classes = useStyles();
 
   const handleChange = (_, newValue) => {
