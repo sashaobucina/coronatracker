@@ -5,7 +5,7 @@ import feedparser
 from datetime import datetime
 import pandas as pd
 import tempfile
-from socket import timeout
+from socket import timeout, error as SocketError
 import urllib.parse
 import urllib.error as request_err
 import urllib.request as request
@@ -219,6 +219,7 @@ class GoogleNewsScraper(WebScraper):
                 request_err.HTTPError,
                 request_err.URLError,
                 HTTPException,
+                SocketError,
                 timeout,
             ) as e:
                 self.logger.debug(f"{str(e)} - {link}")
