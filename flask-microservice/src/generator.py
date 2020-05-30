@@ -77,7 +77,7 @@ class DataGenerator:
         Return a dictionary containing the top movers for both confirmed cases, deaths, and recovered cases.
         """
         top_movers = {k: {} for k, _ in self.reports.items()}
-        thresholds = {DEATHS: 50, CONFIRMED: 1000, RECOVERED: 1000}
+        thresholds = {DEATHS: 50, CONFIRMED: 1000, RECOVERED: -1}
 
         # populate the movers dict
         for report_type, report in self.reports.items():
@@ -247,4 +247,3 @@ class DataGenerator:
         """
         idx = changes.argmax(axis=0)
         return idx, changes[idx]
-
