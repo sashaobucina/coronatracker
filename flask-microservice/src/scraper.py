@@ -19,7 +19,7 @@ from selenium.common.exceptions import (
 
 from generator import DataGenerator
 from preprocess import process_data, process_dates
-from util import CONFIRMED, DEATHS, RECOVERED, clip, get_utc_time, grep
+from util import CONFIRMED, DEATHS, RECOVERED, clip, get_utc_time
 
 
 class WebScraper:

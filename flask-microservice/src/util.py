@@ -10,13 +10,13 @@ RECOVERED = "recovered"
 
 def json_like(labels, data):
     """
-  Convert data to represent a JSON-like structure.
+    Convert data to represent a JSON-like structure.
 
-  >>> labels = ["date", "num_cases"]
-  >>> cases, dates = [100, 200, 300], ["1/1/20", "1/2/20", "1/3/20"]
-  >>> json_like(labels, [dates, cases])
-  [{'date': '1/1/20', 'num_cases': 100}, {'date': '1/2/20', 'num_cases': 200}, {'date': '1/3/20', 'num_cases': 300}]
-  """
+    >>> labels = ["date", "num_cases"]
+    >>> cases, dates = [100, 200, 300], ["1/1/20", "1/2/20", "1/3/20"]
+    >>> json_like(labels, [dates, cases])
+    [{'date': '1/1/20', 'num_cases': 100}, {'date': '1/2/20', 'num_cases': 200}, {'date': '1/3/20', 'num_cases': 300}]
+    """
     data = [ndarray_to_list(datum) for datum in data]
     zipped_data = zip(*data)
     return [dict(zip(labels, row)) for row in zipped_data]
@@ -33,7 +33,7 @@ def div(divided, divisor):
     """
     Perform safe division.
     """
-    return divided / divisor if divisor != 0 else 0
+    return divided / divisor if divisor != 0 else 0.0
 
 
 def _is_numpy(obj):
@@ -73,17 +73,6 @@ def clip(s):
     if len(s) > 200:
         s = s[:200].strip() + "..."
     return s
-
-
-def grep(lst, term):
-    """
-  Finds the first match from a list of strings, given a single or multiple terms.
-  """
-    if isinstance(term, list):
-        term = "".join([f"(?=.*{x})" for x in term])
-
-    matches = [i for (i, s) in enumerate(lst) if re.search(term, s, re.IGNORECASE)]
-    return -1 if len(matches) == 0 else matches[0]
 
 
 def get_utc_time():
