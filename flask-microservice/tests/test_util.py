@@ -30,11 +30,6 @@ def test_div():
     assert util.div(5, 2) == 5 / 2
 
 
-def test_is_numpy():
-    assert not util._is_numpy([])
-    assert util._is_numpy(np.array([]))
-
-
 def test_ndarray_to_list():
     lst = [1, 2, 3]
     assert util.ndarray_to_list(lst) is lst
