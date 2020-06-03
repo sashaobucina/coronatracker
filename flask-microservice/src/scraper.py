@@ -88,26 +88,25 @@ class GithubScraper(WebScraper):
 
             self.valid_countries.sort()
 
-            if len(reports) == len(report_types):
-                self.logger.info("Loaded data successfully!")
-            else:
+            # handle unsuccessful load
+            if len(reports) != len(report_types):
                 diff = list(set(report_types) - set(reports.keys()))
                 self.logger.error(f"Missing the following reports: {diff}")
-                self.logger.warning("Reverting to load from backup!")
                 return False
 
+            self.logger.info("Loaded data successfully!")
             self.cache = reports
+
             return True
         except Exception as e:
             self.logger.error(e)
-            self.logger.warning("Reverting to load from backup!")
             return False
 
     def load_from_backup(self):
         """
         Collect all the data from a local backup
         """
-        self.logger.info(f"Loading data from backup...")
+        self.logger.warning(f"Reverting to load data from backup...")
 
         reports = {}
         report_types = [CONFIRMED, DEATHS, RECOVERED]
@@ -140,12 +139,13 @@ class GithubScraper(WebScraper):
         # last post-processing steps
         self.valid_countries.sort()
 
-        if len(reports) == len(report_types):
-            self.logger.info("Loaded data successfully!")
-        else:
+        # handle unsuccessful load
+        if len(reports) != len(report_types):
             diff = list(set(report_types) - set(reports.keys()))
             self.logger.error(f"Missing the following reports: {diff}")
+            return
 
+        self.logger.info("Loaded data successfully!")
         self.cache = reports
 
     def is_empty(self):
@@ -265,7 +265,7 @@ class GoogleNewsScraper(WebScraper):
         Extract meta tag data from given HTML parse tree
         """
         tag = soup.find("meta", property=f"og:{name}")
-        return tag["content"].strip() if tag else None
+        return tag["content"].strip() if (tag and "content" in tag) else None
 
 
 class TravelAlertScraper(WebScraper):
