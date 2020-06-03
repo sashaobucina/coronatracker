@@ -265,7 +265,7 @@ class GoogleNewsScraper(WebScraper):
         Extract meta tag data from given HTML parse tree
         """
         tag = soup.find("meta", property=f"og:{name}")
-        return tag["content"].strip() if (tag and "content" in tag) else None
+        return tag["content"].strip() if (tag and "content" in tag.attrs) else None
 
 
 class TravelAlertScraper(WebScraper):
