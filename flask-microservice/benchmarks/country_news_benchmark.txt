@@ -1,0 +1,42 @@
+This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 0.0.0.0 (be patient).....done
+
+
+Server Software:        Werkzeug/1.0.0
+Server Hostname:        0.0.0.0
+Server Port:            5000
+
+Document Path:          /news/country/Canada
+Document Length:        53933 bytes
+
+Concurrency Level:      5
+Time taken for tests:   0.507 seconds
+Complete requests:      100
+Failed requests:        0
+Total transferred:      5411300 bytes
+HTML transferred:       5393300 bytes
+Requests per second:    197.15 [#/sec] (mean)
+Time per request:       25.362 [ms] (mean)
+Time per request:       5.072 [ms] (mean, across all concurrent requests)
+Transfer rate:          10418.09 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.8      0       8
+Processing:     4   24  10.2     22      60
+Waiting:        3   23  10.2     22      60
+Total:          5   25  10.3     23      61
+
+Percentage of the requests served within a certain time (ms)
+  50%     23
+  66%     25
+  75%     28
+  80%     30
+  90%     40
+  95%     47
+  98%     57
+  99%     61
+ 100%     61 (longest request)
