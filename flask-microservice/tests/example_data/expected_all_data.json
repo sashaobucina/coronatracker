@@ -1,0 +1,149 @@
+[
+    {
+        "date": "4/1/20",
+        "data": [
+            {
+                "country": "Canada",
+                "value": 5
+            },
+            {
+                "country": "US",
+                "value": 10
+            },
+            {
+                "country": "Russia",
+                "value": 15
+            },
+            {
+                "country": "Spain",
+                "value": 10
+            },
+            {
+                "country": "Brazil",
+                "value": 0
+            },
+            {
+                "country": "Italy",
+                "value": 20
+            },
+            {
+                "country": "China",
+                "value": 50
+            },
+            {
+                "country": "Japan",
+                "value": 0
+            },
+            {
+                "country": "France",
+                "value": 10
+            },
+            {
+                "country": "Serbia",
+                "value": 0
+            },
+            {
+                "country": "Austria",
+                "value": 0
+            }
+        ]
+    },
+    {
+        "date": "4/2/20",
+        "data": [
+            {
+                "country": "Canada",
+                "value": 10
+            },
+            {
+                "country": "US",
+                "value": 15
+            },
+            {
+                "country": "Russia",
+                "value": 25
+            },
+            {
+                "country": "Spain",
+                "value": 20
+            },
+            {
+                "country": "Brazil",
+                "value": 0
+            },
+            {
+                "country": "Italy",
+                "value": 45
+            },
+            {
+                "country": "China",
+                "value": 70
+            },
+            {
+                "country": "Japan",
+                "value": 5
+            },
+            {
+                "country": "France",
+                "value": 20
+            },
+            {
+                "country": "Serbia",
+                "value": 0
+            },
+            {
+                "country": "Austria",
+                "value": 5
+            }
+        ]
+    },
+    {
+        "date": "4/3/20",
+        "data": [
+            {
+                "country": "Canada",
+                "value": 20
+            },
+            {
+                "country": "US",
+                "value": 25
+            },
+            {
+                "country": "Russia",
+                "value": 45
+            },
+            {
+                "country": "Spain",
+                "value": 37
+            },
+            {
+                "country": "Brazil",
+                "value": 20
+            },
+            {
+                "country": "Italy",
+                "value": 67
+            },
+            {
+                "country": "China",
+                "value": 80
+            },
+            {
+                "country": "Japan",
+                "value": 10
+            },
+            {
+                "country": "France",
+                "value": 30
+            },
+            {
+                "country": "Serbia",
+                "value": 1
+            },
+            {
+                "country": "Austria",
+                "value": 10
+            }
+        ]
+    }
+]

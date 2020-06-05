@@ -1,0 +1,61 @@
+{
+    "reports": {
+        "confirmed":{
+            "Canada": [5, 10, 20],
+            "US": [10, 15, 25],
+            "Russia": [15, 25, 45],
+            "Spain": [10, 20, 37],
+            "Brazil": [0, 0, 20],
+            "Italy": [20, 45, 67],
+            "China": [50, 70, 80],
+            "Japan": [0, 5, 10],
+            "France": [10, 20, 30],
+            "Serbia": [0, 0, 1],
+            "Austria": [0, 5, 10]
+        },
+        "deaths":{
+            "Canada": [0, 1, 3],
+            "US": [1, 5, 9],
+            "Russia": [1, 2, 5],
+            "Spain": [5, 8, 10],
+            "Brazil": [4, 8, 11],
+            "Italy": [10, 20, 40],
+            "China": [10, 24, 26],
+            "Japan": [0, 0, 1],
+            "France": [10, 15, 27],
+            "Serbia": [0, 0, 1],
+            "Austria": [0, 2, 3]
+        },
+        "recovered":{
+            "Canada": [5, 9, 18],
+            "US": [9, 14, 22],
+            "Russia": [14, 23, 40],
+            "Spain": [5, 7, 9],
+            "Brazil": [4, 8, 9],
+            "Italy": [0, 0, 20],
+            "China": [10, 20, 50],
+            "Japan": [0, 0, 1],
+            "France": [10, 15, 27],
+            "Serbia": [0, 2, 5],
+            "Austria": [0, 9, 18]
+        }
+    },
+    "countries": [
+        "Canada",
+        "US",
+        "Russia",
+        "Spain",
+        "Brazil",
+        "Italy",
+        "China",
+        "Japan",
+        "France",
+        "Serbia",
+        "Austria"
+    ],
+    "dates": [
+        "4/1/20",
+        "4/2/20",
+        "4/3/20"
+    ]
+}

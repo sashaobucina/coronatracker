@@ -1,0 +1,9 @@
+{
+    "country": "China",
+    "total": 80,
+    "newCases": 10,
+    "maxCases": 20,
+    "percentBelow": 50.0,
+    "daysSince": 1,
+    "percentChange": 14.29
+}

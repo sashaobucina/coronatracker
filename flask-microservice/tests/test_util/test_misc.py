@@ -1,7 +1,6 @@
 import pytest
-import re
 
-from api.util.misc import json_like, clip, get_utc_time
+from api.util.misc import json_like, clip
 
 
 @pytest.mark.parametrize(
@@ -27,11 +26,6 @@ def test_json_like():
         {"date": "1/3/20", "num_cases": 300},
     ]
     assert actual == expected
-
-
-def test_get_utc_time():
-    time = get_utc_time()
-    assert re.match(r"^[A-z]{3} \d{2}, \d{4} \d{2}:\d{2}:\d{2} UTC", time) is not None
 
 
 if __name__ == "__main__":
