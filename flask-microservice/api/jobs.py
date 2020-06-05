@@ -1,3 +1,4 @@
+from bisect import insort
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -15,7 +16,6 @@ def add_job(scheduler: BackgroundScheduler, func, interval, args=[]):
 def scrape_job(scraper: BaseScraper) -> None:
     """ Create job that launches thread to scrape for fresh data. """
     thread = Thread(target=scraper.scrape, args=())
-    # thread.daemon = True
     thread.start()
 
 
@@ -29,13 +29,14 @@ def data_collection_job(jhu_scraper: JHUScraper, generator: DataGenerator):
     if not success and jhu_scraper.check_cache():
         jhu_scraper.load_from_backup()
 
-    # retrieve JHU data
+    # retrieve scraped JHU data
     reports = jhu_scraper.get_cache()
     countries = jhu_scraper.get_valid_countries()
 
-    # process JHU data
+    # process scraped JHU data
     dates = process_dates(reports)
     data = process_data(reports, countries)
+    insort(countries, "Global")
     generator.overwrite(dates, data, countries)
 
 

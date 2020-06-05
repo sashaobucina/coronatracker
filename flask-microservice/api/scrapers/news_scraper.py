@@ -7,8 +7,9 @@ import urllib.error as request_err
 from http.client import HTTPException
 from socket import timeout, error as SocketError
 
+from api.util.misc import clip
+from api.util.date import get_utc_time
 from api.scrapers.scraper import BaseScraper
-from api.util.misc import clip, get_utc_time
 
 
 class NewsScraper(BaseScraper):

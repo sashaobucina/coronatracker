@@ -4,7 +4,7 @@ COVID-19 Coronavirus Tracker RESTful API
 
 import logging
 from flask_cors import CORS
-from flask import Flask, jsonify, abort
+from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from api.routes import main

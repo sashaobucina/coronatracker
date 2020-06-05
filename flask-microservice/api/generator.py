@@ -34,7 +34,7 @@ class DataGenerator:
         """
         Return all the countries that are being tracked.
         """
-        return sorted(self.valid_countries + ["Global"])
+        return self.valid_countries
 
     def get_country_data(self, country, report_type):
         """

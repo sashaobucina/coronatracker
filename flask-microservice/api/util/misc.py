@@ -1,6 +1,4 @@
 import re
-from datetime import datetime, timezone
-
 from api.util.np_util import ndarray_to_list
 
 
@@ -26,11 +24,6 @@ def clip(s):
     if len(s) > 200:
         s = s[:200].strip() + "..."
     return s
-
-
-def get_utc_time():
-    """ Get the current UTC time. """
-    return datetime.now(tz=timezone.utc).strftime("%b %d, %Y %H:%M:%S %Z")
 
 
 if __name__ == "__main__":

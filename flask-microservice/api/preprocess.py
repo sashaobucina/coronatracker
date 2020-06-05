@@ -1,5 +1,6 @@
 import numpy as np
 
+from api.util.date import is_date
 from api.util.misc import CONFIRMED, DEATHS, RECOVERED
 
 
@@ -11,13 +12,15 @@ def process_dates(reports: dict):
     deaths = reports[DEATHS]
     recovered = reports[RECOVERED]
 
-    dates1 = confirmed.columns.to_numpy()[4:]
-    dates2 = deaths.columns.to_numpy()[4:]
-    dates3 = deaths.columns.to_numpy()[4:]
-    assert np.array_equal(dates1, dates2)
-    assert np.array_equal(dates2, dates3)
+    dates1 = [col for col in confirmed.columns if is_date(col)]
+    dates2 = [col for col in deaths.columns if is_date(col)]
+    dates3 = [col for col in recovered.columns if is_date(col)]
 
-    return dates1.tolist()
+    # fail-fast mechanism
+    assert dates1 == dates2
+    assert dates2 == dates3
+
+    return dates1
 
 
 def process_data(reports: dict, countries: list):
