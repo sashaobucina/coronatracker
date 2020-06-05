@@ -7,6 +7,12 @@ CONFIRMED = "confirmed"
 DEATHS = "deaths"
 RECOVERED = "recovered"
 
+THRESHOLDS = {
+    CONFIRMED: 1000,
+    DEATHS: 50,
+    RECOVERED: -1
+}
+
 
 def json_like(labels, data):
     """ Convert data to represent a JSON-like structure. """

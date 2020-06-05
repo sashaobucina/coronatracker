@@ -1,7 +1,7 @@
 import numpy as np
 from flask import current_app, abort, jsonify, Blueprint
 
-from api.util.misc import CONFIRMED, DEATHS, RECOVERED, json_like
+from api.util.misc import CONFIRMED, DEATHS, RECOVERED, THRESHOLDS, json_like
 from api.initialize import generator, news_scraper, travel_scraper
 
 main = Blueprint("main", __name__)
@@ -24,7 +24,7 @@ def get_countries():
 
 @main.route("/top-movers")
 def get_top_movers():
-    response = generator.top_movers()
+    response = generator.top_movers(thresholds=THRESHOLDS)
     return jsonify(response)
 
 

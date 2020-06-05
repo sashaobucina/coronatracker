@@ -64,10 +64,6 @@ def test_get_all_data(generator):
     assert actual == expected
 
 
-# def test_top_movers(generator):
-#     pass
-
-
 def test_top_contributors(generator):
     d = json.loads(read_file("expected_top_contributors.json"))
     expected_countries, expected_data = d["countries"], d["data"]
