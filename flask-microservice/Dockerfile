@@ -22,10 +22,17 @@ WORKDIR /app
 # install all necessary python modules
 RUN pip install -r requirements.txt
 
-COPY . /app
+# copy main module
+COPY ./wsgi.py /app
+
+# copy code
+COPY ./api /app/api
+
+# copy backup file
+COPY ./backups/latest /app/backups
 
 EXPOSE 5000
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "src/app.py" ]
+CMD [ "wsgi.py" ]

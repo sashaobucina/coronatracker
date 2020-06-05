@@ -1,5 +1,6 @@
 import numpy as np
-from util import CONFIRMED, DEATHS, RECOVERED
+
+from api.util.misc import CONFIRMED, DEATHS, RECOVERED
 
 
 def process_dates(reports: dict):

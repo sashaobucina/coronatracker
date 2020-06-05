@@ -1,13 +1,8 @@
 import numpy as np
-from util import (
-    div,
-    numpy_to_native,
-    get_percent_below,
-    get_percent_change,
-    CONFIRMED,
-    DEATHS,
-    RECOVERED,
-)
+
+from api.util.np_util import numpy_to_native
+from api.util.misc import CONFIRMED, DEATHS, RECOVERED
+from api.util.math_util import div, get_percent_below, get_percent_change
 
 
 class DataGenerator:
@@ -22,6 +17,12 @@ class DataGenerator:
         self.dates = dates
         self.reports = reports
         self.valid_countries = valid_countries
+
+    def overwrite(self, dates=[], reports={}, countries=[]):
+        """ Overwrite data generator object with new data. """
+        self.dates = dates
+        self.reports = reports
+        self.valid_countries = countries
 
     def get_dates(self):
         """
