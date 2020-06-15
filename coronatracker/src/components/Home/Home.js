@@ -36,6 +36,9 @@ export default function Home(props) {
       return;
     }
 
+    // remove leading and trailing whitespace from search query
+    query = query.trim()
+
     // try getting country from previous tab
     let maybeCountry = getCountry(query, countries);
     if (maybeCountry) {
