@@ -2,7 +2,7 @@ APScheduler==3.6.3
 bs4==0.0.1
 feedparser==5.2.1
 Flask==1.1.1
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 lxml==4.5.0
 numpy==1.18.1
 pandas==1.0.3
