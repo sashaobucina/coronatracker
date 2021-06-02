@@ -8,4 +8,4 @@ numpy==1.18.1
 pandas==1.0.3
 pytest==5.4.2
 selenium==3.141.0
-urllib3==1.25.8
+urllib3==1.26.5
